@@ -1,19 +1,19 @@
 import { useState, useEffect, useRef } from "react";
-import type { CSSProperties, ReactNode } from "react";
-import { ArrowDown, ArrowRight, RotateCcw, Mic, Sparkles, PenTool, Code2, type LucideIcon } from "lucide-react";
+import { ArrowDown, ArrowRight, RotateCcw, Mic, Sparkles, PenTool, Code2 } from "lucide-react";
 
 const C = {
   cream: "#E3E1DE", paleGreen: "#D6E9B4", teal: "#2C695B", tealDeep: "#214F44",
   olive: "#6D7945", oliveLt: "#9AAB62", rust: "#6C3016", rustDeep: "#4A2410",
   forest: "#16291F", white: "#FFFFFF", gold: "#C98B3A",
   floor: "#D9D5CD", table: "#F3EFE8", chair: "#BFB7AB",
+  sand: "#E9E4D8", sage: "#E1E7D7", mist: "#DCE4E0", menu: "#EDEBE6",
   fg1: "#23302A", fg2: "#4A554E", fg3: "#828A80", line: "#CFCCC7", lineStrong: "#B6B2AB",
   onDark: "#F4F2EE", onDark2: "#BFCDB8", lineOnDark: "rgba(255,255,255,0.16)",
 };
 const SER = "'Spectral',Georgia,serif";
 const SAN = "'GT Walsheim','Hanken Grotesk','Helvetica Neue',Arial,sans-serif";
 const GRAIN = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E\")";
-const rng = (s: number) => { const x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
+const rng = (s) => { const x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
 
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
@@ -24,6 +24,7 @@ html{scroll-behavior:smooth}
 @keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
 @keyframes spinSlow{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 @keyframes driftCascade{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+@keyframes drawLoop{from{stroke-dashoffset:760}to{stroke-dashoffset:0}}
 .eyebrow{font-family:${SAN};font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.16em}
 .lift{transition:transform .35s ease-out,box-shadow .35s ease-out,border-color .35s ease-out}
 .lift:hover{transform:translateY(-4px);box-shadow:0 16px 44px rgba(22,41,31,.14)}
@@ -34,46 +35,75 @@ input[type=range]{accent-color:${C.teal};width:100%}
 .bloom{animation:riseIn .5s ease-out both}
 .arange{accent-color:${C.oliveLt}}
 .clink:hover{text-decoration:underline}
-.tocLabel{border-bottom:1px solid transparent;transition:border-color .25s ease-out,color .25s ease-out}
-.tocItem:hover .tocLabel{border-color:${C.teal};color:${C.teal}}
+.menuItem{border:1.5px solid ${C.line};background:${C.white};transition:transform .25s ease-out,box-shadow .25s ease-out,border-color .25s ease-out}
+.menuItem:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(22,41,31,.14);border-color:var(--ac)}
 `;
 
-function Reveal({ children, delay = 0, style = {} }: { children: ReactNode; delay?: number; style?: CSSProperties }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [v, setV] = useState(false);
-  useEffect(() => {
-    const el = ref.current; if (!el) return;
+function Reveal({ children, delay = 0, style = {} }) {
+  const ref = useRef(null); const [v, setV] = useState(false);
+  useEffect(() => { const el = ref.current; if (!el) return;
     const o = new IntersectionObserver(([e]) => e.isIntersecting && setV(true), { threshold: 0.12 });
-    o.observe(el); return () => o.disconnect();
-  }, []);
+    o.observe(el); return () => o.disconnect(); }, []);
   return <div ref={ref} style={{ opacity: v ? 1 : 0, transform: v ? "none" : "translateY(20px)", transition: `opacity .8s ease-out ${delay}s, transform .8s ease-out ${delay}s`, ...style }}>{children}</div>;
 }
-
 function useMobile() {
   const [mob, setMob] = useState(typeof window !== "undefined" && window.innerWidth < 780);
   useEffect(() => { const f = () => setMob(window.innerWidth < 780); window.addEventListener("resize", f); return () => window.removeEventListener("resize", f); }, []);
   return mob;
 }
-
-function Scribble({ w = 220, color = C.rust, style }: { w?: number; color?: string; style?: CSSProperties }) {
+function Scribble({ w = 220, color = C.rust, style }) {
   return (
     <svg width={w} height="14" viewBox="0 0 220 14" fill="none" style={style}>
       <path d="M3 9 C 28 2, 46 13, 72 7 S 120 1, 150 8 S 196 12, 217 5" stroke={color} strokeWidth="2.2" strokeLinecap="round" />
     </svg>
   );
 }
-
-function Grain({ blend = "multiply", op = 0.05 }: { blend?: CSSProperties["mixBlendMode"]; op?: number }) {
+function CircleScribble({ color = C.rust, style }) {
+  return (
+    <svg viewBox="0 0 300 120" fill="none" preserveAspectRatio="none" style={{ overflow: "visible", ...style }}>
+      <path d="M214 18 C150 4, 66 6, 36 28 C8 48, 16 80, 64 96 C128 116, 240 104, 272 76 C294 56, 282 24, 226 14 C166 3, 78 7, 42 26"
+        stroke={color} strokeWidth="2.6" strokeLinecap="round" fill="none"
+        strokeDasharray="760" style={{ animation: "drawLoop 1.1s ease-out .3s both" }} />
+    </svg>
+  );
+}
+function Grain({ blend = "multiply", op = 0.05 }) {
   return <div style={{ position: "absolute", inset: 0, backgroundImage: GRAIN, opacity: op, mixBlendMode: blend, pointerEvents: "none" }} />;
+}
+function SectionTag({ num, text, accent, onDark = false }) {
+  const chipBg = onDark ? C.paleGreen : accent;
+  const chipFg = onDark ? C.forest : C.onDark;
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+      <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 38, height: 38, borderRadius: 6, background: chipBg, color: chipFg, fontFamily: SER, fontSize: 18, transform: "rotate(-3deg)", flexShrink: 0, boxShadow: "0 4px 12px rgba(22,41,31,.12)" }}>{num}</span>
+      <span className="eyebrow" style={{ color: onDark ? C.paleGreen : accent }}>{text}</span>
+    </div>
+  );
+}
+function ScoreGauge({ value, color }) {
+  const R = 78, CIRC = 2 * Math.PI * R, off = CIRC * (1 - value / 100);
+  return (
+    <div style={{ position: "relative", width: 190, height: 190, flexShrink: 0 }}>
+      <svg width="190" height="190" viewBox="0 0 190 190" style={{ transform: "rotate(-90deg)" }}>
+        <circle cx="95" cy="95" r={R} fill="none" stroke={C.lineOnDark} strokeWidth="13" />
+        <circle cx="95" cy="95" r={R} fill="none" stroke={color} strokeWidth="13" strokeLinecap="round"
+          strokeDasharray={CIRC} strokeDashoffset={off} style={{ transition: "stroke-dashoffset .55s ease-out, stroke .4s" }} />
+      </svg>
+      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+        <span style={{ fontFamily: SER, fontSize: 72, fontWeight: 500, lineHeight: 0.78, color, transition: "color .4s" }}>{value}</span>
+        <span className="eyebrow" style={{ color: C.onDark2, fontSize: 10, marginTop: 7 }}>out of 100</span>
+      </div>
+    </div>
+  );
 }
 
 /* ----- Brand illustrations ----- */
-function SynthesisTree({ w = 340 }: { w?: number }) {
+function SynthesisTree({ w = 340 }) {
   const pal = [C.rust, C.olive, C.teal, C.oliveLt, C.tealDeep];
   const clusters = [{ cx: 72, cy: 72 }, { cx: 180, cy: 50 }, { cx: 290, cy: 80 }, { cx: 62, cy: 168 }, { cx: 300, cy: 170 }];
   const conv = { x: 180, y: 232 };
   const spokes = [0, 51, 102, 154, 205, 256, 308];
-  const cascade: { x: number; y: number; s: number; rot: number; c: string; d: number }[] = [];
+  const cascade = [];
   for (let i = 0; i < 60; i++) {
     const t = i / 60, y = 268 + t * 178, spread = 16 + t * 150;
     cascade.push({ x: 180 + (rng(i + 3) * 2 - 1) * spread, y, s: 5 + rng(i + 9) * 4, rot: rng(i) * 60 - 30, c: pal[i % pal.length], d: rng(i + 1) * 1.5 });
@@ -100,11 +130,9 @@ function SynthesisTree({ w = 340 }: { w?: number }) {
     </svg>
   );
 }
-
-function OrbitBurst({ w = 380 }: { w?: number }) {
+function OrbitBurst({ w = 380 }) {
   const pal = [C.teal, C.olive, C.rust, C.oliveLt, C.tealDeep, C.paleGreen];
-  const cx = 215, cy = 165;
-  const tiles: { x: number; y: number; size: number; rot: number; c: string; tri: boolean }[] = [];
+  const cx = 215, cy = 165, tiles = [];
   for (let i = 0; i < 78; i++) {
     const a = 1.2 + i * 0.31, r = 56 + i * 2.5;
     if (r > 235) break;
@@ -125,7 +153,7 @@ function OrbitBurst({ w = 380 }: { w?: number }) {
 }
 
 /* ----- Co-host logos ----- */
-function IdeoLogo({ h = 46, color = C.fg1 }: { h?: number; color?: string }) {
+function IdeoLogo({ h = 46, color = C.fg1 }) {
   return (
     <svg viewBox="142 192 339 256" height={h} fill="currentColor" style={{ color, display: "block", overflow: "visible" }}>
       <path d="M230.83 281.174H142V192.344H230.83V281.174ZM147.618 275.562H225.218V197.961H147.618V275.562Z" />
@@ -139,7 +167,7 @@ function IdeoLogo({ h = 46, color = C.fg1 }: { h?: number; color?: string }) {
     </svg>
   );
 }
-function RtgLogo({ h = 50, color = C.fg1 }: { h?: number; color?: string }) {
+function RtgLogo({ h = 50, color = C.fg1 }) {
   return (
     <svg viewBox="146 176 332 273" height={h} fill="currentColor" style={{ color, display: "block", overflow: "visible" }}>
       <path d="M207.724 181.181C207.724 180.431 208.338 179.749 209.157 179.749H230.647C239.653 179.749 247.021 186.98 247.021 195.918C247.021 202.808 242.45 208.471 235.9 211.131L246.202 230.234C246.748 231.189 246.202 232.417 244.906 232.417H236.992C236.31 232.417 235.969 232.075 235.764 231.734L225.735 211.813H217.412V230.984C217.412 231.734 216.73 232.417 215.979 232.417H209.089C208.27 232.417 207.656 231.734 207.656 230.984V181.181H207.724ZM229.829 203.763C233.786 203.763 237.265 200.284 237.265 196.122C237.265 192.165 233.786 188.822 229.829 188.822H217.549V203.763H229.829Z" />
@@ -160,10 +188,10 @@ function RtgLogo({ h = 50, color = C.fg1 }: { h?: number; color?: string }) {
     </svg>
   );
 }
-function SyLogo({ h = 26, color = C.fg1 }: { h?: number; color?: string }) {
+function SyLogo({ h = 26, color = C.fg1 }) {
   return <span style={{ fontFamily: SAN, fontWeight: 700, fontSize: h, lineHeight: 1, letterSpacing: "-.015em", color, whiteSpace: "nowrap" }}>SYPartners</span>;
 }
-function FirmLogo({ id, h = 52, color = C.fg1 }: { id: string; h?: number; color?: string }) {
+function FirmLogo({ id, h = 52, color = C.fg1 }) {
   if (id === "IDEO") return <IdeoLogo h={h} color={color} />;
   if (id === "RTG") return <RtgLogo h={h} color={color} />;
   return <SyLogo h={Math.round(h * 0.52)} color={color} />;
@@ -171,8 +199,7 @@ function FirmLogo({ id, h = 52, color = C.fg1 }: { id: string; h?: number; color
 
 const BRICKS = (() => {
   const pal = [C.teal, C.olive, C.rust, C.oliveLt, C.tealDeep, C.paleGreen, "transparent", "transparent", C.olive, C.teal, "transparent"];
-  const cols = 7, rows = 8, cell = 54;
-  const arr: { x: number; y: number; color: string; rot: number; op: number }[] = [];
+  const cols = 7, rows = 8, cell = 54, arr = [];
   for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
     const k = r * cols + c;
     arr.push({ x: c * cell, y: r * cell, color: pal[(k * 5 + (r % 2 ? 3 : 0)) % pal.length], rot: ((r + c) % 3 - 1) * 6, op: Math.max(0.22, 0.92 - r * 0.05) });
@@ -182,19 +209,19 @@ const BRICKS = (() => {
 
 function BrickField() {
   const slots = BRICKS.arr;
-  const [order, setOrder] = useState<number[]>(() => slots.map((_, i) => i));
+  const [order, setOrder] = useState(() => slots.map((_, i) => i));
   useEffect(() => {
     const id = setInterval(() => {
       setOrder((prev) => {
         const next = [...prev];
-        for (let s = 0; s < 4; s++) {
+        for (let s = 0; s < 5; s++) {
           const a = Math.floor(Math.random() * next.length);
           const b = Math.floor(Math.random() * next.length);
           [next[a], next[b]] = [next[b], next[a]];
         }
         return next;
       });
-    }, 600);
+    }, 560);
     return () => clearInterval(id);
   }, []);
   return (
@@ -205,20 +232,18 @@ function BrickField() {
           <div key={i} style={{
             position: "absolute", left: target.x, top: target.y,
             width: BRICKS.cell - 7, height: BRICKS.cell - 7,
-            background: b.color, opacity: b.op, borderRadius: 3,
-            transform: `rotate(${b.rot}deg)`,
+            background: b.color, opacity: b.op, borderRadius: 4,
+            "--r": `${b.rot}deg`, "--op": b.op, transform: `rotate(${b.rot}deg)`,
             transition: "left .85s cubic-bezier(.5,0,.2,1), top .85s cubic-bezier(.5,0,.2,1)",
             animation: `brickFloat ${2.6 + (i % 4) * 0.5}s ease-in-out ${(i % 7) * 0.1}s infinite`,
-            ["--r" as never]: `${b.rot}deg`,
-            ["--op" as never]: b.op,
-          } as CSSProperties} />
+          }} />
         );
       })}
     </>
   );
 }
 
-function Chip({ active, onClick, accent, children }: { active: boolean; onClick: () => void; accent?: string; children: ReactNode }) {
+function Chip({ active, onClick, accent, children }) {
   return (
     <button onClick={onClick} className="tab" style={{
       padding: "8px 15px", borderRadius: 22, fontSize: 13, fontWeight: 600, fontFamily: SAN,
@@ -230,7 +255,7 @@ function Chip({ active, onClick, accent, children }: { active: boolean; onClick:
   );
 }
 
-function RoomView({ activeTable, onSelect, promptColors, mob }: { activeTable: number | null; onSelect: (v: number | null) => void; promptColors: string[]; mob: boolean }) {
+function RoomView({ activeTable, onSelect, promptColors, mob }) {
   const tables = [{ n: 1, x: 27, y: 27 }, { n: 2, x: 73, y: 27 }, { n: 3, x: 27, y: 73 }, { n: 4, x: 73, y: 73 }];
   const dia = 28, chairR = 18, chairAngles = [20, 80, 140, 200, 260, 320];
   return (
@@ -263,15 +288,11 @@ function RoomView({ activeTable, onSelect, promptColors, mob }: { activeTable: n
   );
 }
 
-/* ----- Data & types ----- */
-interface Company { id: string; firm: string; accent: string; desc: string; linkText: string | null; linkUrl: string | null; reachUrl: string; prompt: string; overall: string; }
-interface Insight { co: string; table: number; t: string; ins: string; tag?: string; x?: string; frags: string[]; }
-interface Pipe { Icon: LucideIcon; t: string; d: string; tool: string; color: string; }
-
+// ---- DATA ----
 const TOC = [
-  { id: "panel", label: "The fireside chat", color: C.rust },
+  { id: "panel", label: "The Fireside Chat", color: C.rust },
   { id: "tables", label: "The Listening Room", color: C.olive },
-  { id: "assess", label: "The assessment", color: C.teal },
+  { id: "assess", label: "The Assessment", color: C.teal },
 ];
 
 const PANEL = [
@@ -283,7 +304,7 @@ const PANEL = [
   { n: "06", lbl: "Conditions over control", t: "Leadership becomes less about control, more about conditions.", ins: "AI makes command-and-control less effective. Leaders shape the environment where people apply judgment with confidence.", take: "The leader’s role shifts from directing activity to designing the conditions for better work." },
 ];
 
-const COMPANIES: Company[] = [
+const COMPANIES = [
   { id: "RTG", firm: "Rich Talent Group", accent: C.rust,
     desc: "Rich Talent Group recruits extraordinary leaders for companies that want to make an impact and need a firm that goes beyond the traditional playbook. Combining deep expertise with creative sourcing and expansive networks, RTG builds leadership teams and boards for some of the world’s most influential companies.",
     linkText: null, linkUrl: null, reachUrl: "#",
@@ -301,7 +322,7 @@ const COMPANIES: Company[] = [
     overall: "The dividend is realized when time is made visible, trusted, woven into the rhythm, and the work redesigned." },
 ];
 
-const INSIGHTS: Insight[] = [
+const INSIGHTS = [
   { co: "RTG", table: 1, t: "Judgment and accountability stay human.", ins: "As expertise gets democratized, leaders are differentiated less by what they know and more by how they decide under uncertainty. AI can inform the call, but it can’t own the consequences.", tag: "Judgment · integrity", frags: ["everyone can know things now", "it’s how you decide that’s rare", "the model can’t own the call", "you still own the outcome", "verify before you trust", "the buck stays with you"] },
   { co: "RTG", table: 2, t: "Taste and courage create distinction.", ins: "When the average answer gets better, sameness becomes the risk. Leaders need the taste to recognize quality before it’s obvious — and the courage to move past safe, optimized, familiar work.", tag: "Taste · courage", frags: ["spotting good before it’s proven", "you can’t prompt taste", "the average answer just got better", "safe is the new risky", "convergence is the trap", "dare to be distinctive"] },
   { co: "RTG", table: 3, t: "Empathy and learning agility set the pace.", ins: "Transformation is experienced by people, so emotional context and trust matter more in fast change. And as knowledge ages quickly, the edge is updating your mental model faster than the world shifts.", tag: "Empathy · learning agility", frags: ["people feel the change, not the system", "trust moves people, not tools", "you have to read the room", "unlearn faster than the world changes", "update the mental model, fast", "stay a student"] },
@@ -330,7 +351,7 @@ const BANDS = [
   { min: 61, name: "Reinvesting", color: C.teal, note: "You’re directing reclaimed time toward better work. Protect it — and keep sharpening where it lands." },
   { min: 83, name: "Compounding", color: C.oliveLt, note: "The dividend is visible, intentional, and protected. Now press the advantage — distinctiveness over sameness." },
 ];
-const PIPE: Pipe[] = [
+const PIPE = [
   { Icon: Mic, t: "Record & transcribe", d: "The evening was captured and transcribed automatically with AI.", tool: "AI transcription", color: C.teal },
   { Icon: Sparkles, t: "Synthesize", d: "Transcripts distilled into the themes and insights you’ve just explored.", tool: "ChatGPT", color: C.olive },
   { Icon: PenTool, t: "Design", d: "The visual system and layouts were composed and refined.", tool: "Figma", color: C.rust },
@@ -339,31 +360,46 @@ const PIPE: Pipe[] = [
 
 export default function App() {
   const mob = useMobile();
-  const [node, setNode] = useState<number | null>(null);
-  const [activeTable, setActiveTable] = useState<number | null>(null);
-  const [activePrompt, setActivePrompt] = useState<string>("RTG");
-  const [scores, setScores] = useState<number[]>(ASSESS.map(() => 50));
+  const [node, setNode] = useState(null);
+  const [activeTable, setActiveTable] = useState(null);
+  const [activePrompt, setActivePrompt] = useState("RTG");
+  const [scores, setScores] = useState(ASSESS.map(() => 50));
 
   const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
-  const band = [...BANDS].reverse().find((b) => avg >= b.min)!;
+  const band = [...BANDS].reverse().find((b) => avg >= b.min);
   const weakest = scores.indexOf(Math.min(...scores));
+  const TILES = 24, filled = Math.round((avg / 100) * TILES);
 
   const sections = ["intro", "panel", "tables", "assess", "built"];
   const [active, setActive] = useState("intro");
-  useEffect(() => {
-    const o = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)), { threshold: 0.4 });
-    sections.forEach((s) => { const el = document.getElementById(s); if (el) o.observe(el); });
-    return () => o.disconnect();
-  }, []);
-  const eyebrow = (txt: string, color?: string) => <div className="eyebrow" style={{ color: color || C.fg3, marginBottom: 20 }}>{txt}</div>;
+  useEffect(() => { const o = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)), { threshold: 0.4 });
+    sections.forEach((s) => { const el = document.getElementById(s); if (el) o.observe(el); }); return () => o.disconnect(); }, []);
+  const eyebrow = (txt, color) => <div className="eyebrow" style={{ color: color || C.fg3, marginBottom: 20 }}>{txt}</div>;
 
   const POS = [{ x: 50, y: 11 }, { x: 81, y: 31 }, { x: 81, y: 69 }, { x: 50, y: 89 }, { x: 19, y: 69 }, { x: 19, y: 31 }];
   const satColors = [C.teal, C.olive, C.rust, C.tealDeep, C.oliveLt, C.olive];
   const sel = node != null ? PANEL[node] : null;
-  const coOf = (id: string) => COMPANIES.find((c) => c.id === id)!;
+  const coOf = (id) => COMPANIES.find((c) => c.id === id);
   const promptColors = COMPANIES.map((c) => c.accent);
   const activeCo = coOf(activePrompt);
   const activeInsight = activeTable != null ? INSIGHTS.find((x) => x.co === activePrompt && x.table === activeTable) : null;
+
+  const CoHostCards = (
+    <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3,1fr)", gap: mob ? 24 : 32 }}>
+      {COMPANIES.map((c) => (
+        <div key={c.id} style={{ borderTop: `2px solid ${c.accent}`, paddingTop: 16 }}>
+          <div style={{ height: 40, display: "flex", alignItems: "center" }}>
+            <FirmLogo id={c.id} h={c.id === "RTG" ? 36 : 34} color={C.fg1} />
+          </div>
+          <p style={{ color: C.fg2, fontSize: 13.5, lineHeight: 1.55, margin: "12px 0 12px" }}>{c.desc}</p>
+          <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
+            {c.linkUrl && <a className="clink" href={c.linkUrl} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: c.accent, fontWeight: 600, fontSize: 13, textDecoration: "none" }}>{c.linkText} <ArrowRight size={14} /></a>}
+            <a className="clink" href={c.reachUrl} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: C.fg2, fontWeight: 600, fontSize: 13, textDecoration: "none" }}>Reach out <ArrowRight size={14} /></a>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <div style={{ background: C.cream, color: C.fg1, fontFamily: SAN, minHeight: "100vh", width: "100%", overflowX: "hidden" }}>
@@ -374,94 +410,91 @@ export default function App() {
       </div>
 
       {/* 1 · INTRO */}
-      <section id="intro" style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "9vh 7vw 5vh", position: "relative", overflow: "hidden" }}>
+      <section id="intro" style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", padding: "7vh 7vw 6vh", overflow: "hidden" }}>
         {!mob && <div style={{ position: "absolute", top: -60, right: -55, width: BRICKS.cols * BRICKS.cell, height: BRICKS.rows * BRICKS.cell, transform: "rotate(-8deg) scale(1.12)", opacity: 0.7, WebkitMaskImage: "linear-gradient(120deg,transparent 0%,#000 45%)", maskImage: "linear-gradient(120deg,transparent 0%,#000 45%)", pointerEvents: "none" }}>
           <BrickField />
         </div>}
         <Grain />
-        <div style={{ position: "relative", maxWidth: 720, zIndex: 1 }}>
-          {/* logo lockup */}
-          <div style={{ animation: "riseIn .8s ease-out both", marginBottom: 12 }}>
-            <span style={{ display: "inline-block", background: C.paleGreen, color: C.forest, fontFamily: SER, fontSize: "clamp(18px,2.4vw,26px)", padding: "6px 18px", transform: "rotate(-1deg)" }}>
+        <div style={{ position: "relative", maxWidth: 660, zIndex: 1 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", animation: "riseIn .8s ease-out both" }}>
+            <span style={{ display: "inline-block", background: C.paleGreen, color: C.forest, fontFamily: SER, fontSize: "clamp(16px,2vw,22px)", padding: "5px 16px" }}>
               kyu <span style={{ fontWeight: 600, letterSpacing: ".04em" }}>HOUSE</span>
             </span>
+            <span className="eyebrow" style={{ color: C.fg2 }}>a gathering on leadership &amp; AI</span>
           </div>
-          <div style={{ animation: "riseIn .9s ease-out .1s both", display: "inline-block" }}>
-            <div style={{ background: C.tealDeep, padding: "18px 42px 24px 30px", transform: "rotate(-1deg)", boxShadow: "0 18px 44px rgba(22,41,31,.18)" }}>
-              <h1 style={{ fontFamily: SER, fontSize: "clamp(46px,8vw,100px)", lineHeight: 0.92, fontWeight: 500, margin: 0, color: C.onDark, letterSpacing: -1 }}>
+
+          <div style={{ display: "inline-block", marginTop: 26, animation: "riseIn .9s ease-out .1s both" }}>
+            <div style={{ background: C.tealDeep, padding: "16px 42px 22px 28px", boxShadow: "0 18px 44px rgba(22,41,31,.18)" }}>
+              <h1 style={{ fontFamily: SER, fontSize: "clamp(46px,8.4vw,108px)", lineHeight: 0.9, fontWeight: 500, margin: 0, color: C.onDark, letterSpacing: -1 }}>
                 The AI<br />Dividend
               </h1>
             </div>
           </div>
 
-          {/* co-hosted by */}
-          <div style={{ marginTop: 24, animation: "riseIn .9s ease-out .2s both" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 24, flexWrap: "wrap", animation: "riseIn .9s ease-out .18s both" }}>
+            <span className="eyebrow" style={{ color: C.fg1 }}>June 8, 2026</span>
+            <span style={{ width: 30, height: 1, background: C.lineStrong }} />
             <span className="eyebrow" style={{ color: C.fg3 }}>co-hosted by</span>
-            <div style={{ display: "flex", alignItems: "center", gap: "clamp(24px,5vw,50px)", flexWrap: "wrap", marginTop: 13 }}>
-              <IdeoLogo h={36} />
-              <SyLogo h={21} />
-              <RtgLogo h={40} />
+            <div style={{ display: "flex", alignItems: "center", gap: "clamp(18px,3vw,30px)", flexWrap: "wrap" }}>
+              <IdeoLogo h={28} />
+              <SyLogo h={17} />
+              <RtgLogo h={32} />
             </div>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 28, animation: "riseIn .9s ease-out .24s both" }}>
-            <span className="eyebrow" style={{ color: C.fg2 }}>June 8, 2026</span>
-            <span style={{ width: 34, height: 1, background: C.lineStrong }} />
-            <span className="eyebrow" style={{ color: C.fg2 }}>a gathering on leadership & AI</span>
-          </div>
-
-          <div style={{ marginTop: 30, animation: "riseIn .9s ease-out .32s both" }}>
-            <div style={{ fontFamily: SER, fontSize: "clamp(21px,3.6vw,33px)", color: C.fg3, textDecoration: "line-through", fontStyle: "italic", lineHeight: 1.25 }}>How do we do the same work faster?</div>
-            <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginTop: 10 }}>
+          <div style={{ marginTop: 36, animation: "riseIn .9s ease-out .28s both" }}>
+            <div style={{ fontFamily: SER, fontSize: "clamp(20px,3.3vw,31px)", color: C.fg3, textDecoration: "line-through", fontStyle: "italic", lineHeight: 1.25 }}>How do we do the same work faster?</div>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginTop: 12 }}>
               <ArrowRight size={26} color={C.rust} style={{ flexShrink: 0, marginTop: 6 }} />
-              <span style={{ position: "relative", fontFamily: SER, fontSize: "clamp(21px,3.6vw,33px)", color: C.rust, fontStyle: "italic", lineHeight: 1.25 }}>
-                What better work should we now have time to do?
-                <Scribble w={260} color={C.rust} style={{ position: "absolute", left: 0, bottom: -11 }} />
+              <span style={{ position: "relative", fontFamily: SER, fontSize: "clamp(20px,3.3vw,31px)", color: C.rust, fontStyle: "italic", lineHeight: 1.25 }}>
+                What better work will we do with the time we free up?
               </span>
             </div>
           </div>
 
-          <a href="#panel" style={{ display: "inline-flex", flexDirection: "column", alignItems: "flex-start", gap: 13, marginTop: 46, color: C.fg1, textDecoration: "none", animation: "riseIn .9s ease-out .44s both" }}>
-            <span className="eyebrow" style={{ color: C.fg3 }}>scroll to explore</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 12, fontSize: 13, letterSpacing: ".05em", fontWeight: 600 }}>
-              <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 46, height: 46, borderRadius: 4, border: `1px solid ${C.lineStrong}`, background: C.white, animation: "bounceDown 1.8s ease-in-out infinite" }}><ArrowDown size={18} color={C.teal} /></span>Enter the room
-            </span>
+          <a href="#panel" style={{ display: "inline-flex", alignItems: "center", gap: 13, marginTop: 44, color: C.fg1, textDecoration: "none", fontSize: 13, letterSpacing: ".05em", fontWeight: 600, animation: "riseIn .9s ease-out .4s both" }}>
+            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 46, height: 46, borderRadius: 4, border: `1px solid ${C.lineStrong}`, background: C.white, animation: "bounceDown 1.8s ease-in-out infinite" }}><ArrowDown size={18} color={C.teal} /></span>
+            Enter the room
           </a>
         </div>
       </section>
 
-      {/* CONTENTS STRIP */}
-      <nav style={{ position: "relative", padding: mob ? "30px 7vw" : "38px 7vw", borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, overflow: "hidden" }}>
-        <div style={{ position: "relative", display: "flex", alignItems: mob ? "flex-start" : "center", justifyContent: "space-between", gap: 22, flexWrap: "wrap" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ display: "flex", gap: 4 }}>
-              {[C.rust, C.olive, C.teal].map((cc, i) => <span key={i} style={{ width: 10, height: 10, borderRadius: 2, background: cc, transform: `rotate(${(i - 1) * 8}deg)` }} />)}
-            </span>
-            <span className="eyebrow" style={{ color: C.fg2 }}>the evening, in three parts</span>
-          </div>
-          <div style={{ display: "flex", alignItems: "baseline", gap: mob ? "16px 22px" : "clamp(22px,3vw,46px)", flexWrap: "wrap" }}>
-            {TOC.map((t, i) => (
-              <a key={t.id} href={`#${t.id}`} className="tocItem" style={{ display: "inline-flex", alignItems: "baseline", gap: 9, textDecoration: "none", color: C.fg1 }}>
-                <span style={{ fontFamily: SER, fontSize: 15, color: t.color }}>0{i + 1}</span>
-                <span className="tocLabel" style={{ fontFamily: SER, fontSize: "clamp(16px,2vw,21px)" }}>{t.label}</span>
-              </a>
-            ))}
-          </div>
+      {/* CONTENTS MENU */}
+      <nav style={{ position: "relative", padding: mob ? "34px 7vw" : "44px 7vw", background: C.menu, borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}` }}>
+        <div className="eyebrow" style={{ color: C.fg3, marginBottom: 18, display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ display: "flex", gap: 4 }}>
+            {[C.rust, C.olive, C.teal].map((cc, i) => <span key={i} style={{ width: 10, height: 10, borderRadius: 2, background: cc, transform: `rotate(${(i - 1) * 8}deg)` }} />)}
+          </span>
+          Contents · the evening in three parts
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3,1fr)", gap: 14 }}>
+          {TOC.map((t, i) => (
+            <a key={t.id} href={`#${t.id}`} className="menuItem" style={{ "--ac": t.color, display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 10, textDecoration: "none", color: C.fg1 }}>
+              <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 42, height: 42, borderRadius: 6, background: t.color, color: C.onDark, fontFamily: SER, fontSize: 19, transform: "rotate(-3deg)", flexShrink: 0 }}>0{i + 1}</span>
+              <span style={{ fontFamily: SER, fontSize: "clamp(18px,2.2vw,23px)", lineHeight: 1.1 }}>{t.label}</span>
+              <ArrowRight size={17} color={t.color} style={{ marginLeft: "auto", flexShrink: 0 }} />
+            </a>
+          ))}
         </div>
       </nav>
 
       {/* 2 · PANEL */}
-      <section id="panel" style={{ padding: "12vh 7vw", position: "relative", overflow: "hidden" }}>
+      <section id="panel" style={{ padding: "12vh 7vw", background: C.sand, position: "relative", overflow: "hidden" }}>
         <Grain />
-        {!mob && <div style={{ position: "absolute", bottom: -50, left: -40, opacity: 0.22, transform: "rotate(8deg) scale(0.85)", WebkitMaskImage: "linear-gradient(320deg,transparent,#000 70%)", maskImage: "linear-gradient(320deg,transparent,#000 70%)", pointerEvents: "none" }}>
+        {!mob && <div style={{ position: "absolute", bottom: -50, left: -40, opacity: 0.2, transform: "rotate(8deg) scale(0.85)", WebkitMaskImage: "linear-gradient(320deg,transparent,#000 70%)", maskImage: "linear-gradient(320deg,transparent,#000 70%)", pointerEvents: "none" }}>
           <SynthesisTree w={300} />
         </div>}
         <div style={{ position: "relative", zIndex: 1 }}>
           <Reveal>
-            {eyebrow("the fireside chat")}
-            <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, maxWidth: 820, color: C.rust }}>Tim Brown, Joe Gerber & Mike Peng on the AI Dividend</h2>
-            <Scribble w={210} color={C.rust} style={{ marginTop: 8 }} />
-            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 620 }}>Six insights wove through the conversation. {mob ? "Tap" : "Select"} a tile to bring it to the center.</p>
+            <SectionTag num="01" text="the fireside chat" accent={C.rust} />
+            <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.08, maxWidth: 860, color: C.rust }}>
+              Tim Brown, Joe Gerber &amp; Mike Peng on the{" "}
+              <span style={{ position: "relative", display: "inline-block", whiteSpace: "nowrap" }}>
+                AI Dividend
+                <CircleScribble color={C.rust} style={{ position: "absolute", left: "-7%", top: "-26%", width: "114%", height: "158%", pointerEvents: "none" }} />
+              </span>
+            </h2>
+            <p style={{ color: C.fg2, marginTop: 22, fontSize: 17, lineHeight: 1.5, maxWidth: 620 }}>Six insights wove through the conversation. {mob ? "Tap" : "Select"} a tile to bring it to the center.</p>
           </Reveal>
 
           {mob ? (
@@ -517,11 +550,11 @@ export default function App() {
       </section>
 
       {/* 3 · THE LISTENING ROOM */}
-      <section id="tables" style={{ padding: "9vh 7vw", borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
+      <section id="tables" style={{ padding: "12vh 7vw", background: C.sage, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
         <Grain />
         <div style={{ position: "relative", zIndex: 1 }}>
           <Reveal>
-            {eyebrow("the roundtables · we were listening")}
+            <SectionTag num="02" text="the roundtables · we were listening" accent={C.olive} />
             <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>The Listening Room</h2>
             <Scribble w={230} color={C.olive} style={{ marginTop: 8 }} />
             <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 660 }}>Four tables, each working through all three prompts. Tap a table to explore what was said there — or the center of the room for the overall themes.</p>
@@ -588,35 +621,17 @@ export default function App() {
           </Reveal>
 
           <p style={{ color: C.fg3, fontSize: 12, marginTop: 22, fontStyle: "italic" }}>Quotes are illustrative — representative of the discussion rather than verbatim.</p>
-
-          <div style={{ marginTop: 56, paddingTop: 28, borderTop: `1px solid ${C.line}` }}>
-            <div className="eyebrow" style={{ color: C.fg3, marginBottom: 20 }}>about the co-hosts</div>
-            <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3,1fr)", gap: mob ? 24 : 32 }}>
-              {COMPANIES.map((c) => (
-                <div key={c.id} style={{ borderTop: `2px solid ${c.accent}`, paddingTop: 16 }}>
-                  <div style={{ height: 38, display: "flex", alignItems: "center" }}>
-                    <FirmLogo id={c.id} h={c.id === "RTG" ? 34 : 32} color={C.fg1} />
-                  </div>
-                  <p style={{ color: C.fg2, fontSize: 13.5, lineHeight: 1.55, margin: "12px 0 12px" }}>{c.desc}</p>
-                  <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
-                    {c.linkUrl && <a className="clink" href={c.linkUrl} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: c.accent, fontWeight: 600, fontSize: 13, textDecoration: "none" }}>{c.linkText} <ArrowRight size={14} /></a>}
-                    <a className="clink" href={c.reachUrl} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: C.fg2, fontWeight: 600, fontSize: 13, textDecoration: "none" }}>Reach out <ArrowRight size={14} /></a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
       {/* 4 · ASSESSMENT */}
-      <section id="assess" style={{ padding: "9vh 7vw", background: C.forest, color: C.onDark, position: "relative", overflow: "hidden" }}>
+      <section id="assess" style={{ padding: "11vh 7vw", background: C.forest, color: C.onDark, position: "relative", overflow: "hidden" }}>
         <Grain blend="overlay" />
         <div style={{ position: "relative" }}>
           <Reveal>
             <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1.1fr 0.9fr", gap: 30, alignItems: "center" }}>
               <div>
-                {eyebrow("the AI dividend assessment", C.paleGreen)}
+                <SectionTag num="03" text="the AI dividend assessment" accent={C.teal} onDark />
                 <h2 style={{ fontFamily: SER, fontSize: "clamp(30px,4.6vw,46px)", fontWeight: 500, margin: 0, lineHeight: 1.04, maxWidth: 560, color: C.onDark }}>How well are you using your dividend?</h2>
                 <p style={{ color: C.onDark2, marginTop: 12, fontSize: 16, lineHeight: 1.5, maxWidth: 500 }}>Six honest reads. Drag each toward how true it is for your organization today.</p>
               </div>
@@ -637,27 +652,47 @@ export default function App() {
             ))}
           </div>
 
-          <div style={{ marginTop: 30, border: `1px solid ${C.lineOnDark}`, borderRadius: 12, padding: mob ? "20px" : "22px 26px", background: "rgba(255,255,255,0.03)", display: "flex", gap: mob ? 18 : 28, flexWrap: "wrap", alignItems: "center" }}>
-            <div style={{ display: "flex", alignItems: "flex-end", gap: 12 }}>
-              <span style={{ fontFamily: SER, fontSize: 50, fontWeight: 500, lineHeight: 0.8, color: band.color, transition: "color .4s" }}>{avg}</span>
-              <span style={{ fontFamily: SER, fontSize: 22, color: band.color, transition: "color .4s", marginBottom: 3 }}>{band.name}</span>
-            </div>
-            <div style={{ flex: "1 1 260px", minWidth: 200 }}>
-              <div style={{ height: 8, borderRadius: 6, background: C.lineOnDark, overflow: "hidden" }}>
-                <div style={{ height: "100%", width: `${avg}%`, background: band.color, borderRadius: 6, transition: "width .5s ease-out, background .4s" }} />
+          {/* RESULT */}
+          <div style={{ marginTop: 36, border: `1px solid ${C.lineOnDark}`, borderRadius: 16, padding: mob ? 22 : 32, background: "rgba(255,255,255,0.035)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "auto 1fr", gap: mob ? 22 : 40, alignItems: "center" }}>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, justifySelf: mob ? "center" : "start" }}>
+                <ScoreGauge value={avg} color={band.color} />
+                <span style={{ display: "inline-block", fontFamily: SER, fontSize: 27, color: C.forest, background: band.color, padding: "3px 18px", borderRadius: 4, transition: "background .4s" }}>{band.name}</span>
               </div>
-              <p style={{ color: C.onDark2, fontSize: 13.5, lineHeight: 1.5, margin: "10px 0 0" }}>{band.note}</p>
+              <div>
+                <p style={{ color: C.onDark, fontSize: 15.5, lineHeight: 1.55, margin: 0, maxWidth: 540 }}>{band.note}</p>
+                <div style={{ marginTop: 20, paddingTop: 18, borderTop: `1px solid ${C.lineOnDark}`, display: "flex", gap: 20, flexWrap: "wrap", alignItems: "flex-start", justifyContent: "space-between" }}>
+                  <div style={{ flex: "1 1 250px" }}>
+                    <span className="eyebrow" style={{ color: "#E0A07E", fontSize: 10 }}>biggest opportunity · {ASSESS[weakest].dim}</span>
+                    <p style={{ color: C.onDark2, fontSize: 14, lineHeight: 1.5, margin: "8px 0 0" }}>{ASSESS[weakest].tip}</p>
+                  </div>
+                  <button onClick={() => setScores(ASSESS.map(() => 50))} style={{ flexShrink: 0, height: 38, padding: "0 16px", borderRadius: 6, border: `1px solid ${C.lineOnDark}`, background: "transparent", color: C.onDark, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13, fontFamily: SAN }}><RotateCcw size={14} /> Reset</button>
+                </div>
+              </div>
             </div>
-            <div style={{ flex: "1 1 230px", minWidth: 190, borderLeft: mob ? "none" : `1px solid ${C.lineOnDark}`, paddingLeft: mob ? 0 : 24 }}>
-              <span className="eyebrow" style={{ color: "#E0A07E", fontSize: 10 }}>biggest opportunity · {ASSESS[weakest].dim}</span>
-              <p style={{ color: C.onDark, fontSize: 13.5, lineHeight: 1.5, margin: "8px 0 0" }}>{ASSESS[weakest].tip}</p>
+            <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: `repeat(${TILES}, 1fr)`, gap: 4 }}>
+              {Array.from({ length: TILES }).map((_, i) => (
+                <div key={i} style={{ height: 18, borderRadius: 2, background: i < filled ? band.color : C.lineOnDark, transform: `rotate(${((i % 3) - 1) * 4}deg)`, transition: "background .4s ease-out" }} />
+              ))}
             </div>
-            <button onClick={() => setScores(ASSESS.map(() => 50))} style={{ flexShrink: 0, height: 38, padding: "0 16px", borderRadius: 6, border: `1px solid ${C.lineOnDark}`, background: "transparent", color: C.onDark, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13, fontFamily: SAN }}><RotateCcw size={14} /> Reset</button>
           </div>
 
           <p style={{ marginTop: 44, fontFamily: SER, fontSize: "clamp(22px,3.6vw,34px)", fontStyle: "italic", lineHeight: 1.25, maxWidth: 800 }}>
             Don’t let the AI Dividend disappear into more work. <span style={{ color: C.paleGreen }}>Make it visible, intentional, and protected.</span>
           </p>
+        </div>
+      </section>
+
+      {/* CO-HOSTS BAND */}
+      <section style={{ padding: mob ? "9vh 7vw" : "11vh 7vw", background: C.mist, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
+        <Grain />
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <Reveal>
+            <SectionTag num="✳" text="about the co-hosts" accent={C.teal} />
+            <h2 style={{ fontFamily: SER, fontSize: "clamp(28px,4.4vw,44px)", fontWeight: 500, margin: 0, lineHeight: 1.05, color: C.rust }}>Meet the co-hosts</h2>
+            <Scribble w={190} color={C.teal} style={{ marginTop: 8, marginBottom: 30 }} />
+          </Reveal>
+          <Reveal delay={0.05}>{CoHostCards}</Reveal>
         </div>
       </section>
 
