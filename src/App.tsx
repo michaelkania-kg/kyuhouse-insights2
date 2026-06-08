@@ -607,6 +607,19 @@ export default function App() {
             </div>
           </Reveal>
 
+          {mob && (
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, marginTop: 22, padding: "14px 16px", borderRadius: 12, border: `1px solid ${C.lineOnDark}`, background: "rgba(255,255,255,0.06)" }}>
+              <div>
+                <span className="eyebrow" style={{ color: C.onDark2, fontSize: 9 }}>your score · live</span>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 3 }}>
+                  <span style={{ fontFamily: SER, fontSize: 40, fontWeight: 500, lineHeight: 1, color: band.color, transition: "color .4s" }}>{avg}</span>
+                  <span style={{ fontFamily: SER, fontSize: 17, color: C.onDark, fontStyle: "italic" }}>{band.name}</span>
+                </div>
+              </div>
+              <span style={{ fontFamily: SAN, fontSize: 11, fontWeight: 600, color: C.onDark2, textAlign: "right", maxWidth: 110, lineHeight: 1.35 }}>Updates as you drag ↓</span>
+            </div>
+          )}
+
           <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3,1fr)", gap: mob ? 18 : "22px 30px", marginTop: 30 }}>
             {ASSESS.map((a, i) => (
               <div key={i} style={{ borderTop: `1px solid ${C.lineOnDark}`, paddingTop: 13 }}>
