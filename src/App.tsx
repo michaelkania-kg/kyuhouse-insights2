@@ -401,7 +401,7 @@ export default function App() {
   const weakest = scores.indexOf(Math.min(...scores));
   const TILES = 24, filled = Math.round((avg / 100) * TILES);
 
-  const sections = ["intro", "panel", "assess", "tables", "built"];
+  const sections = ["intro", "panel", "assess", "tables"];
   const [active, setActive] = useState("intro");
   useEffect(() => { const o = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)), { threshold: 0.4 });
     sections.forEach((s) => { const el = document.getElementById(s); if (el) o.observe(el); }); return () => o.disconnect(); }, []);
@@ -529,21 +529,33 @@ export default function App() {
           </Reveal>
 
           {mob ? (
-            <div style={{ marginTop: 36 }}>
-              {PANEL.map((p, i) => (
-                <Reveal key={p.n} delay={i * 0.05}>
-                  <div onClick={() => setNode(node === i ? null : i)} style={{ borderTop: `1px solid ${C.line}`, padding: "20px 0", cursor: "pointer" }}>
-                    <div style={{ display: "flex", gap: 16, alignItems: "baseline" }}>
-                      <span style={{ fontFamily: SER, color: node === i ? C.teal : C.lineStrong, fontSize: 20 }}>{p.n}</span>
-                      <h3 style={{ fontFamily: SER, fontWeight: 500, fontSize: 22, margin: 0, color: node === i ? C.teal : C.fg1 }}>{p.t}</h3>
+            <div style={{ marginTop: 30 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 10 }}>
+                {PANEL.map((p, i) => {
+                  const on = node === i;
+                  return (
+                    <div key={p.n} onClick={() => setNode(on ? null : i)} style={{ borderRadius: 8, cursor: "pointer", padding: 14, minHeight: 96, display: "flex", flexDirection: "column", justifyContent: "center", background: on ? satColors[i] : C.white, color: on ? C.onDark : C.fg1, border: `1px solid ${on ? satColors[i] : C.line}`, boxShadow: "0 4px 14px rgba(22,41,31,.07)", transform: `rotate(${((i % 3) - 1) * 2}deg)`, transition: "background .3s ease-out, color .3s ease-out" }}>
+                      <span style={{ fontFamily: SER, fontSize: 14, opacity: 0.55 }}>{p.n}</span>
+                      <span style={{ fontFamily: SER, fontSize: 15.5, lineHeight: 1.15, marginTop: 4 }}>{p.lbl}</span>
                     </div>
-                    <div style={{ maxHeight: node === i ? 320 : 0, overflow: "hidden", transition: "max-height .5s ease-out" }}>
-                      <p style={{ color: C.fg2, fontSize: 16, lineHeight: 1.55, margin: "14px 0 0", paddingLeft: 36 }}>{p.ins}</p>
-                      <p style={{ fontFamily: SER, fontStyle: "italic", color: C.teal, fontSize: 19, lineHeight: 1.4, margin: "14px 0 0", paddingLeft: 36, borderLeft: `2px solid ${C.teal}`, marginLeft: 36 }}>{p.take}</p>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
+                  );
+                })}
+              </div>
+              <div className="bloom" key={node ?? "thesis"} style={{ marginTop: 18, background: C.white, border: `1px solid ${C.line}`, borderRadius: 10, padding: 22, boxShadow: "0 12px 30px rgba(22,41,31,.10)", textAlign: "center" }}>
+                {sel ? (
+                  <>
+                    <span className="eyebrow" style={{ color: C.teal, fontSize: 10 }}>{sel.n} · insight</span>
+                    <p style={{ color: C.fg2, fontSize: 15, lineHeight: 1.5, margin: "10px 0 12px" }}>{sel.ins}</p>
+                    <p style={{ fontFamily: SER, fontStyle: "italic", color: C.fg1, fontSize: 18, lineHeight: 1.35, margin: 0 }}>{sel.take}</p>
+                  </>
+                ) : (
+                  <>
+                    <span className="eyebrow" style={{ color: C.teal, fontSize: 10 }}>the thesis</span>
+                    <p style={{ fontFamily: SER, fontSize: 18, lineHeight: 1.4, color: C.fg1, margin: "10px 0 0", fontStyle: "italic" }}>AI’s greater potential is the human capacity it unlocks.</p>
+                    <p style={{ color: C.fg3, fontSize: 12.5, marginTop: 12 }}>Tap a tile to reveal it</p>
+                  </>
+                )}
+              </div>
             </div>
           ) : (
             <Reveal style={{ marginTop: 24 }}>
@@ -744,49 +756,6 @@ export default function App() {
           </Reveal>
           <Reveal delay={0.05}>{CoHostCards}</Reveal>
         </div>
-      </section>
-
-      {/* 5 · HOW IT WAS BUILT */}
-      <section id="built" style={{ padding: "7vh 7vw 9vh", borderTop: `1px solid ${C.line}` }}>
-        <Reveal>
-          {eyebrow("behind the experience")}
-          <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
-            <span style={{ display: "inline-flex", gap: 4, flexShrink: 0, marginTop: 10 }}>
-              {[C.teal, C.olive, C.rust].map((cc, i) => <span key={i} style={{ width: 13, height: 13, borderRadius: 3, background: cc, transform: `rotate(${(i - 1) * 9}deg)`, boxShadow: "0 3px 8px rgba(22,41,31,.12)" }} />)}
-            </span>
-            <h2 style={{ fontFamily: SER, fontSize: "clamp(30px,4.6vw,48px)", fontWeight: 500, margin: 0, lineHeight: 1.05, maxWidth: 760, color: C.rust }}>How this was made — an AI-assisted pipeline</h2>
-          </div>
-          <p style={{ color: C.fg2, marginTop: 16, fontSize: 16, lineHeight: 1.5, maxWidth: 560 }}>From a recorded conversation to the page you’re reading, four steps.</p>
-        </Reveal>
-        <div style={{ position: "relative", marginTop: 56 }}>
-          {!mob && <div style={{ position: "absolute", top: 40, left: "11%", right: "11%", height: 1, background: C.line }}>
-            <div style={{ position: "absolute", top: -3, width: 6, height: 6, borderRadius: 2, background: C.teal, animation: "travel 6s linear infinite" }} />
-          </div>}
-          <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(4,1fr)", gap: mob ? 18 : 24 }}>
-            {PIPE.map((s, i) => {
-              const Ic = s.Icon;
-              return (
-                <Reveal key={i} delay={i * 0.12}>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: mob ? "flex-start" : "center", textAlign: mob ? "left" : "center" }}>
-                    <div style={{ width: 80, height: 80, borderRadius: 8, background: C.white, border: `1px solid ${C.line}`, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 18px rgba(22,41,31,.07)", position: "relative", zIndex: 2, transform: `rotate(${((i % 2) ? 1 : -1) * 3}deg)` }}>
-                      <Ic size={27} color={s.color} strokeWidth={1.75} />
-                    </div>
-                    <span className="eyebrow" style={{ color: C.fg3, marginTop: 18, fontSize: 11 }}>step 0{i + 1}</span>
-                    <h3 style={{ fontFamily: SER, fontWeight: 500, fontSize: 23, margin: "6px 0 0" }}>{s.t}</h3>
-                    <p style={{ color: C.fg2, fontSize: 14.5, lineHeight: 1.5, margin: "10px 0 12px", maxWidth: 230 }}>{s.d}</p>
-                    <span style={{ border: `1px solid ${s.color}`, color: s.color, borderRadius: 4, padding: "6px 14px", fontSize: 13, fontWeight: 600 }}>{s.tool}</span>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-        <Reveal delay={0.2}>
-          <div style={{ marginTop: 80, paddingTop: 28, borderTop: `1px solid ${C.line}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-            <span style={{ display: "inline-block", background: "#3A322A", color: C.white, fontFamily: SER, fontSize: 18, padding: "5px 15px", transform: "rotate(-2deg)" }}>kyu <span style={{ letterSpacing: ".03em" }}>HOUSE</span></span>
-            <span className="eyebrow" style={{ color: C.fg3 }}>the AI dividend · June 8, 2026</span>
-          </div>
-        </Reveal>
       </section>
 
       {/* KYU FOOTER */}
