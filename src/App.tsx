@@ -444,9 +444,9 @@ export default function App() {
 
       {/* 1 · INTRO */}
       <section id="intro" style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", padding: "7vh 7vw 6vh", overflow: "hidden" }}>
-        {!mob && <div style={{ position: "absolute", top: -60, right: -55, width: BRICKS.cols * BRICKS.cell, height: BRICKS.rows * BRICKS.cell, transform: "rotate(-8deg) scale(1.12)", opacity: 0.7, WebkitMaskImage: "linear-gradient(120deg,transparent 0%,#000 45%)", maskImage: "linear-gradient(120deg,transparent 0%,#000 45%)", pointerEvents: "none" }}>
+        <div style={{ position: "absolute", top: mob ? -24 : -60, right: mob ? -64 : -55, width: BRICKS.cols * BRICKS.cell, height: BRICKS.rows * BRICKS.cell, transform: mob ? "rotate(-8deg) scale(0.6)" : "rotate(-8deg) scale(1.12)", transformOrigin: "top right", opacity: mob ? 0.5 : 0.7, WebkitMaskImage: "linear-gradient(120deg,transparent 0%,#000 45%)", maskImage: "linear-gradient(120deg,transparent 0%,#000 45%)", pointerEvents: "none" }}>
           <BrickField />
-        </div>}
+        </div>
         <Grain />
         <div style={{ position: "relative", maxWidth: 660, zIndex: 1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", animation: "riseIn .8s ease-out both" }}>
@@ -464,11 +464,11 @@ export default function App() {
             <span className="eyebrow" style={{ color: C.fg1 }}>June 8, 2026</span>
             <span style={{ width: 30, height: 1, background: C.lineStrong }} />
             <span className="eyebrow" style={{ color: C.fg3 }}>co-hosted by</span>
-            <div style={{ display: "flex", alignItems: "center", gap: "clamp(15px,2.4vw,26px)", flexWrap: "wrap" }}>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontFamily: SAN, fontSize: 11.5, fontWeight: 600, color: C.teal, textTransform: "uppercase", letterSpacing: ".08em" }}>click to visit <ArrowRight size={13} /></span>
-              <a className="logoLink" href="https://www.ideo.com/" target="_blank" rel="noreferrer" title="Visit IDEO"><IdeoLogo h={28} /><ExternalLink size={13} color={C.teal} /></a>
-              <a className="logoLink" href="https://www.sypartners.com/" target="_blank" rel="noreferrer" title="Visit SYPartners"><SyLogo h={17} /><ExternalLink size={13} color={C.teal} /></a>
-              <a className="logoLink" href="https://www.richtalentgroup.com/" target="_blank" rel="noreferrer" title="Visit Rich Talent Group"><RtgLogo h={32} /><ExternalLink size={13} color={C.teal} /></a>
+            <div style={{ display: "flex", alignItems: "center", gap: mob ? 13 : "clamp(15px,2.4vw,26px)", flexWrap: "nowrap" }}>
+              {!mob && <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontFamily: SAN, fontSize: 11.5, fontWeight: 600, color: C.teal, textTransform: "uppercase", letterSpacing: ".08em" }}>click to visit <ArrowRight size={13} /></span>}
+              <a className="logoLink" href="https://www.ideo.com/" target="_blank" rel="noreferrer" title="Visit IDEO"><IdeoLogo h={mob ? 20 : 24} /><ExternalLink size={mob ? 11 : 12} color={C.teal} /></a>
+              <a className="logoLink" href="https://www.sypartners.com/" target="_blank" rel="noreferrer" title="Visit SYPartners"><SyLogo h={mob ? 12 : 15} /><ExternalLink size={mob ? 11 : 12} color={C.teal} /></a>
+              <a className="logoLink" href="https://www.richtalentgroup.com/" target="_blank" rel="noreferrer" title="Visit Rich Talent Group"><RtgLogo h={mob ? 22 : 27} /><ExternalLink size={mob ? 11 : 12} color={C.teal} /></a>
             </div>
           </div>
 
@@ -640,9 +640,9 @@ export default function App() {
       </section>
 
       {/* 3 · THE LISTENING ROOM */}
-      <section id="tables" style={{ padding: "12vh 7vw", background: C.sage, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
+      <section id="tables" style={{ padding: mob ? "6vh 7vw" : "7vh 7vw", background: C.sage, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
         <Grain />
-        <div style={{ position: "relative", zIndex: 1, filter: "grayscale(0.92) blur(2px)", opacity: 0.5, pointerEvents: "none", userSelect: "none" }} aria-hidden="true">
+        <div style={{ position: "relative", zIndex: 1, filter: "grayscale(0.92) blur(2px)", opacity: 0.5, pointerEvents: "none", userSelect: "none", maxHeight: mob ? 280 : 360, overflow: "hidden" }} aria-hidden="true">
           <Reveal>
             <SectionTag num="03" text="the roundtables · we were listening" accent={C.olive} />
             <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>The Listening Room</h2>
@@ -714,7 +714,7 @@ export default function App() {
         </div>
 
         {/* COMING SOON OVERLAY */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 20, display: "flex", alignItems: "center", justifyContent: "center", padding: "6vw 7vw", background: "repeating-linear-gradient(135deg, rgba(109,121,69,0.07) 0 16px, transparent 16px 32px), rgba(225,231,215,0.42)", backdropFilter: "blur(1.5px)", WebkitBackdropFilter: "blur(1.5px)" }}>
+        <div style={{ position: "absolute", inset: 0, zIndex: 20, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: mob ? "7vh" : "8vh", paddingLeft: "7vw", paddingRight: "7vw", paddingBottom: "4vh", background: "repeating-linear-gradient(135deg, rgba(109,121,69,0.07) 0 16px, transparent 16px 32px), rgba(225,231,215,0.42)", backdropFilter: "blur(1.5px)", WebkitBackdropFilter: "blur(1.5px)" }}>
           <div style={{ position: "relative", background: C.white, border: `1px solid ${C.lineStrong}`, borderRadius: 16, padding: mob ? "32px 26px" : "40px 48px", boxShadow: "0 30px 72px rgba(22,41,31,.28)", textAlign: "center", maxWidth: 500, animation: "softPulse 4.5s ease-in-out infinite" }}>
             <div style={{ display: "flex", justifyContent: "center", gap: 7, marginBottom: 20 }}>
               {[C.rust, C.olive, C.teal].map((cc, i) => <span key={i} style={{ width: 13, height: 13, borderRadius: 3, background: cc, transform: `rotate(${(i - 1) * 9}deg)`, boxShadow: "0 3px 8px rgba(22,41,31,.14)" }} />)}
@@ -730,11 +730,16 @@ export default function App() {
       </section>
 
       {/* CO-HOSTS BAND */}
-      <section style={{ padding: mob ? "9vh 7vw" : "11vh 7vw", background: C.mist, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
+      <section style={{ padding: mob ? "6vh 7vw" : "7vh 7vw", background: C.mist, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
         <Grain />
         <div style={{ position: "relative", zIndex: 1 }}>
           <Reveal>
-            <h2 style={{ fontFamily: SER, fontSize: "clamp(28px,4.4vw,44px)", fontWeight: 500, margin: 0, lineHeight: 1.05, color: C.rust }}>Meet the co-hosts</h2>
+            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+              <span style={{ display: "inline-flex", gap: 4, flexShrink: 0 }}>
+                {[C.rust, C.olive, C.teal].map((cc, i) => <span key={i} style={{ width: 13, height: 13, borderRadius: 3, background: cc, transform: `rotate(${(i - 1) * 9}deg)`, boxShadow: "0 3px 8px rgba(22,41,31,.12)" }} />)}
+              </span>
+              <h2 style={{ fontFamily: SER, fontSize: "clamp(28px,4.4vw,44px)", fontWeight: 500, margin: 0, lineHeight: 1.05, color: C.rust }}>Meet the co-hosts</h2>
+            </div>
             <Scribble w={190} color={C.teal} style={{ marginTop: 8, marginBottom: 30 }} />
           </Reveal>
           <Reveal delay={0.05}>{CoHostCards}</Reveal>
@@ -742,10 +747,15 @@ export default function App() {
       </section>
 
       {/* 5 · HOW IT WAS BUILT */}
-      <section id="built" style={{ padding: "12vh 7vw 11vh", borderTop: `1px solid ${C.line}` }}>
+      <section id="built" style={{ padding: "7vh 7vw 9vh", borderTop: `1px solid ${C.line}` }}>
         <Reveal>
           {eyebrow("behind the experience")}
-          <h2 style={{ fontFamily: SER, fontSize: "clamp(30px,4.6vw,48px)", fontWeight: 500, margin: 0, lineHeight: 1.05, maxWidth: 760, color: C.rust }}>How this was made — an AI-assisted pipeline</h2>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+            <span style={{ display: "inline-flex", gap: 4, flexShrink: 0, marginTop: 10 }}>
+              {[C.teal, C.olive, C.rust].map((cc, i) => <span key={i} style={{ width: 13, height: 13, borderRadius: 3, background: cc, transform: `rotate(${(i - 1) * 9}deg)`, boxShadow: "0 3px 8px rgba(22,41,31,.12)" }} />)}
+            </span>
+            <h2 style={{ fontFamily: SER, fontSize: "clamp(30px,4.6vw,48px)", fontWeight: 500, margin: 0, lineHeight: 1.05, maxWidth: 760, color: C.rust }}>How this was made — an AI-assisted pipeline</h2>
+          </div>
           <p style={{ color: C.fg2, marginTop: 16, fontSize: 16, lineHeight: 1.5, maxWidth: 560 }}>From a recorded conversation to the page you’re reading, four steps.</p>
         </Reveal>
         <div style={{ position: "relative", marginTop: 56 }}>
@@ -782,35 +792,35 @@ export default function App() {
       {/* KYU FOOTER */}
       <footer style={{ background: "#EDECE8", borderTop: `1px solid ${C.line}`, overflow: "hidden" }}>
         {!mob ? (
-          <div style={{ position: "relative", minHeight: 600 }}>
+          <div style={{ position: "relative", minHeight: 430 }}>
             <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
-              <div style={{ width: 560, height: 560, maxWidth: "54vw", maxHeight: "54vw", borderRadius: "50%", border: "1px solid #8c8c87", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <span style={{ fontFamily: SER, fontWeight: 400, fontSize: "clamp(90px,12vw,168px)", lineHeight: 1, letterSpacing: "-.02em", color: "#16160f" }}>kyu</span>
+              <div style={{ width: 390, height: 390, maxWidth: "44vw", maxHeight: "44vw", borderRadius: "50%", border: "1px solid #8c8c87", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <span style={{ fontFamily: SER, fontWeight: 400, fontSize: "clamp(68px,9vw,118px)", lineHeight: 1, letterSpacing: "-.02em", color: "#16160f" }}>kyu</span>
               </div>
             </div>
-            <nav style={{ position: "absolute", top: 52, left: "6vw", display: "flex", flexDirection: "column", zIndex: 2 }}>
+            <nav style={{ position: "absolute", top: 38, left: "6vw", display: "flex", flexDirection: "column", zIndex: 2 }}>
               <a className="kyuNav" href="https://kyu.com/about" target="_blank" rel="noreferrer">About</a>
               <a className="kyuNav" href="https://kyu.com/companies" target="_blank" rel="noreferrer">Companies</a>
               <a className="kyuNav" href="https://kyu.com/stories" target="_blank" rel="noreferrer">Stories</a>
               <a className="kyuNav" href="https://kyu.com/about/contact" target="_blank" rel="noreferrer">Contact</a>
               <a className="kyuNav" href="https://kyu.com/legal" target="_blank" rel="noreferrer">Legal</a>
             </nav>
-            <div style={{ position: "absolute", bottom: 52, left: "6vw", display: "flex", flexDirection: "column", zIndex: 2 }}>
+            <div style={{ position: "absolute", bottom: 38, left: "6vw", display: "flex", flexDirection: "column", zIndex: 2 }}>
               <a className="kyuNav" href="https://www.linkedin.com/company/kyu-collective/" target="_blank" rel="noreferrer">LinkedIn</a>
               <a className="kyuNav" href="https://www.instagram.com/kyu_collective/?hl=en" target="_blank" rel="noreferrer">Instagram</a>
               <a className="kyuNav" href="https://vimeo.com/showcase/12200156" target="_blank" rel="noreferrer">Vimeo</a>
               <a className="kyuNav" href="mailto:kyucollective@kyu.com">kyucollective@kyu.com</a>
             </div>
-            <div style={{ position: "absolute", bottom: 52, right: "6vw", display: "flex", flexDirection: "column", zIndex: 2 }}>
+            <div style={{ position: "absolute", bottom: 38, right: "6vw", display: "flex", flexDirection: "column", zIndex: 2 }}>
               <span style={{ fontFamily: SER, fontSize: 18, color: "#1c1c19", lineHeight: 1.6 }}>© 2026</span>
               <span style={{ fontFamily: SER, fontSize: 18, color: "#1c1c19", lineHeight: 1.6 }}>kyu Collective</span>
               <a className="kyuNav kyuUnder" href="https://www.hakuhodody-holdings.co.jp/english/" target="_blank" rel="noreferrer">Hakuhodo DY Holdings</a>
             </div>
           </div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 40, padding: "56px 8vw 48px" }}>
-            <div style={{ width: 230, height: 230, maxWidth: "62vw", maxHeight: "62vw", borderRadius: "50%", border: "1px solid #8c8c87", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ fontFamily: SER, fontWeight: 400, fontSize: 86, lineHeight: 1, letterSpacing: "-.02em", color: "#16160f" }}>kyu</span>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 28, padding: "40px 8vw 36px" }}>
+            <div style={{ width: 180, height: 180, maxWidth: "54vw", maxHeight: "54vw", borderRadius: "50%", border: "1px solid #8c8c87", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <span style={{ fontFamily: SER, fontWeight: 400, fontSize: 66, lineHeight: 1, letterSpacing: "-.02em", color: "#16160f" }}>kyu</span>
             </div>
             <nav style={{ display: "flex", flexDirection: "column" }}>
               <a className="kyuNav" href="https://kyu.com/about" target="_blank" rel="noreferrer">About</a>
