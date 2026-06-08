@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowDown, ArrowRight, RotateCcw, Mic, Sparkles, PenTool, Code2 } from "lucide-react";
+import { ArrowDown, ArrowRight, RotateCcw, Mic, Sparkles, PenTool, Code2, Mail, ExternalLink } from "lucide-react";
 
 const C = {
   cream: "#E3E1DE", paleGreen: "#D6E9B4", teal: "#2C695B", tealDeep: "#214F44",
@@ -37,6 +37,12 @@ input[type=range]{accent-color:${C.teal};width:100%}
 .clink:hover{text-decoration:underline}
 .menuItem{border:1.5px solid ${C.line};background:${C.white};transition:transform .25s ease-out,box-shadow .25s ease-out,border-color .25s ease-out}
 .menuItem:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(22,41,31,.14);border-color:var(--ac)}
+.logoLink{display:inline-flex;align-items:center;gap:5px;text-decoration:none;cursor:pointer;padding-bottom:3px;border-bottom:1.5px solid rgba(44,105,91,0.45);transition:opacity .25s ease-out,transform .25s ease-out,border-color .25s ease-out}
+.logoLink:hover{opacity:.7;transform:translateY(-2px);border-bottom-color:#2C695B}
+@keyframes softPulse{0%,100%{transform:rotate(-1.2deg) scale(1)}50%{transform:rotate(-1.2deg) scale(1.015)}}
+.kyuNav{font-family:${SER};font-size:18px;color:#1c1c19;text-decoration:none;line-height:1.6;transition:opacity .2s ease-out}
+.kyuNav:hover{opacity:.5}
+.kyuUnder{text-decoration:underline;text-underline-offset:3px}
 `;
 
 function Reveal({ children, delay = 0, style = {} }) {
@@ -189,12 +195,37 @@ function RtgLogo({ h = 50, color = C.fg1 }) {
   );
 }
 function SyLogo({ h = 26, color = C.fg1 }) {
-  return <span style={{ fontFamily: SAN, fontWeight: 700, fontSize: h, lineHeight: 1, letterSpacing: "-.015em", color, whiteSpace: "nowrap" }}>SYPartners</span>;
+  return (
+    <svg viewBox="0 0 50557 7825" height={h} role="img" aria-label="SYPartners" xmlns="http://www.w3.org/2000/svg" style={{ color, display: "block", width: "auto" }}>
+      <path d="M1578.52 7423.76C1115.62 7211.22 755.588 6905.65 498.423 6505.53C241.258 6105.41 98.304 5641 70.3184 5112.3H1343.29C1364.46 5445.86 1461.28 5731.77 1635.24 5967.75C1809.21 6204.5 2036.88 6385.27 2319 6510.83C2601.13 6636.38 2911.99 6698.4 3253.12 6698.4C3740.22 6698.4 4125.96 6603.1 4411.87 6411.74C4697.02 6220.38 4839.98 5947.33 4839.98 5592.59C4839.98 5307.44 4734.08 5079.78 4521.54 4908.84C4309.01 4738.65 3987.55 4607.8 3556.42 4517.8L2366.65 4278.03C1753.99 4152.47 1260.09 3916.48 884.927 3568.55C509.012 3220.62 321.433 2775.12 321.433 2232.81C321.433 1815.29 441.695 1443.16 681.464 1116.41C921.233 789.656 1255.55 535.516 1683.65 354.744C2111.76 173.972 2589.78 83.208 3118.48 83.208C3695.59 83.208 4194.79 180.78 4616.09 375.166C5036.63 570.309 5364.14 843.358 5597.1 1194.31C5830.06 1546.02 5960.91 1954.46 5988.14 2420.39H4704.59C4690.22 2170.03 4621.39 1947.66 4495.83 1752.51C4370.27 1558.13 4186.47 1403.07 3942.92 1288.1C3699.37 1173.13 3407.41 1115.65 3066.29 1115.65C2781.14 1115.65 2525.49 1155.74 2299.34 1235.91C2073.18 1316.09 1895.43 1432.57 1766.85 1585.36C1638.27 1738.14 1573.98 1918.91 1573.98 2127.67C1573.98 2406.01 1676.84 2620.07 1881.82 2769.83C2086.8 2919.59 2402.2 3036.07 2826.52 3119.27L4079.07 3380.22C4690.97 3505.77 5181.85 3740.25 5550.21 4084.4C5918.56 4428.54 6103.11 4879.34 6103.11 5436.03C6103.11 5881.53 5988.14 6277.86 5758.96 6625.79C5529.03 6973.72 5196.98 7246.77 4762.07 7444.94C4327.16 7643.11 3810.56 7742.19 3212.27 7742.19C2613.98 7742.19 2041.41 7636.3 1579.27 7423.76H1578.52Z" fill="currentColor" />
+      <path d="M8742.78 4538.22L6060.7 259.448H7522L8972.71 2743.36C9125.5 3008.09 9261.65 3258.45 9379.64 3494.43C9497.63 3272.06 9636.8 3021.7 9797.15 2743.36L11268.3 259.448H12677.4L9984.73 4538.22V7564.45H8742.78V4538.22Z" fill="currentColor" />
+      <path d="M13469.4 259.448H16475.2C16982.7 259.448 17432 332.815 17821.6 478.795C18211.1 624.774 18520.4 857.735 18750.4 1178.44C18980.3 1498.38 19094.5 1912.87 19094.5 2420.39C19094.5 2927.91 18979.6 3333.33 18750.4 3657.05C18520.4 3980.78 18209.6 4213.74 17816.3 4355.94C17422.9 4498.89 16975.9 4569.99 16475.2 4569.99H14711.4V7565.21H13469.4V259.448ZM17492.5 3233.49C17711.9 3039.1 17821.6 2767.56 17821.6 2419.64C17821.6 2071.71 17711.9 1781.26 17492.5 1589.9C17273.2 1398.54 16930.6 1303.24 16464.6 1303.24H14711.4V3526.2H16464.6C16930.6 3526.2 17273.2 3428.63 17492.5 3234.24V3233.49Z" fill="currentColor" />
+      <path d="M20167.8 7549.31C19900.1 7420.73 19686 7237.69 19525.7 7001.7C19365.3 6764.96 19285.9 6490.4 19285.9 6177.26C19285.9 5662.17 19454.6 5277.94 19791.9 5023.8C20129.3 4769.66 20586.9 4600.99 21164 4517.79L21999 4402.82C22201 4374.83 22343.2 4324.91 22427.1 4251.55C22511.1 4178.18 22552.7 4072.29 22552.7 3933.11C22552.7 3717.55 22471 3542.07 22307.6 3405.93C22144.2 3270.54 21930.2 3202.46 21665.4 3202.46C21345.5 3202.46 21091.4 3282.64 20903.8 3442.23C20716.2 3602.58 20611.8 3828.74 20590.6 4120.69H19400.9C19422.1 3779.57 19524.2 3474 19708.7 3202.46C19893.3 2930.93 20146.7 2716.87 20470.4 2560.31C20794.1 2403.74 21167.8 2325.83 21592.1 2325.83C22064.8 2325.83 22459.6 2411.3 22776.6 2581.49C23092.7 2752.42 23326.4 2995.22 23475.4 3312.14C23625.2 3629.05 23700.1 4016.32 23700.1 4475.43V7564.44H22625.3V7345.09C22625.3 7199.11 22635.9 7042.54 22656.3 6875.39C22517.1 7140.12 22312.1 7350.39 22040.6 7506.95C21769.1 7663.52 21431.7 7741.43 21028.6 7741.43C20722.3 7741.43 20435.6 7677.14 20167.8 7548.56V7549.31ZM21946.8 6714.28C22141.2 6606.88 22296.3 6457.12 22411.2 6265.75C22526.2 6074.39 22583.7 5857.32 22583.7 5613.77V5008.67C22535.3 5057.08 22465.7 5097.17 22374.9 5128.93C22284.2 5159.94 22155.6 5193.22 21989.2 5228.02L21477.9 5321.81C21151.1 5384.59 20900 5479.89 20726.8 5608.47C20552.8 5737.05 20465.8 5913.29 20465.8 6135.66C20465.8 6358.03 20546 6546.37 20705.6 6678.73C20866 6811.1 21064.1 6876.9 21300.1 6876.9C21536.1 6876.9 21752.4 6823.2 21946.8 6715.04V6714.28Z" fill="currentColor" />
+      <path d="M29424.3 7261.91C29149.7 6997.93 29012.1 6590.25 29012.1 6041.13V3594.28H27927.4V2499.05H28813.1C28923.6 2499.05 29012.1 2409.8 29012.1 2300.13V259.448H30170.1V2497.54H31359.1V3592.76H30170.1V5873.21C30170.1 6151.56 30230.6 6358.8 30353.1 6494.19C30474.9 6629.58 30664.7 6697.65 30921.9 6697.65C31039.9 6697.65 31165.4 6687.06 31297 6666.64V7574.29C31220.6 7595.46 31120 7614.37 30994.5 7631.77C30868.9 7649.17 30737.3 7657.49 30598.2 7657.49C30089.9 7657.49 29698.8 7525.12 29424.3 7261.15V7261.91Z" fill="currentColor" />
+      <path d="M32046.5 2492.99H33204.5V2753.94C33204.5 2899.92 33193.9 3049.68 33173.5 3202.46C33326.3 2938.49 33535.1 2725.95 33799.8 2565.6C34063.8 2405.25 34376.9 2325.83 34739.2 2325.83C35101.5 2325.83 35429.8 2407.52 35704.3 2570.9C35978.9 2734.27 36189.9 2969.5 36335.9 3275.07C36481.9 3581.4 36555.2 3942.95 36555.2 4360.46V7564.44H35397.2V4527.62C35397.2 4116.91 35311.8 3800.75 35141.6 3577.62C34971.4 3355.25 34722.6 3244.06 34395.8 3244.06C34165.9 3244.06 33960.9 3303.06 33780.1 3421.81C33599.3 3539.8 33457.9 3698.64 33357.3 3896.81C33256.7 4094.98 33206 4319.62 33206 4569.98V7565.19H32048V2492.99H32046.5Z" fill="currentColor" />
+      <path d="M38311.5 7423.75C37928.8 7211.22 37631.6 6900.35 37419 6489.64C37206.5 6078.93 37100.6 5588.81 37100.6 5018.5C37100.6 4496.61 37208 4030.69 37424.3 3619.98C37639.9 3209.27 37937.1 2891.6 38316.8 2665.44C38695.8 2439.29 39125.4 2326.59 39605.7 2326.59C40086 2326.59 40538.3 2437.78 40899.8 2660.9C41261.4 2883.28 41538.2 3200.19 41729.6 3610.9C41920.9 4021.61 42016.2 4501.9 42016.2 5051.03V5301.39H38279.8C38279.8 5600.91 38338.8 5866.39 38457.5 6100.11C38575.5 6333.07 38739.6 6513.84 38947.6 6643.18C39156.4 6771.77 39389.4 6836.06 39647.3 6836.06C39953.6 6836.06 40212.3 6761.18 40424.8 6611.42C40636.6 6461.65 40767.5 6237.77 40815.9 5938.25H41973.9C41939.1 6279.37 41824.1 6584.94 41629.7 6856.48C41434.6 7128.02 41166.8 7343.58 40826.5 7503.17C40485.3 7663.52 40092 7742.94 39647.3 7742.94C39139 7742.94 38694.3 7637.05 38311.5 7424.51V7423.75ZM40477 3546.61C40257.7 3317.43 39964.2 3202.46 39595.1 3202.46C39226 3202.46 38932.5 3321.21 38692.8 3557.2C38453 3793.94 38315.3 4096.49 38280.5 4464.84H40816.6C40809.8 4082.12 40696.4 3775.79 40477.8 3546.61H40477Z" fill="currentColor" />
+      <path d="M24405 2493.01H25563.7V2999.02C25563.7 3186.6 25553.2 3371.15 25532.7 3551.92C25678.7 3238.78 25878.4 2984.64 26132.5 2790.26C26386.7 2595.87 26694.5 2498.3 27056.1 2498.3C27153.6 2498.3 27240.6 2505.11 27317 2519.48V3646.47C27205.8 3625.29 27090.9 3615.46 26972.9 3615.46C26687.7 3615.46 26438.9 3667.65 26226.3 3772.02C26013.8 3876.4 25850.4 4045.07 25736.2 4278.03C25621.2 4511 25563.7 4809 25563.7 5170.55V7565.97H24405V2493.01Z" fill="currentColor" />
+      <path d="M42608.5 2493.01H43767.3V2999.02C43767.3 3186.6 43756.7 3371.15 43736.2 3551.92C43882.2 3238.78 44081.9 2984.64 44336 2790.26C44590.2 2595.87 44898 2498.3 45259.6 2498.3C45357.1 2498.3 45444.1 2505.11 45520.5 2519.48V3646.47C45409.3 3625.29 45294.4 3615.46 45176.4 3615.46C44891.2 3615.46 44642.4 3667.65 44429.8 3772.02C44217.3 3876.4 44053.9 4045.07 43939.7 4278.03C43824.7 4511 43767.3 4809 43767.3 5170.55V7565.97H42608.5V2493.01Z" fill="currentColor" />
+      <path d="M46903.8 7507.71C46559.7 7351.14 46291.2 7130.28 46100.6 6845.13C45909.2 6559.98 45803.3 6225.67 45782.1 5842.95H46950.7C46964.3 6162.89 47071 6415.52 47269.2 6599.31C47467.3 6783.87 47744.2 6876.14 48098.9 6876.14C48405.2 6876.14 48648.8 6810.34 48829.5 6677.98C49010.3 6545.61 49101.1 6375.43 49101.1 6166.67C49101.1 5985.9 49033 5845.21 48897.6 5743.86C48762.2 5643.26 48548.2 5564.6 48255.5 5509.39L47598.2 5374C47076.3 5276.43 46674.7 5100.95 46392.5 4846.81C46110.4 4592.67 45969.7 4264.4 45969.7 3860.5C45969.7 3568.55 46055.2 3306.09 46225.4 3072.37C46395.6 2839.41 46636.1 2656.37 46945.4 2524.76C47254.8 2392.39 47611.8 2326.59 48014.9 2326.59C48453.6 2326.59 48832.6 2396.18 49152.5 2535.35C49472.5 2674.52 49722.8 2874.2 49903.6 3135.15C50084.4 3396.09 50178.2 3700.15 50185.7 4048.08H49037.6C49009.6 3784.11 48903.7 3576.87 48719.1 3427.11C48534.6 3277.34 48292.5 3202.46 47993.8 3202.46C47729 3202.46 47515 3256.17 47351.6 3364.33C47188.2 3472.49 47106.5 3619.98 47106.5 3807.56C47106.5 3974.72 47170.8 4104.81 47299.4 4198.6C47428 4292.39 47421.9 4367.27 47735.1 4423.24L48629.9 4558.63C49137.4 4656.2 49532.2 4828.66 49814.3 5075.23C50096.5 5322.56 50237.1 5657.64 50237.1 6081.96C50237.1 6395.09 50150.2 6678.73 49976.2 6932.12C49802.2 7186.26 49554.9 7384.42 49235 7527.38C48915 7669.57 48542.9 7741.43 48118.6 7741.43C47652.6 7741.43 47247.2 7663.52 46903.1 7506.96L46903.8 7507.71Z" fill="currentColor" />
+    </svg>
+  );
+}
+function KyuLogo({ h = 32, color = C.fg1 }) {
+  return <span style={{ fontFamily: SER, fontWeight: 400, fontSize: h, lineHeight: 1, letterSpacing: "-.005em", color, whiteSpace: "nowrap" }}>kyu</span>;
 }
 function FirmLogo({ id, h = 52, color = C.fg1 }) {
   if (id === "IDEO") return <IdeoLogo h={h} color={color} />;
   if (id === "RTG") return <RtgLogo h={h} color={color} />;
   return <SyLogo h={Math.round(h * 0.52)} color={color} />;
+}
+function AiDividendLogo({ w = "100%", style }) {
+  return (
+    <svg viewBox="0 0 925 548" width={w} role="img" aria-label="The AI Dividend" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", height: "auto", maxWidth: "100%", ...style }}>
+      <rect x="7.7041" y="0.351196" width="786.675" height="294.113" transform="rotate(1.30654 7.7041 0.351196)" fill="#273533" />
+      <rect x="1.16895" y="242.138" width="919.259" height="305.067" transform="rotate(-0.7617 1.16895 242.138)" fill="#273533" />
+      <path d="M110.33 232.537V228.08L132.619 221.393V95.9043H93.3897L80.6848 128.67H76.6727V85.4283H205.95V128.67H201.938L189.234 95.9043H150.004V221.393L172.294 228.08V232.537H110.33ZM214.668 232.537V228.971L228.71 223.399V84.7596L214.222 76.0668V73.8379L242.083 65.368H243.867V146.278H244.535C250.182 140.631 255.531 136.545 260.584 134.019C265.784 131.344 271.505 130.007 277.746 130.007C286.662 130.007 294.017 132.384 299.813 137.139C305.608 141.746 308.505 148.656 308.505 157.868V223.399L322.548 228.971V232.537H277.523V228.971L293.349 223.622V166.561C293.349 158.983 291.12 153.262 286.662 149.399C282.353 145.386 276.632 143.38 269.499 143.38C265.339 143.38 260.732 144.198 255.68 145.832C250.776 147.467 246.838 149.919 243.867 153.188V223.622L259.692 228.971V232.537H214.668ZM378.32 234.766C368.364 234.766 359.82 232.686 352.687 228.525C345.703 224.365 340.354 218.644 336.639 211.363C332.924 203.933 331.066 195.389 331.066 185.73C331.066 175.18 333.221 165.744 337.53 157.423C341.84 148.953 347.56 142.266 354.693 137.362C361.826 132.459 369.553 130.007 377.874 130.007C389.613 130.007 398.826 134.019 405.513 142.043C412.199 150.067 415.766 161.36 416.211 175.923L415.32 176.814H346C346 177.409 346 178.003 346 178.597C346 186.324 347.338 193.457 350.012 199.995C352.687 206.385 356.922 211.511 362.717 215.375C368.512 219.238 376.016 221.17 385.229 221.17C395.928 221.17 406.033 217.827 415.543 211.14H416.211V213.592C412.794 219.535 407.816 224.588 401.278 228.748C394.739 232.76 387.087 234.766 378.32 234.766ZM374.53 137.808C367.398 137.808 361.305 140.557 356.253 146.055C351.201 151.405 348.006 158.983 346.669 168.79H401.278C399.643 158.389 396.671 150.662 392.362 145.609C388.053 140.409 382.109 137.808 374.53 137.808ZM468.457 232.537V228.08L481.608 222.73L538.668 84.3139H546.469L602.861 222.284L617.126 228.08V232.537H565.192V228.08L584.361 222.284L566.976 178.82H511.921L494.758 222.507L513.927 228.08V232.537H468.457ZM515.933 168.344H562.741L539.114 109.724L515.933 168.344ZM629.029 232.537V228.08L646.637 221.393V96.573L629.029 89.8862V85.4283H681.631V89.8862L664.023 96.573V221.393L681.631 228.08V232.537H629.029ZM81.1306 446.537V442.08L98.962 435.393V310.573L81.1306 303.886V299.428H140.866C157.36 299.428 171.328 302.326 182.77 308.121C194.36 313.916 203.127 321.866 209.071 331.971C215.163 342.075 218.21 353.517 218.21 366.296C218.21 382.196 214.866 396.164 208.179 408.2C201.493 420.236 192.205 429.672 180.318 436.507C168.579 443.194 154.908 446.537 139.306 446.537H81.1306ZM138.637 309.904H116.348V436.062H141.089C153.125 436.062 163.527 433.461 172.294 428.26C181.061 423.059 187.822 415.778 192.577 406.417C197.481 396.907 199.932 385.836 199.932 373.206C199.932 360.427 197.555 349.282 192.8 339.772C188.045 330.262 181.061 322.906 171.848 317.706C162.784 312.505 151.713 309.904 138.637 309.904ZM250.975 313.693C247.706 313.693 244.957 312.653 242.728 310.573C240.647 308.344 239.607 305.595 239.607 302.326C239.607 299.057 240.647 296.382 242.728 294.302C244.957 292.073 247.706 290.958 250.975 290.958C254.244 290.958 256.919 292.073 258.999 294.302C261.228 296.382 262.342 299.057 262.342 302.326C262.342 305.595 261.228 308.344 258.999 310.573C256.919 312.653 254.244 313.693 250.975 313.693ZM231.137 446.537V442.971L245.18 437.399V363.399L230.692 354.706V352.477L258.553 344.007H260.336V437.399L275.047 442.971V446.537H231.137ZM324.221 446.983L285.215 355.597L270.504 349.802V346.236H319.54V349.802L301.709 355.151V356.266L330.462 424.917H331.131L357.655 357.158V356.043L340.715 349.802V346.236H382.619V349.802L367.239 356.043L327.787 446.983H324.221ZM405.807 313.693C402.538 313.693 399.789 312.653 397.56 310.573C395.479 308.344 394.439 305.595 394.439 302.326C394.439 299.057 395.479 296.382 397.56 294.302C399.789 292.073 402.538 290.958 405.807 290.958C409.076 290.958 411.751 292.073 413.831 294.302C416.06 296.382 417.174 299.057 417.174 302.326C417.174 305.595 416.06 308.344 413.831 310.573C411.751 312.653 409.076 313.693 405.807 313.693ZM385.969 446.537V442.971L400.012 437.399V363.399L385.524 354.706V352.477L413.385 344.007H415.168V437.399L429.879 442.971V446.537H385.969ZM470.36 448.766C462.931 448.766 456.318 446.909 450.523 443.194C444.728 439.479 440.121 434.204 436.704 427.369C433.434 420.385 431.8 412.063 431.8 402.405C431.8 390.071 434.177 379.521 438.933 370.754C443.836 361.987 450.3 355.374 458.324 350.917C466.348 346.31 475.19 344.007 484.848 344.007C488.712 344.007 492.278 344.304 495.547 344.898C498.816 345.493 501.863 346.31 504.686 347.35V298.76L489.529 290.067V287.838L518.059 279.368H519.843V437.622L535.668 442.971V446.537H506.915L505.132 435.17H503.794C498.296 439.776 492.873 443.194 487.523 445.423C482.322 447.652 476.601 448.766 470.36 448.766ZM446.511 397.947C446.511 406.863 448.071 414.218 451.192 420.013C454.312 425.66 458.398 429.821 463.451 432.495C468.652 435.17 474.224 436.507 480.168 436.507C484.328 436.507 488.489 435.839 492.65 434.501C496.959 433.164 500.971 431.009 504.686 428.037V361.615C500.674 358.792 496.736 356.637 492.873 355.151C489.009 353.666 484.7 352.923 479.945 352.923C474.001 352.923 468.429 354.409 463.228 357.38C458.176 360.352 454.089 365.182 450.969 371.868C447.997 378.407 446.511 387.099 446.511 397.947ZM585.314 448.766C575.358 448.766 566.814 446.686 559.681 442.525C552.697 438.365 547.348 432.644 543.633 425.363C539.918 417.933 538.06 409.389 538.06 399.73C538.06 389.18 540.215 379.744 544.524 371.423C548.834 362.953 554.555 356.266 561.687 351.362C568.82 346.459 576.547 344.007 584.868 344.007C596.607 344.007 605.82 348.019 612.507 356.043C619.193 364.067 622.76 375.36 623.205 389.923L622.314 390.814H552.994C552.994 391.409 552.994 392.003 552.994 392.597C552.994 400.324 554.332 407.457 557.006 413.995C559.681 420.385 563.916 425.511 569.711 429.375C575.506 433.238 583.011 435.17 592.223 435.17C602.922 435.17 613.027 431.827 622.537 425.14H623.205V427.592C619.788 433.535 614.81 438.588 608.272 442.748C601.733 446.76 594.081 448.766 585.314 448.766ZM581.525 351.808C574.392 351.808 568.3 354.557 563.247 360.055C558.195 365.405 555 372.983 553.663 382.79H608.272C606.637 372.389 603.665 364.662 599.356 359.609C595.047 354.409 589.103 351.808 581.525 351.808ZM626.192 446.537V442.971L640.234 437.399V363.399L625.746 355.82V353.368L651.825 344.007H653.608L655.168 360.278H656.06C661.706 354.631 667.056 350.545 672.108 348.019C677.309 345.344 683.03 344.007 689.271 344.007C698.186 344.007 705.542 346.384 711.337 351.139C717.132 355.746 720.03 362.656 720.03 371.868V437.399L734.072 442.971V446.537H689.048V442.971L704.873 437.399V380.561C704.873 372.983 702.644 367.262 698.186 363.399C693.877 359.386 688.156 357.38 681.024 357.38C676.863 357.38 672.256 358.198 667.204 359.832C662.301 361.467 658.363 363.919 655.391 367.188V437.399L671.216 442.971V446.537H626.192ZM775.802 448.766C768.372 448.766 761.759 446.909 755.964 443.194C750.169 439.479 745.563 434.204 742.145 427.369C738.876 420.385 737.241 412.063 737.241 402.405C737.241 390.071 739.619 379.521 744.374 370.754C749.277 361.987 755.741 355.374 763.765 350.917C771.79 346.31 780.631 344.007 790.29 344.007C794.153 344.007 797.719 344.304 800.989 344.898C804.258 345.493 807.304 346.31 810.127 347.35V298.76L794.97 290.067V287.838L823.501 279.368H825.284V437.622L841.109 442.971V446.537H812.356L810.573 435.17H809.236C803.738 439.776 798.314 443.194 792.964 445.423C787.764 447.652 782.043 448.766 775.802 448.766ZM751.952 397.947C751.952 406.863 753.512 414.218 756.633 420.013C759.753 425.66 763.84 429.821 768.892 432.495C774.093 435.17 779.665 436.507 785.609 436.507C789.77 436.507 793.93 435.839 798.091 434.501C802.4 433.164 806.412 431.009 810.127 428.037V361.615C806.115 358.792 802.177 356.637 798.314 355.151C794.45 353.666 790.141 352.923 785.386 352.923C779.442 352.923 773.87 354.409 768.669 357.38C763.617 360.352 759.53 365.182 756.41 371.868C753.438 378.407 751.952 387.099 751.952 397.947Z" fill="white" />
+    </svg>
+  );
 }
 
 const BRICKS = (() => {
@@ -246,7 +277,7 @@ function BrickField() {
 function Chip({ active, onClick, accent, children }) {
   return (
     <button onClick={onClick} className="tab" style={{
-      padding: "8px 15px", borderRadius: 22, fontSize: 13, fontWeight: 600, fontFamily: SAN,
+      padding: "9px 16px", borderRadius: 14, fontSize: 12.5, fontWeight: 600, fontFamily: SAN, lineHeight: 1.35, textAlign: "left",
       border: `1.5px solid ${active ? (accent || C.forest) : C.line}`,
       background: active ? (accent || C.forest) : C.white,
       color: active ? C.onDark : C.fg1,
@@ -263,7 +294,7 @@ function RoomView({ activeTable, onSelect, promptColors, mob }) {
       {Array.from({ length: 9 }).map((_, i) => <div key={i} style={{ position: "absolute", top: 0, bottom: 0, left: `${(i + 1) * 10}%`, width: 1, background: "rgba(22,41,31,0.04)" }} />)}
       <Grain op={0.06} />
       <button onClick={() => onSelect(null)} className="tab" style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: "16%", height: "16%", borderRadius: "50%", cursor: "pointer", border: `2px dashed ${activeTable === null ? C.forest : C.lineStrong}`, background: activeTable === null ? C.paleGreen : "rgba(255,255,255,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 3 }}>
-        <span style={{ fontFamily: SER, fontSize: mob ? 9 : 11, lineHeight: 1.05, color: C.forest, textAlign: "center" }}>the room<br />overall</span>
+        <span style={{ fontFamily: SER, fontSize: mob ? 8 : 10, lineHeight: 1.1, color: C.forest, textAlign: "center" }}>overall room<br />perspective</span>
       </button>
       {tables.map((t) => {
         const on = activeTable === t.n;
@@ -291,8 +322,8 @@ function RoomView({ activeTable, onSelect, promptColors, mob }) {
 // ---- DATA ----
 const TOC = [
   { id: "panel", label: "The Fireside Chat", color: C.rust },
-  { id: "tables", label: "The Listening Room", color: C.olive },
   { id: "assess", label: "The Assessment", color: C.teal },
+  { id: "tables", label: "The Listening Room", color: C.olive, soon: true },
 ];
 
 const PANEL = [
@@ -307,17 +338,17 @@ const PANEL = [
 const COMPANIES = [
   { id: "RTG", firm: "Rich Talent Group", accent: C.rust,
     desc: "Rich Talent Group recruits extraordinary leaders for companies that want to make an impact and need a firm that goes beyond the traditional playbook. Combining deep expertise with creative sourcing and expansive networks, RTG builds leadership teams and boards for some of the world’s most influential companies.",
-    linkText: null, linkUrl: null, reachUrl: "#",
+    linkText: null, linkUrl: null, reachUrl: "https://www.richtalentgroup.com/",
     prompt: "In a world where AI increasingly democratizes expertise and execution, what human qualities will become the strongest predictors of executive leadership success?",
     overall: "The human edge converges on judgment, taste, and the humility to keep learning." },
   { id: "SY", firm: "SYPartners", accent: C.olive,
     desc: "SYPartners is a consultancy that partners with clients at their critical turning points — designing new possibilities for impact, creating paths to long-term value, and building cultures of competitive advantage. For more than 30 years they’ve transformed some of the world’s most iconic organizations by fusing strategy and design. Their perspective on AI recently inspired their Zero Gravity Leadership piece.",
-    linkText: "Read Zero Gravity Leadership", linkUrl: "#", reachUrl: "#",
+    linkText: "Read Zero Gravity Leadership", linkUrl: "https://www.sypartners.com/articles/zero-gravity-leadership-in-the-age-of-ai", reachUrl: "https://www.sypartners.com/",
     prompt: "What leadership capabilities will distinguish businesses that merely deploy AI from those that use AI to spark new value?",
     overall: "Value comes from sharper questions, faster learning, protected attention, and meaning that motivates." },
   { id: "IDEO", firm: "IDEO", accent: C.teal,
     desc: "IDEO is an iconic design and innovation company, enabling the world’s most influential leaders to create breakthrough, human-centered products, services, and organizations with purpose and impact. In partnership with Tim Brown, they recently released their latest thought piece, The AI Dividend.",
-    linkText: "Read The AI Dividend", linkUrl: "#", reachUrl: "#",
+    linkText: "Read The AI Dividend", linkUrl: "https://www.ideo.com/journal/the-ai-dividend", reachUrl: "https://www.ideo.com/",
     prompt: "What does your organization need to fully take advantage of an AI Dividend? What might stand in the way?",
     overall: "The dividend is realized when time is made visible, trusted, woven into the rhythm, and the work redesigned." },
 ];
@@ -352,8 +383,8 @@ const BANDS = [
   { min: 83, name: "Compounding", color: C.oliveLt, note: "The dividend is visible, intentional, and protected. Now press the advantage — distinctiveness over sameness." },
 ];
 const PIPE = [
-  { Icon: Mic, t: "Record & transcribe", d: "The evening was captured and transcribed automatically with AI.", tool: "AI transcription", color: C.teal },
-  { Icon: Sparkles, t: "Synthesize", d: "Transcripts distilled into the themes and insights you’ve just explored.", tool: "ChatGPT", color: C.olive },
+  { Icon: Mic, t: "Record & transcribe", d: "The conversation was captured and transcribed automatically with AI.", tool: "AI transcription", color: C.teal },
+  { Icon: Sparkles, t: "Synthesize", d: "Content is recorded, then synthesized into overall themes that strip out identifiable individual perspectives — and the source transcripts are deleted.", tool: "ChatGPT & Claude", color: C.olive },
   { Icon: PenTool, t: "Design", d: "The visual system and layouts were composed and refined.", tool: "Figma", color: C.rust },
   { Icon: Code2, t: "Build", d: "This interactive experience was designed and developed.", tool: "Claude Design & Code", color: C.tealDeep },
 ];
@@ -370,7 +401,7 @@ export default function App() {
   const weakest = scores.indexOf(Math.min(...scores));
   const TILES = 24, filled = Math.round((avg / 100) * TILES);
 
-  const sections = ["intro", "panel", "tables", "assess", "built"];
+  const sections = ["intro", "panel", "assess", "tables", "built"];
   const [active, setActive] = useState("intro");
   useEffect(() => { const o = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)), { threshold: 0.4 });
     sections.forEach((s) => { const el = document.getElementById(s); if (el) o.observe(el); }); return () => o.disconnect(); }, []);
@@ -388,14 +419,16 @@ export default function App() {
     <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3,1fr)", gap: mob ? 24 : 32 }}>
       {COMPANIES.map((c) => (
         <div key={c.id} style={{ borderTop: `2px solid ${c.accent}`, paddingTop: 16 }}>
-          <div style={{ height: 40, display: "flex", alignItems: "center" }}>
-            <FirmLogo id={c.id} h={c.id === "RTG" ? 36 : 34} color={C.fg1} />
+          <div style={{ minHeight: 40, display: "flex", alignItems: "center" }}>
+            <a className="logoLink" href={c.reachUrl} target="_blank" rel="noreferrer" title={`Visit ${c.firm}`}>
+              <FirmLogo id={c.id} h={c.id === "RTG" ? 36 : 34} color={C.fg1} />
+              <ExternalLink size={13} color={c.accent} />
+            </a>
           </div>
           <p style={{ color: C.fg2, fontSize: 13.5, lineHeight: 1.55, margin: "12px 0 12px" }}>{c.desc}</p>
-          <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
-            {c.linkUrl && <a className="clink" href={c.linkUrl} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: c.accent, fontWeight: 600, fontSize: 13, textDecoration: "none" }}>{c.linkText} <ArrowRight size={14} /></a>}
-            <a className="clink" href={c.reachUrl} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: C.fg2, fontWeight: 600, fontSize: 13, textDecoration: "none" }}>Reach out <ArrowRight size={14} /></a>
-          </div>
+          {c.linkUrl && (
+            <a className="clink" href={c.linkUrl} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: c.accent, fontWeight: 600, fontSize: 13, textDecoration: "none" }}>{c.linkText} <ArrowRight size={14} /></a>
+          )}
         </div>
       ))}
     </div>
@@ -417,28 +450,25 @@ export default function App() {
         <Grain />
         <div style={{ position: "relative", maxWidth: 660, zIndex: 1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", animation: "riseIn .8s ease-out both" }}>
-            <span style={{ display: "inline-block", background: C.paleGreen, color: C.forest, fontFamily: SER, fontSize: "clamp(16px,2vw,22px)", padding: "5px 16px" }}>
-              kyu <span style={{ fontWeight: 600, letterSpacing: ".04em" }}>HOUSE</span>
+            <span style={{ display: "inline-block", background: "#3A322A", color: C.white, fontFamily: SER, fontSize: "clamp(17px,2.1vw,24px)", padding: "6px 18px", transform: "rotate(-2deg)", boxShadow: "0 6px 16px rgba(22,41,31,.18)" }}>
+              kyu <span style={{ letterSpacing: ".03em" }}>HOUSE</span>
             </span>
             <span className="eyebrow" style={{ color: C.fg2 }}>a gathering on leadership &amp; AI</span>
           </div>
 
-          <div style={{ display: "inline-block", marginTop: 26, animation: "riseIn .9s ease-out .1s both" }}>
-            <div style={{ background: C.tealDeep, padding: "16px 42px 22px 28px", boxShadow: "0 18px 44px rgba(22,41,31,.18)" }}>
-              <h1 style={{ fontFamily: SER, fontSize: "clamp(46px,8.4vw,108px)", lineHeight: 0.9, fontWeight: 500, margin: 0, color: C.onDark, letterSpacing: -1 }}>
-                The AI<br />Dividend
-              </h1>
-            </div>
+          <div style={{ marginTop: 28, maxWidth: 540, animation: "riseIn .9s ease-out .1s both", filter: "drop-shadow(0 16px 40px rgba(22,41,31,.22))" }}>
+            <AiDividendLogo w="100%" />
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 24, flexWrap: "wrap", animation: "riseIn .9s ease-out .18s both" }}>
             <span className="eyebrow" style={{ color: C.fg1 }}>June 8, 2026</span>
             <span style={{ width: 30, height: 1, background: C.lineStrong }} />
             <span className="eyebrow" style={{ color: C.fg3 }}>co-hosted by</span>
-            <div style={{ display: "flex", alignItems: "center", gap: "clamp(18px,3vw,30px)", flexWrap: "wrap" }}>
-              <IdeoLogo h={28} />
-              <SyLogo h={17} />
-              <RtgLogo h={32} />
+            <div style={{ display: "flex", alignItems: "center", gap: "clamp(15px,2.4vw,26px)", flexWrap: "wrap" }}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontFamily: SAN, fontSize: 11.5, fontWeight: 600, color: C.teal, textTransform: "uppercase", letterSpacing: ".08em" }}>click to visit <ArrowRight size={13} /></span>
+              <a className="logoLink" href="https://www.ideo.com/" target="_blank" rel="noreferrer" title="Visit IDEO"><IdeoLogo h={28} /><ExternalLink size={13} color={C.teal} /></a>
+              <a className="logoLink" href="https://www.sypartners.com/" target="_blank" rel="noreferrer" title="Visit SYPartners"><SyLogo h={17} /><ExternalLink size={13} color={C.teal} /></a>
+              <a className="logoLink" href="https://www.richtalentgroup.com/" target="_blank" rel="noreferrer" title="Visit Rich Talent Group"><RtgLogo h={32} /><ExternalLink size={13} color={C.teal} /></a>
             </div>
           </div>
 
@@ -447,7 +477,7 @@ export default function App() {
             <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginTop: 12 }}>
               <ArrowRight size={26} color={C.rust} style={{ flexShrink: 0, marginTop: 6 }} />
               <span style={{ position: "relative", fontFamily: SER, fontSize: "clamp(20px,3.3vw,31px)", color: C.rust, fontStyle: "italic", lineHeight: 1.25 }}>
-                What better work will we do with the time we free up?
+                What work will we do with the time we free up?
               </span>
             </div>
           </div>
@@ -465,14 +495,16 @@ export default function App() {
           <span style={{ display: "flex", gap: 4 }}>
             {[C.rust, C.olive, C.teal].map((cc, i) => <span key={i} style={{ width: 10, height: 10, borderRadius: 2, background: cc, transform: `rotate(${(i - 1) * 8}deg)` }} />)}
           </span>
-          Contents · the evening in three parts
+          Content
         </div>
         <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3,1fr)", gap: 14 }}>
           {TOC.map((t, i) => (
-            <a key={t.id} href={`#${t.id}`} className="menuItem" style={{ "--ac": t.color, display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 10, textDecoration: "none", color: C.fg1 }}>
+            <a key={t.id} href={`#${t.id}`} onClick={(e) => { const el = document.getElementById(t.id); if (el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth", block: "start" }); } }} className="menuItem" style={{ "--ac": t.color, display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 10, textDecoration: "none", color: C.fg1, cursor: "pointer", opacity: t.soon ? 0.92 : 1 }}>
               <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 42, height: 42, borderRadius: 6, background: t.color, color: C.onDark, fontFamily: SER, fontSize: 19, transform: "rotate(-3deg)", flexShrink: 0 }}>0{i + 1}</span>
               <span style={{ fontFamily: SER, fontSize: "clamp(18px,2.2vw,23px)", lineHeight: 1.1 }}>{t.label}</span>
-              <ArrowRight size={17} color={t.color} style={{ marginLeft: "auto", flexShrink: 0 }} />
+              {t.soon
+                ? <span style={{ marginLeft: "auto", flexShrink: 0, fontFamily: SAN, fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".12em", color: t.color, border: `1px solid ${t.color}`, borderRadius: 20, padding: "5px 11px", whiteSpace: "nowrap" }}>Coming soon</span>
+                : <ArrowRight size={17} color={t.color} style={{ marginLeft: "auto", flexShrink: 0 }} />}
             </a>
           ))}
         </div>
@@ -488,13 +520,12 @@ export default function App() {
           <Reveal>
             <SectionTag num="01" text="the fireside chat" accent={C.rust} />
             <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.08, maxWidth: 860, color: C.rust }}>
-              Tim Brown, Joe Gerber &amp; Mike Peng on the{" "}
               <span style={{ position: "relative", display: "inline-block", whiteSpace: "nowrap" }}>
-                AI Dividend
+                The AI Dividend
                 <CircleScribble color={C.rust} style={{ position: "absolute", left: "-7%", top: "-26%", width: "114%", height: "158%", pointerEvents: "none" }} />
               </span>
             </h2>
-            <p style={{ color: C.fg2, marginTop: 22, fontSize: 17, lineHeight: 1.5, maxWidth: 620 }}>Six insights wove through the conversation. {mob ? "Tap" : "Select"} a tile to bring it to the center.</p>
+            <p style={{ color: C.fg2, marginTop: 22, fontSize: 17, lineHeight: 1.5, maxWidth: 620 }}>Six Insights driving the discussion. {mob ? "Tap" : "Select"} a tile to bring it to the center.</p>
           </Reveal>
 
           {mob ? (
@@ -549,89 +580,14 @@ export default function App() {
         </div>
       </section>
 
-      {/* 3 · THE LISTENING ROOM */}
-      <section id="tables" style={{ padding: "12vh 7vw", background: C.sage, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
-        <Grain />
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <Reveal>
-            <SectionTag num="02" text="the roundtables · we were listening" accent={C.olive} />
-            <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>The Listening Room</h2>
-            <Scribble w={230} color={C.olive} style={{ marginTop: 8 }} />
-            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 660 }}>Four tables, each working through all three prompts. Tap a table to explore what was said there — or the center of the room for the overall themes.</p>
-          </Reveal>
-
-          <Reveal style={{ marginTop: 36 }}>
-            <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "0.85fr 1.15fr", gap: mob ? 30 : 44, alignItems: "start" }}>
-              <div>
-                <RoomView activeTable={activeTable} onSelect={(v) => setActiveTable(v)} promptColors={promptColors} mob={mob} />
-                <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap", marginTop: 16 }}>
-                  <span className="eyebrow" style={{ color: C.fg3, fontSize: 10 }}>prompts at every table</span>
-                  {COMPANIES.map((c) => (
-                    <span key={c.id} style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 12.5, color: C.fg2 }}>
-                      <span style={{ width: 10, height: 10, borderRadius: 2, background: c.accent }} /> {c.firm}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bloom" key={activeTable ?? "overall"} style={{ minHeight: mob ? "auto" : 420 }}>
-                {activeTable == null ? (
-                  <>
-                    <span className="eyebrow" style={{ color: C.olive }}>the room overall</span>
-                    <h3 style={{ fontFamily: SER, fontWeight: 500, fontSize: "clamp(24px,3.2vw,32px)", lineHeight: 1.15, margin: "10px 0 0" }}>Three themes, one per prompt</h3>
-                    <p style={{ color: C.fg2, fontSize: 15, lineHeight: 1.55, margin: "10px 0 26px", maxWidth: 540 }}>Across all four tables, each co-host’s prompt drew out a distinct theme. Tap a table in the room to read its specific insights and the voices behind them.</p>
-                    <div style={{ display: "grid", gap: 14 }}>
-                      {COMPANIES.map((c) => (
-                        <div key={c.id} style={{ borderLeft: `3px solid ${c.accent}`, paddingLeft: 18 }}>
-                          <span className="eyebrow" style={{ color: c.accent, fontSize: 10 }}>prompt from {c.firm}</span>
-                          <p style={{ fontFamily: SER, fontStyle: "italic", fontSize: 14.5, color: C.fg3, margin: "6px 0 8px", maxWidth: 560 }}>“{c.prompt}”</p>
-                          <p style={{ fontFamily: SER, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.3, color: C.fg1, margin: 0, maxWidth: 560 }}>{c.overall}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <button onClick={() => setActiveTable(null)} style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "none", border: "none", cursor: "pointer", color: C.fg3, fontWeight: 600, fontSize: 13, fontFamily: SAN, padding: 0 }}>← The room overall</button>
-                    <h3 style={{ fontFamily: SER, fontWeight: 500, fontSize: "clamp(26px,3.6vw,36px)", lineHeight: 1.1, margin: "12px 0 4px" }}>Table {activeTable}</h3>
-                    <p style={{ color: C.fg3, fontSize: 13.5, margin: "0 0 18px" }}>Choose a prompt to read what this table said.</p>
-                    <div style={{ display: "flex", gap: 9, flexWrap: "wrap", marginBottom: 22 }}>
-                      {COMPANIES.map((c) => <Chip key={c.id} active={activePrompt === c.id} accent={c.accent} onClick={() => setActivePrompt(c.id)}>{c.firm}</Chip>)}
-                    </div>
-                    {activeInsight && (
-                      <div key={activePrompt} className="bloom" style={{ background: C.white, border: `1px solid ${C.line}`, borderTop: `3px solid ${activeCo.accent}`, borderRadius: 12, padding: 24 }}>
-                        <span className="eyebrow" style={{ color: activeCo.accent, fontSize: 10 }}>prompt from {activeCo.firm}</span>
-                        <p style={{ fontFamily: SER, fontStyle: "italic", fontSize: 14.5, color: C.fg3, margin: "6px 0 14px" }}>“{activeCo.prompt}”</p>
-                        <h4 style={{ fontFamily: SER, fontWeight: 500, fontSize: 22, lineHeight: 1.2, margin: 0 }}>{activeInsight.t}</h4>
-                        <p style={{ color: C.fg2, fontSize: 15, lineHeight: 1.55, margin: "10px 0 14px" }}>{activeInsight.ins}</p>
-                        {activeInsight.tag && <span style={{ display: "inline-block", border: `1px solid ${activeCo.accent}`, color: activeCo.accent, borderRadius: 4, padding: "5px 12px", fontSize: 12, fontWeight: 600 }}>{activeInsight.tag}</span>}
-                        {activeInsight.x && <div style={{ borderTop: `1px solid ${C.line}`, marginTop: 14, paddingTop: 12 }}><span className="eyebrow" style={{ color: C.rust, fontSize: 10 }}>what stands in the way</span><p style={{ color: C.fg3, fontSize: 13.5, lineHeight: 1.5, margin: "6px 0 0" }}>{activeInsight.x}</p></div>}
-                        <div style={{ marginTop: 16 }}>
-                          <span className="eyebrow" style={{ color: C.fg3, fontSize: 10 }}>voices from the table</span>
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
-                            {activeInsight.frags.slice(0, 4).map((f, i) => <span key={i} style={{ fontFamily: SER, fontStyle: "italic", fontSize: 13, color: C.fg2, background: C.cream, border: `1px solid ${C.line}`, borderRadius: 4, padding: "6px 11px" }}>“{f}”</span>)}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-          </Reveal>
-
-          <p style={{ color: C.fg3, fontSize: 12, marginTop: 22, fontStyle: "italic" }}>Quotes are illustrative — representative of the discussion rather than verbatim.</p>
-        </div>
-      </section>
-
-      {/* 4 · ASSESSMENT */}
+      {/* 2 · ASSESSMENT */}
       <section id="assess" style={{ padding: "11vh 7vw", background: C.forest, color: C.onDark, position: "relative", overflow: "hidden" }}>
         <Grain blend="overlay" />
         <div style={{ position: "relative" }}>
           <Reveal>
             <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1.1fr 0.9fr", gap: 30, alignItems: "center" }}>
               <div>
-                <SectionTag num="03" text="the AI dividend assessment" accent={C.teal} onDark />
+                <SectionTag num="02" text="the AI dividend assessment" accent={C.teal} onDark />
                 <h2 style={{ fontFamily: SER, fontSize: "clamp(30px,4.6vw,46px)", fontWeight: 500, margin: 0, lineHeight: 1.04, maxWidth: 560, color: C.onDark }}>How well are you using your dividend?</h2>
                 <p style={{ color: C.onDark2, marginTop: 12, fontSize: 16, lineHeight: 1.5, maxWidth: 500 }}>Six honest reads. Drag each toward how true it is for your organization today.</p>
               </div>
@@ -683,12 +639,101 @@ export default function App() {
         </div>
       </section>
 
+      {/* 3 · THE LISTENING ROOM */}
+      <section id="tables" style={{ padding: "12vh 7vw", background: C.sage, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
+        <Grain />
+        <div style={{ position: "relative", zIndex: 1, filter: "grayscale(0.92) blur(2px)", opacity: 0.5, pointerEvents: "none", userSelect: "none" }} aria-hidden="true">
+          <Reveal>
+            <SectionTag num="03" text="the roundtables · we were listening" accent={C.olive} />
+            <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>The Listening Room</h2>
+            <Scribble w={230} color={C.olive} style={{ marginTop: 8 }} />
+            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 660 }}>Four tables, each working through all three prompts. Tap a table to explore what was said there — or the center of the room for the overall themes.</p>
+          </Reveal>
+
+          <Reveal style={{ marginTop: 36 }}>
+            <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "0.85fr 1.15fr", gap: mob ? 30 : 44, alignItems: "start" }}>
+              <div>
+                <RoomView activeTable={activeTable} onSelect={(v) => setActiveTable(v)} promptColors={promptColors} mob={mob} />
+                <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap", marginTop: 16 }}>
+                  <span className="eyebrow" style={{ color: C.fg3, fontSize: 10 }}>prompts at every table</span>
+                  {COMPANIES.map((c) => (
+                    <span key={c.id} style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 12.5, color: C.fg2 }}>
+                      <span style={{ width: 10, height: 10, borderRadius: 2, background: c.accent }} /> {c.firm}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bloom" key={activeTable ?? "overall"} style={{ minHeight: mob ? "auto" : 420 }}>
+                {activeTable == null ? (
+                  <>
+                    <span className="eyebrow" style={{ color: C.olive }}>overall room perspective</span>
+                    <h3 style={{ fontFamily: SER, fontWeight: 500, fontSize: "clamp(24px,3.2vw,32px)", lineHeight: 1.15, margin: "10px 0 0" }}>Three themes, one per prompt</h3>
+                    <p style={{ color: C.fg2, fontSize: 15, lineHeight: 1.55, margin: "10px 0 26px", maxWidth: 540 }}>Across all four tables, each co-host’s prompt drew out a distinct theme. Tap a table in the room to read its specific insights and the voices behind them.</p>
+                    <div style={{ display: "grid", gap: 14 }}>
+                      {COMPANIES.map((c) => (
+                        <div key={c.id} style={{ borderLeft: `3px solid ${c.accent}`, paddingLeft: 18 }}>
+                          <span className="eyebrow" style={{ color: c.accent, fontSize: 10 }}>prompt from {c.firm}</span>
+                          <p style={{ fontFamily: SER, fontStyle: "italic", fontSize: 14.5, color: C.fg3, margin: "6px 0 8px", maxWidth: 560 }}>“{c.prompt}”</p>
+                          <p style={{ fontFamily: SER, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.3, color: C.fg1, margin: 0, maxWidth: 560 }}>{c.overall}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <button onClick={() => setActiveTable(null)} style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "none", border: "none", cursor: "pointer", color: C.fg3, fontWeight: 600, fontSize: 13, fontFamily: SAN, padding: 0 }}>← Overall Room Perspective</button>
+                    <h3 style={{ fontFamily: SER, fontWeight: 500, fontSize: "clamp(26px,3.6vw,36px)", lineHeight: 1.1, margin: "12px 0 4px" }}>Table {activeTable}</h3>
+                    <p style={{ color: C.fg3, fontSize: 13.5, margin: "0 0 18px" }}>Choose a prompt to read what this table said.</p>
+                    <div style={{ display: "flex", gap: 9, flexWrap: "wrap", marginBottom: 22 }}>
+                      {COMPANIES.map((c) => <Chip key={c.id} active={activePrompt === c.id} accent={c.accent} onClick={() => setActivePrompt(c.id)}>{c.prompt}</Chip>)}
+                    </div>
+                    {activeInsight && (
+                      <div key={activePrompt} className="bloom" style={{ background: C.white, border: `1px solid ${C.line}`, borderTop: `3px solid ${activeCo.accent}`, borderRadius: 12, padding: 24 }}>
+                        <span className="eyebrow" style={{ color: activeCo.accent, fontSize: 10 }}>prompt from {activeCo.firm}</span>
+                        <p style={{ fontFamily: SER, fontStyle: "italic", fontSize: 14.5, color: C.fg3, margin: "6px 0 14px" }}>“{activeCo.prompt}”</p>
+                        <h4 style={{ fontFamily: SER, fontWeight: 500, fontSize: 22, lineHeight: 1.2, margin: 0 }}>{activeInsight.t}</h4>
+                        <p style={{ color: C.fg2, fontSize: 15, lineHeight: 1.55, margin: "10px 0 14px" }}>{activeInsight.ins}</p>
+                        {activeInsight.tag && <span style={{ display: "inline-block", border: `1px solid ${activeCo.accent}`, color: activeCo.accent, borderRadius: 4, padding: "5px 12px", fontSize: 12, fontWeight: 600 }}>{activeInsight.tag}</span>}
+                        {activeInsight.x && <div style={{ borderTop: `1px solid ${C.line}`, marginTop: 14, paddingTop: 12 }}><span className="eyebrow" style={{ color: C.rust, fontSize: 10 }}>what stands in the way</span><p style={{ color: C.fg3, fontSize: 13.5, lineHeight: 1.5, margin: "6px 0 0" }}>{activeInsight.x}</p></div>}
+                        <div style={{ marginTop: 16 }}>
+                          <span className="eyebrow" style={{ color: C.fg3, fontSize: 10 }}>voices from the table</span>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+                            {activeInsight.frags.slice(0, 4).map((f, i) => <span key={i} style={{ fontFamily: SER, fontStyle: "italic", fontSize: 13, color: C.fg2, background: C.cream, border: `1px solid ${C.line}`, borderRadius: 4, padding: "6px 11px" }}>“{f}”</span>)}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          </Reveal>
+
+          <p style={{ color: C.fg3, fontSize: 12, marginTop: 22, fontStyle: "italic" }}>Quotes are illustrative — representative of the discussion rather than verbatim.</p>
+        </div>
+
+        {/* COMING SOON OVERLAY */}
+        <div style={{ position: "absolute", inset: 0, zIndex: 20, display: "flex", alignItems: "center", justifyContent: "center", padding: "6vw 7vw", background: "repeating-linear-gradient(135deg, rgba(109,121,69,0.07) 0 16px, transparent 16px 32px), rgba(225,231,215,0.42)", backdropFilter: "blur(1.5px)", WebkitBackdropFilter: "blur(1.5px)" }}>
+          <div style={{ position: "relative", background: C.white, border: `1px solid ${C.lineStrong}`, borderRadius: 16, padding: mob ? "32px 26px" : "40px 48px", boxShadow: "0 30px 72px rgba(22,41,31,.28)", textAlign: "center", maxWidth: 500, animation: "softPulse 4.5s ease-in-out infinite" }}>
+            <div style={{ display: "flex", justifyContent: "center", gap: 7, marginBottom: 20 }}>
+              {[C.rust, C.olive, C.teal].map((cc, i) => <span key={i} style={{ width: 13, height: 13, borderRadius: 3, background: cc, transform: `rotate(${(i - 1) * 9}deg)`, boxShadow: "0 3px 8px rgba(22,41,31,.14)" }} />)}
+            </div>
+            <span className="eyebrow" style={{ color: C.fg3, fontSize: 11, display: "block", marginBottom: 14 }}>the listening room</span>
+            <span style={{ display: "inline-block", background: "#2C3B36", color: C.white, fontFamily: SER, fontWeight: 500, fontSize: "clamp(26px,4.4vw,42px)", lineHeight: 1.05, padding: "8px 24px 6px", transform: "rotate(-1.6deg)", boxShadow: "0 12px 30px rgba(22,41,31,.22)" }}>Coming Soon</span>
+            <p style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9, color: C.fg1, fontSize: "clamp(15px,2vw,17px)", lineHeight: 1.5, margin: "26px 0 0", fontWeight: 500 }}>
+              <Mail size={19} color={C.teal} style={{ flexShrink: 0 }} /> Keep an eye on your emails this week!
+            </p>
+            <p style={{ color: C.fg3, fontSize: 13.5, lineHeight: 1.55, margin: "12px auto 0", maxWidth: 360 }}>The insights from the roundtables are being synthesized — we'll share them with you soon.</p>
+          </div>
+        </div>
+      </section>
+
       {/* CO-HOSTS BAND */}
       <section style={{ padding: mob ? "9vh 7vw" : "11vh 7vw", background: C.mist, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
         <Grain />
         <div style={{ position: "relative", zIndex: 1 }}>
           <Reveal>
-            <SectionTag num="✳" text="about the co-hosts" accent={C.teal} />
             <h2 style={{ fontFamily: SER, fontSize: "clamp(28px,4.4vw,44px)", fontWeight: 500, margin: 0, lineHeight: 1.05, color: C.rust }}>Meet the co-hosts</h2>
             <Scribble w={190} color={C.teal} style={{ marginTop: 8, marginBottom: 30 }} />
           </Reveal>
@@ -728,11 +773,66 @@ export default function App() {
         </div>
         <Reveal delay={0.2}>
           <div style={{ marginTop: 80, paddingTop: 28, borderTop: `1px solid ${C.line}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-            <span style={{ display: "inline-block", background: C.paleGreen, color: C.forest, fontFamily: SER, fontSize: 17, padding: "4px 12px", transform: "rotate(-2deg)" }}>kyu <span style={{ letterSpacing: ".04em" }}>HOUSE</span></span>
+            <span style={{ display: "inline-block", background: "#3A322A", color: C.white, fontFamily: SER, fontSize: 18, padding: "5px 15px", transform: "rotate(-2deg)" }}>kyu <span style={{ letterSpacing: ".03em" }}>HOUSE</span></span>
             <span className="eyebrow" style={{ color: C.fg3 }}>the AI dividend · June 8, 2026</span>
           </div>
         </Reveal>
       </section>
+
+      {/* KYU FOOTER */}
+      <footer style={{ background: "#EDECE8", borderTop: `1px solid ${C.line}`, overflow: "hidden" }}>
+        {!mob ? (
+          <div style={{ position: "relative", minHeight: 600 }}>
+            <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
+              <div style={{ width: 560, height: 560, maxWidth: "54vw", maxHeight: "54vw", borderRadius: "50%", border: "1px solid #8c8c87", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <span style={{ fontFamily: SER, fontWeight: 400, fontSize: "clamp(90px,12vw,168px)", lineHeight: 1, letterSpacing: "-.02em", color: "#16160f" }}>kyu</span>
+              </div>
+            </div>
+            <nav style={{ position: "absolute", top: 52, left: "6vw", display: "flex", flexDirection: "column", zIndex: 2 }}>
+              <a className="kyuNav" href="https://kyu.com/about" target="_blank" rel="noreferrer">About</a>
+              <a className="kyuNav" href="https://kyu.com/companies" target="_blank" rel="noreferrer">Companies</a>
+              <a className="kyuNav" href="https://kyu.com/stories" target="_blank" rel="noreferrer">Stories</a>
+              <a className="kyuNav" href="https://kyu.com/about/contact" target="_blank" rel="noreferrer">Contact</a>
+              <a className="kyuNav" href="https://kyu.com/legal" target="_blank" rel="noreferrer">Legal</a>
+            </nav>
+            <div style={{ position: "absolute", bottom: 52, left: "6vw", display: "flex", flexDirection: "column", zIndex: 2 }}>
+              <a className="kyuNav" href="https://www.linkedin.com/company/kyu-collective/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a className="kyuNav" href="https://www.instagram.com/kyu_collective/?hl=en" target="_blank" rel="noreferrer">Instagram</a>
+              <a className="kyuNav" href="https://vimeo.com/showcase/12200156" target="_blank" rel="noreferrer">Vimeo</a>
+              <a className="kyuNav" href="mailto:kyucollective@kyu.com">kyucollective@kyu.com</a>
+            </div>
+            <div style={{ position: "absolute", bottom: 52, right: "6vw", display: "flex", flexDirection: "column", zIndex: 2 }}>
+              <span style={{ fontFamily: SER, fontSize: 18, color: "#1c1c19", lineHeight: 1.6 }}>© 2026</span>
+              <span style={{ fontFamily: SER, fontSize: 18, color: "#1c1c19", lineHeight: 1.6 }}>kyu Collective</span>
+              <a className="kyuNav kyuUnder" href="https://www.hakuhodody-holdings.co.jp/english/" target="_blank" rel="noreferrer">Hakuhodo DY Holdings</a>
+            </div>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 40, padding: "56px 8vw 48px" }}>
+            <div style={{ width: 230, height: 230, maxWidth: "62vw", maxHeight: "62vw", borderRadius: "50%", border: "1px solid #8c8c87", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <span style={{ fontFamily: SER, fontWeight: 400, fontSize: 86, lineHeight: 1, letterSpacing: "-.02em", color: "#16160f" }}>kyu</span>
+            </div>
+            <nav style={{ display: "flex", flexDirection: "column" }}>
+              <a className="kyuNav" href="https://kyu.com/about" target="_blank" rel="noreferrer">About</a>
+              <a className="kyuNav" href="https://kyu.com/companies" target="_blank" rel="noreferrer">Companies</a>
+              <a className="kyuNav" href="https://kyu.com/stories" target="_blank" rel="noreferrer">Stories</a>
+              <a className="kyuNav" href="https://kyu.com/about/contact" target="_blank" rel="noreferrer">Contact</a>
+              <a className="kyuNav" href="https://kyu.com/legal" target="_blank" rel="noreferrer">Legal</a>
+            </nav>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <a className="kyuNav" href="https://www.linkedin.com/company/kyu-collective/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a className="kyuNav" href="https://www.instagram.com/kyu_collective/?hl=en" target="_blank" rel="noreferrer">Instagram</a>
+              <a className="kyuNav" href="https://vimeo.com/showcase/12200156" target="_blank" rel="noreferrer">Vimeo</a>
+              <a className="kyuNav" href="mailto:kyucollective@kyu.com">kyucollective@kyu.com</a>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <span style={{ fontFamily: SER, fontSize: 17, color: "#1c1c19", lineHeight: 1.6 }}>© 2026</span>
+              <span style={{ fontFamily: SER, fontSize: 17, color: "#1c1c19", lineHeight: 1.6 }}>kyu Collective</span>
+              <a className="kyuNav kyuUnder" href="https://www.hakuhodody-holdings.co.jp/english/" target="_blank" rel="noreferrer">Hakuhodo DY Holdings</a>
+            </div>
+          </div>
+        )}
+      </footer>
     </div>
   );
 }
