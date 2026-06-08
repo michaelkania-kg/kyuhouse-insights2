@@ -651,11 +651,13 @@ export default function App() {
                 </div>
               </div>
             </div>
-            <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: `repeat(${TILES}, 1fr)`, gap: 4 }}>
-              {Array.from({ length: TILES }).map((_, i) => (
-                <div key={i} style={{ height: 18, borderRadius: 2, background: i < filled ? band.color : C.lineOnDark, transform: `rotate(${((i % 3) - 1) * 4}deg)`, transition: "background .4s ease-out" }} />
-              ))}
-            </div>
+            {!mob && (
+              <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: `repeat(${TILES}, 1fr)`, gap: 4 }}>
+                {Array.from({ length: TILES }).map((_, i) => (
+                  <div key={i} style={{ height: 18, borderRadius: 2, background: i < filled ? band.color : C.lineOnDark, transform: `rotate(${((i % 3) - 1) * 4}deg)`, transition: "background .4s ease-out" }} />
+                ))}
+              </div>
+            )}
           </div>
 
           <p style={{ marginTop: 44, fontFamily: SER, fontSize: "clamp(22px,3.6vw,34px)", fontStyle: "italic", lineHeight: 1.25, maxWidth: 800 }}>
