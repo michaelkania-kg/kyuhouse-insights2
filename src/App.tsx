@@ -525,7 +525,7 @@ export default function App() {
                 <CircleScribble color={C.rust} style={{ position: "absolute", left: "-7%", top: "-26%", width: "114%", height: "158%", pointerEvents: "none" }} />
               </span>
             </h2>
-            <p style={{ color: C.fg2, marginTop: 22, fontSize: 17, lineHeight: 1.5, maxWidth: 620 }}>Six Insights driving the discussion. {mob ? "Tap" : "Select"} a tile to bring it to the center.</p>
+            <p style={{ color: C.fg2, marginTop: 22, fontSize: 17, lineHeight: 1.5, maxWidth: 620 }}>Key insights — {mob ? "Tap" : "Select"} a tile to explore.</p>
           </Reveal>
 
           {mob ? (
