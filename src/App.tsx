@@ -341,172 +341,44 @@ const TOC = [
 ];
 
 const PANEL = [
-  { n: "01", lbl: "Efficiency is the mechanism", t: "Efficiency is the mechanism, not the destination.", ins: "AI creates capacity, but capacity only becomes advantage when leaders intentionally direct it toward higher-value work.", take: "The question shifts from “How do we do the same work faster?” to “What better work should we now have time to do?”" },
-  { n: "02", lbl: "Reinvest the dividend", t: "The AI Dividend needs to be reinvested.", ins: "Saved time should be treated as a strategic asset — allocated with the same discipline as capital, talent, or budget.", take: "The AI Dividend is only valuable if leaders protect it and reinvest it." },
+  { n: "01", lbl: "Efficiency is the mechanism", t: "Efficiency is the mechanism, not the destination.", ins: "AI creates capacity, but capacity only becomes advantage when leaders intentionally direct it toward higher-value work.", take: "The question shifts from \u201cHow do we do the same work faster?\u201d to \u201cWhat better work should we now have time to do?\u201d" },
+  { n: "02", lbl: "Reinvest the dividend", t: "The AI Dividend needs to be reinvested.", ins: "Saved time should be treated as a strategic asset \u2014 allocated with the same discipline as capital, talent, or budget.", take: "The AI Dividend is only valuable if leaders protect it and reinvest it." },
   { n: "03", lbl: "Redesign, don't bolt on", t: "AI exposes the limits of old operating models.", ins: "AI will not transform organizations that simply plug new tools into old workflows.", take: "The opportunity is to redesign the system around the work humans are best positioned to do." },
   { n: "04", lbl: "The creative frontier", t: "The creative frontier becomes the competitive frontier.", ins: "When more organizations can move fast, distinction comes from stronger ideas, sharper choices, and more meaningful human judgment.", take: "When everything is easier to make, knowing what is worth making becomes the advantage." },
   { n: "05", lbl: "Adaptive beats efficient", t: "Adaptive organizations will outperform efficient ones.", ins: "The strongest organizations will use AI to increase learning velocity, not just output volume.", take: "The winners will use AI to become more adaptive, not simply more automated." },
-  { n: "06", lbl: "Conditions over control", t: "Leadership becomes less about control, more about conditions.", ins: "AI makes command-and-control less effective. Leaders shape the environment where people apply judgment with confidence.", take: "The leader’s role shifts from directing activity to designing the conditions for better work." },
+  { n: "06", lbl: "Conditions over control", t: "Leadership becomes less about control, more about conditions.", ins: "AI makes command-and-control less effective. Leaders shape the environment where people apply judgment with confidence.", take: "The leader\u2019s role shifts from directing activity to designing the conditions for better work." },
 ];
 
 const COMPANIES = [
   { id: "RTG", firm: "Rich Talent Group", accent: C.rust,
-    desc: "Rich Talent Group recruits extraordinary leaders for companies that want to make an impact and need a firm that goes beyond the traditional playbook. Combining deep expertise with creative sourcing and expansive networks, RTG builds leadership teams and boards for some of the world’s most influential companies.",
-    linkText: null, linkUrl: null, reachUrl: "https://www.richtalentgroup.com/",
-    prompt: "In a world where AI increasingly democratizes expertise and execution, what human qualities will become the strongest predictors of executive leadership success?",
-    overall: "The human edge converges on judgment, taste, and the humility to keep learning." },
+    desc: "Rich Talent Group recruits extraordinary leaders for companies that want to make an impact and need a firm that goes beyond the traditional playbook. Combining deep expertise with creative sourcing and expansive networks, RTG builds leadership teams and boards for some of the world\u2019s most influential companies.",
+    linkText: null, linkUrl: null, reachUrl: "https://www.richtalentgroup.com/" },
   { id: "SY", firm: "SYPartners", accent: C.olive,
-    desc: "SYPartners is a consultancy that partners with clients at their critical turning points — designing new possibilities for impact, creating paths to long-term value, and building cultures of competitive advantage. For more than 30 years they’ve transformed some of the world’s most iconic organizations by fusing strategy and design. Their recent piece, Zero Gravity Leadership, distills how they’re thinking about AI.",
-    linkText: "Read Zero Gravity Leadership", linkUrl: "https://www.sypartners.com/articles/zero-gravity-leadership-in-the-age-of-ai", reachUrl: "https://www.sypartners.com/",
-    prompt: "What leadership capabilities will distinguish businesses that merely deploy AI from those that use AI to spark new value?",
-    overall: "Value comes from sharper questions, faster learning, protected attention, and meaning that motivates." },
+    desc: "SYPartners is a consultancy that partners with clients at their critical turning points \u2014 designing new possibilities for impact, creating paths to long-term value, and building cultures of competitive advantage. For more than 30 years they\u2019ve transformed some of the world\u2019s most iconic organizations by fusing strategy and design. Their recent piece, Zero Gravity Leadership, distills how they\u2019re thinking about AI.",
+    linkText: "Read Zero Gravity Leadership", linkUrl: "https://www.sypartners.com/articles/zero-gravity-leadership-in-the-age-of-ai", reachUrl: "https://www.sypartners.com/" },
   { id: "IDEO", firm: "IDEO", accent: C.teal,
-    desc: "IDEO is an iconic design and innovation company, enabling the world’s most influential leaders to create breakthrough, human-centered products, services, and organizations with purpose and impact. In partnership with Tim Brown, they recently released their latest thought piece, The AI Dividend.",
-    linkText: "Read The AI Dividend", linkUrl: "https://www.ideo.com/journal/the-ai-dividend", reachUrl: "https://www.ideo.com/",
-    prompt: "What does your organization need to fully take advantage of an AI Dividend? What might stand in the way?",
-    overall: "The dividend is realized when time is made visible, trusted, woven into the rhythm, and the work redesigned." },
+    desc: "IDEO is an iconic design and innovation company, enabling the world\u2019s most influential leaders to create breakthrough, human-centered products, services, and organizations with purpose and impact. In partnership with Tim Brown, they recently released their latest thought piece, The AI Dividend.",
+    linkText: "Read The AI Dividend", linkUrl: "https://www.ideo.com/journal/the-ai-dividend", reachUrl: "https://www.ideo.com/" },
 ];
-
-const INSIGHTS = [
-  { co: "RTG", table: 1, t: "Judgment and accountability stay human.", ins: "As expertise gets democratized, leaders are differentiated less by what they know and more by how they decide under uncertainty. AI can inform the call, but it can’t own the consequences.", tag: "Judgment · integrity", frags: ["everyone can know things now", "it’s how you decide that’s rare", "the model can’t own the call", "you still own the outcome", "verify before you trust", "the buck stays with you"] },
-  { co: "RTG", table: 2, t: "Taste and courage create distinction.", ins: "When the average answer gets better, sameness becomes the risk. Leaders need the taste to recognize quality before it’s obvious — and the courage to move past safe, optimized, familiar work.", tag: "Taste · courage", frags: ["spotting good before it’s proven", "you can’t prompt taste", "the average answer just got better", "safe is the new risky", "convergence is the trap", "dare to be distinctive"] },
-  { co: "RTG", table: 3, t: "Empathy and learning agility set the pace.", ins: "Transformation is experienced by people, so emotional context and trust matter more in fast change. And as knowledge ages quickly, the edge is updating your mental model faster than the world shifts.", tag: "Empathy · learning agility", frags: ["people feel the change, not the system", "trust moves people, not tools", "you have to read the room", "unlearn faster than the world changes", "update the mental model, fast", "stay a student"] },
-  { co: "RTG", table: 4, t: "Self-awareness and the humility to be wrong.", ins: "The leaders who thrive treat their own conviction as a hypothesis — confident enough to act, humble enough to update when AI or a colleague surfaces a better read.", tag: "Self-awareness · humility", frags: ["strong opinions, loosely held", "be the first to say I was wrong", "ego is the real bottleneck", "confidence without certainty", "ask who you’re not hearing", "humble enough to change course"] },
-  { co: "SY", table: 1, t: "Lead with better questions and sharper discernment.", ins: "Value-creating leaders use AI to challenge assumptions and reframe problems — not just answer them. And amid ten plausible options, they know when output is useful, generic, or missing human context. That judgment is taste.", tag: "Curiosity · framing · taste", frags: ["we ask it to answer, never to question", "the reframe is the whole game", "it gives me ten options, all fine", "but fine isn’t the bar", "you can smell the AI on it", "context is the whole thing"] },
-  { co: "SY", table: 2, t: "Design for experimentation, not just execution.", ins: "AI’s real value is faster learning, not only faster output. The capability is turning many small, fast experiments into a system that compounds into learning.", tag: "Experiment design · learning", frags: ["we test a lot, learn little", "learning speed beats doing speed", "make the experiment a system", "fail small, fast, on purpose", "kill it fast if it’s dead", "testing isn’t learning"] },
-  { co: "SY", table: 3, t: "Protect attention and build confidence through change.", ins: "AI can free attention or flood it — leaders decide what deserves human focus. And they build belief, not compliance, helping people learn and apply judgment with confidence.", tag: "Focus · coaching · trust", frags: ["more inputs, not more focus", "what actually deserves a human?", "I’m drowning in drafts", "protect the deep work", "compliance isn’t adoption", "make it safe to try"] },
-  { co: "SY", table: 4, t: "Make meaning, not just decisions.", ins: "As AI handles more of the “what,” leaders earn their keep on the “why” — connecting the work to purpose so people stay motivated when the machine could do the task.", tag: "Meaning · narrative", frags: ["AI can decide, it can’t inspire", "people need a why, not a workflow", "tell the story, not the spec", "motivation is a leadership job", "meaning beats mandates", "connect work to something bigger"] },
-  { co: "IDEO", table: 1, t: "Make the time visible, then reinvest it on purpose.", ins: "You can’t reinvest what you can’t see. Map work into what AI can absorb, accelerate, protect, or stop — then name the intended return on the hours you free: strategy, customer understanding, creative exploration, coaching.", x: "Most companies measure output far more clearly than time; old habits and short-term cost pressure quietly refill freed hours with more tasks.", frags: ["where does the time actually go?", "we save the hours, then just fill them", "we measure output, not attention", "map it before you automate it", "more capacity just became more meetings", "be deliberate, or it evaporates"] },
-  { co: "IDEO", table: 2, t: "Build AI into the operating rhythm.", ins: "AI creates value when it’s woven into how teams plan, decide, create, and review — not when it lives in isolated pilots. The harder shift is habits and shared standards, not tool access.", x: "Fragmented pilots, inconsistent use, and no shared sense of what good AI-enabled work actually looks like.", frags: ["we’re piloting it, not living it", "everyone’s using it differently", "what does ‘good’ even look like here?", "the tools are fine — the habits aren’t", "we have champions, not a standard", "make it the rhythm, not the exception"] },
-  { co: "IDEO", table: 3, t: "Trust is the precondition for the dividend.", ins: "People need to believe AI is being used to unlock better work, not to extract more labor. Without transparency about what changes, the gain reads as a threat.", x: "Fear of job loss, mixed leadership signals, and a lack of honesty about what AI actually changes.", frags: ["people think it’s code for layoffs", "is this to help me or replace me?", "say the quiet part — what’s it for?", "trust has to come before the tools", "give us autonomy, not surveillance", "no one will say it out loud"] },
-  { co: "IDEO", table: 4, t: "Redesign the work, don’t just speed it up.", ins: "Bolting AI onto yesterday’s process only makes a flawed system faster. The dividend shows up when teams rebuild the workflow around what humans and AI each do best.", x: "Sunk-cost attachment to existing processes, and the effort of redesign feeling riskier than incremental tweaks.", frags: ["faster bad process is still bad", "we paved the cowpath", "redesign beats retrofit", "what would we build from scratch?", "automate the task, rethink the job", "don’t bolt it on"] },
-];
-
-const TABLE_SUMMARY = {
-  1: "Table 1 kept circling back to discernment. As AI raises the floor on output, the harder and more valuable work becomes judging what is actually worth pursuing — and protecting time for those calls rather than filling it with more tasks.",
-  2: "Table 2 focused on learning velocity. The group argued the real dividend isn't doing the same work faster, but running more small experiments and turning them into a system that compounds — treating speed as a way to learn, not just to ship.",
-  3: "Table 3 centered on trust and attention. Without transparency about what AI is for, people read it as a threat; with it, freed time can be redirected to deep work. The leadership job is to make it safe to try and to protect focus rather than flood it.",
-  4: "Table 4 returned to redesign and meaning. Bolting AI onto old workflows just makes a flawed process faster; the opportunity is rebuilding the work around what humans and AI each do best — and connecting it to a why that keeps people motivated.",
-};
-
-const PROMPT_TAB = { RTG: "Human qualities", SY: "Sparking new value", IDEO: "Realizing the dividend" };
-
-const ROOM_OVERALL = {
-  lead: "Across all four tables, one idea kept surfacing: the value of AI isn't the speed it adds, it's the human capacity it frees — and the room cared far more about what that freed capacity should be spent on than about the tools themselves.",
-  themes: [
-    "Judgment and taste become the scarce, defining skills",
-    "Learning velocity matters more than raw output",
-    "Trust and transparency decide whether the dividend is real",
-    "The work itself gets redesigned, not just accelerated",
-  ],
-};
 
 const QPAL = [C.teal, C.olive, C.rust, C.tealDeep, C.oliveLt, C.gold];
-const QUOTES = [
-  "With the explosion of access to IQ, IQ is no longer earned or owned — it's two hundred dollars a month. So the ability to work with humans and small teams, and to navigate a complex map of stakeholders, becomes the differentiator.",
-  "This is the ultimate reinvention moment, and we're shooting too narrow. The invitation is 'redesign your workflow,' which assumes we keep doing it the same way, only more efficiently — instead of fundamentally rethinking it.",
-  "Tell me how this person interacts with other humans. How do they problem-solve with others? If these capabilities are available to everyone now, what matters is how they actually deal with people.",
-  "Most leaders have a gap between how they're thinking about AI and their people strategy. They're not thinking about the humans at all, so employees never get a chance to adjust.",
-  "Don't defer this to the technology side. The CEO, the head of people, and the head of marketing all have to be at the table, and fluent enough to guide the organization.",
-  "We're not prepared for a future where the cost of debating a hypothesis is higher than the cost of testing it. The leaders who rise will put themselves at the edge, out of curiosity or a player-coach mentality.",
-  "As everyone gets busy trying to maximize AI in their current business, it's actually locking them into the way the business has always worked.",
-  "The new leader needs a lot more moral courage — to say there are two ends of AI, artificial intelligence and authentic interaction, and to figure out how those come together elegantly.",
-  "We've lost something over the last ten or twenty years: relational intelligence, in favor of computer-driven intelligence.",
-  "Every organization keeps going at this with a stick. It's a desirability problem — you don't solve it by telling everyone they have to do it and threatening to fire them.",
-  "Leaders are making their companies more efficient but slower at the same time, because they're not thinking about change management.",
-  "Differentiated leaders will code-shift between the weekly, crazy cycle time of things moving fast and the two-year arc of the organization — and hold both at once.",
-  "Your job is to imagine the next jobs that are so desirable that people look at them and say, 'I can't wait to get to do that.'",
-  "If leaders aren't defining AI — this is how we'll use it, this is what it could be — that's what's missing, and people just project into the void.",
-  "The innovations changing our organization are coming from unexpected places — a junior finance person building an entire tool set attached to our P&L that we never would have funded. How do you find that and bring it up so you can learn from it at the enterprise level?",
-  "Leaders are almost trapped in the old paradigm by the very existence of this supposedly radical technology.",
-  "We have not illuminated for people what the jobs are going to be. People are actively resisting — we have whole employee groups actively resisting.",
-  "The editorial eye gets heightened: what matters, how do you cut through it fast, and how do you get the whole organization to orient around it?",
-  "You need people who can actually talk to people to pull this off — and that's becoming more rare.",
-  "Non-technologists can be product leaders now. Someone with a vision can harness these tools to prototype, develop, and experiment far faster than before.",
-  "Everyone understands the customer journey and its touch points, but not which ones matter most for the financial metrics that drive share price. That's where you find where AI meaningfully reduces friction or creates a delightful moment.",
-  "Nobody is talking about top-line revenue generation — creating experiences that drive preference, choice, and the permanence of a relationship. And that has to start with the CEO.",
-  "The C-suite defers this to the CTO or the information officer and says 'deploy AI,' which moves everything straight into the efficiency space.",
-  "You have to redefine work: what are humans most capable of, and where does AI need to step in?",
-  "We need to change how we work: creating human experiences, tapping human creativity to create value for customers, and empowering the organization to be entrepreneurial.",
-  "It's the fault of the technology companies building it, because they look at it purely from a technology perspective. If you only focus on the technology, it's easy to default to cost savings and automation, when that might not help you grow.",
-  "There's fear because people sense they're that close to being replaced. The thought is: if I adopt it, am I just feeding the machine that replaces me anyway?",
-  "The signal-to-noise ratio is exploding. It's already hard for senior leaders in a complex organization to filter out what matters.",
-  "If you just turn to Silicon Valley and ask for the future of the hospital, they'll design a room where no humans ever interact.",
-  "There's no such thing as effective judgment if you're multiple layers removed, relying on the organization to coordinate information up to you and back down.",
-  "I was the odd one out for years for asking about our users and the community impact of what we were building. Those questions were treated as last-mile considerations — you should flip it around.",
-  "The leaders who rise won't be the ones who are good at debating. They'll be the ones who put themselves at the edge.",
-  "The tendency is to centralize AI, which is contradictory to what AI means. If you lead one of our companies, my AI advisor is your advisor — talk to him whenever you want.",
-  "Push yourself past asking the AI search-engine questions. Try to build something with a coding agent or automate a simple process. Executives should get their hands deep in it to understand what it is and isn't.",
-  "I don't start with AI or the technology. I start with the goal we're trying to achieve. AI is a tool. The first question is how we leverage human talent.",
-  "Determining very clearly what the objectives are, and doing it in real time — that's a skill of the future. It's a skill of the present too, just not well practiced.",
-  "There's human potential everywhere — we're just not unleashing enough of it.",
-  "Some people will be out there aggressively adapting; others won't even understand why we need to change. That difference in adaptability is everything.",
-  "I think a lot about moving innovation to the people closest to the work.",
-  "The CEO is the only person who can knock down operational and business silos so people can actually grow.",
-  "Now it's very expensive — the token wars. People are getting their bills for thinking. The instinct is to hand everyone a hammer, but not everyone needs a hammer.",
-  "I'm not looking for efficiency or to make more money. My goal is how we serve more people with the same dollars.",
-  "As an executive you suddenly have superpowers. You don't have to go through cycles of communication and watch things fall down the chain — you can put ideas into action much more quickly.",
-  "Help people unlock the human spirit. We're at a point where people genuinely want that.",
-  "For people with deep experience and expertise, this is amazing — you can do active strategy in ways you never could before.",
-  "Creating experiences that drive preference, choice, and the permanence of a relationship — that's the human work.",
-  "You have to be able to communicate the real purpose, the objective, and how we're going to get there. We all have to be cheerleaders for that excitement and innovation.",
-  "AI has become too ubiquitous a word. It doesn't really mean anything anymore.",
-];
-const PROVOCATIONS = [
-  "How might we make the next generation of jobs so desirable that people race toward them rather than resist them?",
-  "What does it take to lead as a gardener who cultivates the conditions for growth rather than an engineer who directs it?",
-  "What does it take to translate the unmeasured creative frontier into a durable competitive difference?",
-  "What if the entire surplus AI creates were reinvested in human creativity, judgment, and taste?",
-  "How might we redesign organizations so the capacity freed by AI flows to the people closest to the work?",
-  "What does it take to redefine work around what humans are most capable of?",
-  "What if the cost of testing a hypothesis fell so low that experimentation replaced debate as the engine of strategy?",
-  "How might we put relational intelligence at the core of how we build products, teams, and institutions?",
-  "How might we surface the breakthrough innovations emerging from unexpected corners of an organization and learn from them at enterprise scale?",
-  "How might we cultivate the moral courage leaders need to weave authentic human interaction into AI-driven systems?",
-  "What if the most valuable leadership skill became the editorial eye that cuts through exploding signal-to-noise?",
-  "What does it take to help a frightened workforce move from fear to creative confidence?",
-];
 
 // Summarized insights from the conversation, each paired with an aligned provocation
 const LISTENING = [
   { n: "01", color: C.tealDeep, insight: "Trade debate for experimentation", summary: "Once testing an idea costs less than arguing about it, the edge goes to leaders who get hands-on and put themselves at the frontier instead of directing from a distance.", q: "What if the cost of testing a hypothesis fell so low that experimentation replaced debate as the engine of strategy?" },
-  { n: "02", color: C.olive, insight: "Leaders must define AI, not defer it", summary: "Hand this to technologists with a “deploy AI” mandate and everything collapses into cost-cutting. People fill the silence with fear. Leaders must be fluent enough to say what AI is for.", q: "What if cutting through the exploding signal-to-noise became the most valuable thing a leader does?" },
-  { n: "03", color: C.teal, insight: "The human edge becomes relational", summary: "As intelligence turns cheap and ubiquitous, what sets people apart is how they work with others — reading the room, navigating stakeholders, the relational intelligence we’ve let atrophy.", q: "How might we put relational intelligence back at the core of how we build products, teams, and institutions?" },
-  { n: "04", color: C.rust, insight: "Redesign the work, don’t just speed it up", summary: "“Redesign the workflow” quietly assumes the work stays the same, only faster. The real move is rethinking the job around what humans do best — and where AI should step in.", q: "What would we build if we redefined the work from scratch around what only humans can do?" },
-  { n: "05", color: C.oliveLt, insight: "Push capacity to the edges", summary: "Breakthroughs come from unexpected corners — a junior analyst building tools no one would fund. Centralizing AI contradicts what it is; let freed capacity flow to the people closest to the work.", q: "How might we redesign organizations so the capacity freed by AI flows to the people closest to the work?" },
-  { n: "06", color: C.gold, insight: "It’s a people problem, not a tech problem", summary: "Resistance is rational when people feel close to being replaced. Adoption is a desirability problem, not a mandate — the work is illuminating the next, better jobs.", q: "How might we make the next generation of jobs so desirable that people race toward them rather than resist them?" },
+  { n: "02", color: C.olive, insight: "Leaders must define AI, not defer it", summary: "Hand this to technologists with a \u201cdeploy AI\u201d mandate and everything collapses into cost-cutting. People fill the silence with fear. Leaders must be fluent enough to say what AI is for.", q: "What if cutting through the exploding signal-to-noise became the most valuable thing a leader does?" },
+  { n: "03", color: C.teal, insight: "The human edge becomes relational", summary: "As intelligence turns cheap and ubiquitous, what sets people apart is how they work with others \u2014 reading the room, navigating stakeholders, the relational intelligence we\u2019ve let atrophy.", q: "How might we put relational intelligence back at the core of how we build products, teams, and institutions?" },
+  { n: "04", color: C.rust, insight: "Redesign the work, don\u2019t just speed it up", summary: "\u201cRedesign the workflow\u201d quietly assumes the work stays the same, only faster. The real move is rethinking the job around what humans do best \u2014 and where AI should step in.", q: "What would we build if we redefined the work from scratch around what only humans can do?" },
+  { n: "05", color: C.oliveLt, insight: "Push capacity to the edges", summary: "Breakthroughs come from unexpected corners \u2014 a junior analyst building tools no one would fund. Centralizing AI contradicts what it is; let freed capacity flow to the people closest to the work.", q: "How might we redesign organizations so the capacity freed by AI flows to the people closest to the work?" },
+  { n: "06", color: C.gold, insight: "It\u2019s a people problem, not a tech problem", summary: "Resistance is rational when people feel close to being replaced. Adoption is a desirability problem, not a mandate \u2014 the work is illuminating the next, better jobs.", q: "How might we make the next generation of jobs so desirable that people race toward them rather than resist them?" },
 ];
-
-function FlipCard({ item, mob }) {
-  const [on, setOn] = useState(false);
-  return (
-    <div className={"flip" + (on ? " on" : "")} style={{ height: mob ? 300 : 330 }}>
-      <div className="flipInner">
-        <div className="flipFace" onClick={() => setOn(true)} style={{ background: C.white, border: `1px solid ${C.line}`, borderTop: `3px solid ${item.color}`, cursor: "pointer", padding: mob ? 22 : 26 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 14 }}>
-            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, borderRadius: 6, background: item.color, color: C.onDark, fontFamily: SER, fontSize: 17, transform: "rotate(-3deg)", flexShrink: 0, boxShadow: "0 4px 12px rgba(22,41,31,.12)" }}>{item.n}</span>
-            <span className="eyebrow" style={{ color: item.color, fontSize: 10 }}>insight</span>
-          </div>
-          <h4 style={{ fontFamily: SER, fontWeight: 500, fontSize: mob ? 20 : 21, lineHeight: 1.15, margin: 0, color: C.fg1 }}>{item.insight}</h4>
-          <p style={{ color: C.fg2, fontSize: 13.5, lineHeight: 1.5, margin: "12px 0 0", flex: 1 }}>{item.summary}</p>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: item.color, fontFamily: SAN, fontSize: 12.5, fontWeight: 700, marginTop: 14 }}><RotateCcw size={14} /> Reveal the provocation</span>
-        </div>
-        <div className="flipFace flipBack" onClick={() => setOn(false)} style={{ background: item.color, color: C.onDark, cursor: "pointer", padding: mob ? 24 : 28 }}>
-          <span className="eyebrow" style={{ color: "rgba(255,255,255,.82)", fontSize: 10 }}>a provocation</span>
-          <p style={{ fontFamily: SER, fontStyle: "italic", fontSize: mob ? 21 : 22, lineHeight: 1.32, margin: 0, flex: 1, display: "flex", alignItems: "center" }}>{item.q}</p>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "rgba(255,255,255,.85)", fontFamily: SAN, fontSize: 12.5, fontWeight: 700 }}><RotateCcw size={14} /> Back to insight</span>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // ----- Mosaic: six fragments that pop down -----
 function MosaicWall({ mob }) {
   const [sel, setSel] = useState(null); // 0..5 or null
   const item = sel != null ? LISTENING[sel] : null;
   const cols = mob ? 2 : 6;
-  const SHORT = ["Experiment over debate", "Define, don’t defer", "The relational edge", "Redesign the work", "Push to the edges", "A people problem"];
+  const SHORT = ["Experiment over debate", "Define, don\u2019t defer", "The relational edge", "Redesign the work", "Push to the edges", "A people problem"];
   return (
     <div>
       <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: mob ? 12 : 14 }}>
@@ -544,7 +416,7 @@ function MosaicWall({ mob }) {
                 <p style={{ position: "relative", fontFamily: SER, fontStyle: "italic", fontSize: mob ? 21 : 24, lineHeight: 1.32, margin: "10px 0 0" }}>{item.q}</p>
               </div>
             </div>
-            <button onClick={() => setSel(null)} style={{ marginTop: 18, background: "none", border: "none", cursor: "pointer", color: C.fg3, fontWeight: 600, fontSize: 13, fontFamily: SAN, padding: 0 }}>Close ×</button>
+            <button onClick={() => setSel(null)} style={{ marginTop: 18, background: "none", border: "none", cursor: "pointer", color: C.fg3, fontWeight: 600, fontSize: 13, fontFamily: SAN, padding: 0 }}>Close \u00d7</button>
           </div>
         </div>
       )}
@@ -553,13 +425,11 @@ function MosaicWall({ mob }) {
 }
 
 // ----- Photo gallery -----
-// To use real photos, paste each image's hosted URL (or data URI) into `src`.
 const PHOTOS = [
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/Overall%20Room.png", w: true },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC07086.jpg", w: true },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC06914.jpg" },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC06945.jpg" },
-  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC06790.jpg", h: true },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC06733.jpg" },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC07078.jpg", w: true },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC07218.jpg" },
@@ -608,11 +478,11 @@ function Gallery({ mob }) {
         </div>
         {!mob && <button onClick={() => scrollBy(1)} style={arrow("right")} aria-label="Next"><ChevronRight size={20} /></button>}
       </div>
-      <p style={{ color: C.fg3, fontSize: 12.5, marginTop: 10, fontFamily: SAN }}>{mob ? "Swipe to browse · tap a photo to enlarge" : "Scroll or use the arrows to browse · click a photo to enlarge"}</p>
+      <p style={{ color: C.fg3, fontSize: 12.5, marginTop: 10, fontFamily: SAN }}>{mob ? "Swipe to browse \u00b7 tap a photo to enlarge" : "Scroll or use the arrows to browse \u00b7 click a photo to enlarge"}</p>
 
       {open != null && (
         <div onClick={() => setOpen(null)} style={{ position: "fixed", inset: 0, zIndex: 100, background: "rgba(16,24,18,.88)", display: "flex", alignItems: "center", justifyContent: "center", padding: mob ? 16 : 40 }}>
-          <button onClick={() => setOpen(null)} style={{ position: "absolute", top: 16, right: 20, background: "none", border: "none", color: "#fff", fontSize: 32, cursor: "pointer", lineHeight: 1 }}>×</button>
+          <button onClick={() => setOpen(null)} style={{ position: "absolute", top: 16, right: 20, background: "none", border: "none", color: "#fff", fontSize: 32, cursor: "pointer", lineHeight: 1 }}>\u00d7</button>
           <button onClick={(e) => { e.stopPropagation(); setOpen((o) => (o - 1 + PHOTOS.length) % PHOTOS.length); }} style={navBtn("left")}><ChevronLeft size={26} /></button>
           <div onClick={(e) => e.stopPropagation()} style={{ maxWidth: 880, width: "100%", textAlign: "center" }}>
             {(PHOTOS[open].src && !failed[open])
@@ -630,44 +500,25 @@ function Gallery({ mob }) {
   );
 }
 
-const ROOM_INSIGHTS = [
-  { t: "The human edge becomes relational", s: "As intelligence turns cheap and ubiquitous, what sets people apart is how they work with others: reading the room, navigating stakeholders, and the relational intelligence many organizations have let atrophy." },
-  { t: "Redesign the work, don't just speed it up", s: "The common push to redesign workflows quietly assumes the work stays the same, only faster. The real opportunity is to rethink work entirely around what humans are most capable of, and where AI should step in." },
-  { t: "Leaders must define AI, not defer it", s: "When the C-suite hands this to technologists and simply asks them to deploy AI, everything collapses into efficiency and cost-cutting. Leaders across the business need to be fluent enough to say what AI is for, or people fill the silence with fear." },
-  { t: "It's a people problem, not a tech problem", s: "Resistance is rational when people sense they are close to being replaced. Adoption is a desirability problem, not something you solve with a mandate. The work is illuminating the next, more desirable jobs and moving a frightened workforce toward creative confidence." },
-  { t: "Trade debate for experimentation", s: "As the cost of testing an idea falls below the cost of arguing about it, advantage shifts to leaders who get hands-on and put themselves at the edge rather than directing from a distance." },
-  { t: "Push capacity to the edges", s: "Breakthroughs arrive from unexpected corners, like a junior analyst building tools no one would have funded. Centralizing AI contradicts what it is; the move is to let freed capacity flow to the people closest to the work." },
-];
-
 const ASSESS = [
-  { dim: "Reinvestment", q: "We’ve decided where our reclaimed time should go.", tip: "Name the return you want on saved time — strategy, customer insight, creativity, coaching — before it’s absorbed." },
-  { dim: "Operating rhythm", q: "AI is built into how we plan, decide, create, and review — not isolated pilots.", tip: "Move AI out of side projects and into the team’s everyday operating rhythm." },
+  { dim: "Reinvestment", q: "We\u2019ve decided where our reclaimed time should go.", tip: "Name the return you want on saved time \u2014 strategy, customer insight, creativity, coaching \u2014 before it\u2019s absorbed." },
+  { dim: "Operating rhythm", q: "AI is built into how we plan, decide, create, and review \u2014 not isolated pilots.", tip: "Move AI out of side projects and into the team\u2019s everyday operating rhythm." },
   { dim: "Time visibility", q: "We can see where time goes, and what AI should absorb, accelerate, or leave to humans.", tip: "Map work into four buckets: what AI can absorb, accelerate, what humans protect, and what to stop doing." },
   { dim: "Trust", q: "Our people trust AI is used to unlock better work, not to extract more labor.", tip: "Make it explicit that the dividend is meant to create room, not raise the quota." },
   { dim: "Discernment", q: "Our leaders can tell signal from noise in AI output.", tip: "Build the muscle to judge when AI output is useful, generic, or missing human context." },
   { dim: "Learning velocity", q: "We turn AI experiments into learning, quickly.", tip: "Design experiments as learning systems, not one-off tests." },
 ];
 const BANDS = [
-  { min: 0, name: "Extracting", color: C.rust, note: "The dividend is being absorbed as more output and higher expectations — the squeeze that erodes trust. Start by deciding where the time should go." },
-  { min: 36, name: "Drifting", color: C.olive, note: "You’re creating capacity, but it’s leaking away. The gain needs an owner and a plan before it disappears into more work." },
-  { min: 61, name: "Reinvesting", color: C.teal, note: "You’re directing reclaimed time toward better work. Protect it — and keep sharpening where it lands." },
-  { min: 83, name: "Compounding", color: C.oliveLt, note: "The dividend is visible, intentional, and protected. Now press the advantage — distinctiveness over sameness." },
-];
-const PIPE = [
-  { Icon: Mic, t: "Record & transcribe", d: "The conversation was captured and transcribed automatically with AI.", tool: "AI transcription", color: C.teal },
-  { Icon: Sparkles, t: "Synthesize", d: "Content is recorded, then synthesized into overall themes that strip out identifiable individual perspectives — and the source transcripts are deleted.", tool: "ChatGPT & Claude", color: C.olive },
-  { Icon: PenTool, t: "Design", d: "The visual system and layouts were composed and refined.", tool: "Figma", color: C.rust },
-  { Icon: Code2, t: "Build", d: "This interactive experience was designed and developed.", tool: "Claude Design & Code", color: C.tealDeep },
+  { min: 0, name: "Extracting", color: C.rust, note: "The dividend is being absorbed as more output and higher expectations \u2014 the squeeze that erodes trust. Start by deciding where the time should go." },
+  { min: 36, name: "Drifting", color: C.olive, note: "You\u2019re creating capacity, but it\u2019s leaking away. The gain needs an owner and a plan before it disappears into more work." },
+  { min: 61, name: "Reinvesting", color: C.teal, note: "You\u2019re directing reclaimed time toward better work. Protect it \u2014 and keep sharpening where it lands." },
+  { min: 83, name: "Compounding", color: C.oliveLt, note: "The dividend is visible, intentional, and protected. Now press the advantage \u2014 distinctiveness over sameness." },
 ];
 
 export default function App() {
   const mob = useMobile();
   const [node, setNode] = useState(null);
-  const [activeTable, setActiveTable] = useState(null);
-  const [activePrompt, setActivePrompt] = useState("RTG");
   const [scores, setScores] = useState(ASSESS.map(() => 50));
-  const [qIdx, setQIdx] = useState(0);
-  const [provIdx, setProvIdx] = useState(0);
 
   const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
   const band = [...BANDS].reverse().find((b) => avg >= b.min);
@@ -678,15 +529,10 @@ export default function App() {
   const [active, setActive] = useState("intro");
   useEffect(() => { const o = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)), { threshold: 0.4 });
     sections.forEach((s) => { const el = document.getElementById(s); if (el) o.observe(el); }); return () => o.disconnect(); }, []);
-  const eyebrow = (txt, color) => <div className="eyebrow" style={{ color: color || C.fg3, marginBottom: 20 }}>{txt}</div>;
 
   const POS = [{ x: 50, y: 11 }, { x: 81, y: 31 }, { x: 81, y: 69 }, { x: 50, y: 89 }, { x: 19, y: 69 }, { x: 19, y: 31 }];
   const satColors = [C.teal, C.olive, C.rust, C.tealDeep, C.oliveLt, C.olive];
   const sel = node != null ? PANEL[node] : null;
-  const coOf = (id) => COMPANIES.find((c) => c.id === id);
-  const promptColors = COMPANIES.map((c) => c.accent);
-  const activeCo = coOf(activePrompt);
-  const activeInsight = activeTable != null ? INSIGHTS.find((x) => x.co === activePrompt && x.table === activeTable) : null;
 
   const CoHostCards = (
     <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3,1fr)", gap: mob ? 24 : 32 }}>
@@ -772,12 +618,10 @@ export default function App() {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3,1fr)", gap: 14 }}>
           {TOC.map((t, i) => (
-            <a key={t.id} href={`#${t.id}`} onClick={(e) => { const el = document.getElementById(t.id); if (el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth", block: "start" }); } }} className="menuItem" style={{ "--ac": t.color, display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 10, textDecoration: "none", color: C.fg1, cursor: "pointer", opacity: t.soon ? 0.92 : 1 }}>
+            <a key={t.id} href={`#${t.id}`} onClick={(e) => { const el = document.getElementById(t.id); if (el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth", block: "start" }); } }} className="menuItem" style={{ "--ac": t.color, display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", borderRadius: 10, textDecoration: "none", color: C.fg1, cursor: "pointer" }}>
               <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 42, height: 42, borderRadius: 6, background: t.color, color: C.onDark, fontFamily: SER, fontSize: 19, transform: "rotate(-3deg)", flexShrink: 0 }}>0{i + 1}</span>
               <span style={{ fontFamily: SER, fontSize: "clamp(18px,2.2vw,23px)", lineHeight: 1.1 }}>{t.label}</span>
-              {t.soon
-                ? <span style={{ marginLeft: "auto", flexShrink: 0, fontFamily: SAN, fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".12em", color: t.color, border: `1px solid ${t.color}`, borderRadius: 20, padding: "5px 11px", whiteSpace: "nowrap" }}>Coming soon</span>
-                : <ArrowRight size={17} color={t.color} style={{ marginLeft: "auto", flexShrink: 0 }} />}
+              <ArrowRight size={17} color={t.color} style={{ marginLeft: "auto", flexShrink: 0 }} />
             </a>
           ))}
         </div>
@@ -798,7 +642,7 @@ export default function App() {
                 <CircleScribble color={C.rust} style={{ position: "absolute", left: "-7%", top: "-26%", width: "114%", height: "158%", pointerEvents: "none" }} />
               </span>
             </h2>
-            <p style={{ color: C.fg2, marginTop: 22, fontSize: 17, lineHeight: 1.5, maxWidth: 620 }}>Key insights — {mob ? "Tap" : "Select"} a tile to explore.</p>
+            <p style={{ color: C.fg2, marginTop: 22, fontSize: 17, lineHeight: 1.5, maxWidth: 620 }}>Key insights \u2014 {mob ? "Tap" : "Select"} a tile to explore.</p>
           </Reveal>
 
           {mob ? (
@@ -817,14 +661,14 @@ export default function App() {
               <div className="bloom" key={node ?? "thesis"} style={{ marginTop: 18, background: C.white, border: `1px solid ${C.line}`, borderRadius: 10, padding: 22, boxShadow: "0 12px 30px rgba(22,41,31,.10)", textAlign: "center" }}>
                 {sel ? (
                   <>
-                    <span className="eyebrow" style={{ color: C.teal, fontSize: 10 }}>{sel.n} · insight</span>
+                    <span className="eyebrow" style={{ color: C.teal, fontSize: 10 }}>{sel.n} \u00b7 insight</span>
                     <p style={{ color: C.fg2, fontSize: 15, lineHeight: 1.5, margin: "10px 0 12px" }}>{sel.ins}</p>
                     <p style={{ fontFamily: SER, fontStyle: "italic", color: C.fg1, fontSize: 18, lineHeight: 1.35, margin: 0 }}>{sel.take}</p>
                   </>
                 ) : (
                   <>
                     <span className="eyebrow" style={{ color: C.teal, fontSize: 10 }}>the thesis</span>
-                    <p style={{ fontFamily: SER, fontSize: 18, lineHeight: 1.4, color: C.fg1, margin: "10px 0 0", fontStyle: "italic" }}>AI’s greater potential is the human capacity it unlocks.</p>
+                    <p style={{ fontFamily: SER, fontSize: 18, lineHeight: 1.4, color: C.fg1, margin: "10px 0 0", fontStyle: "italic" }}>AI\u2019s greater potential is the human capacity it unlocks.</p>
                     <p style={{ color: C.fg3, fontSize: 12.5, marginTop: 12 }}>Tap a tile to reveal it</p>
                   </>
                 )}
@@ -838,12 +682,12 @@ export default function App() {
                 </svg>
                 <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: 330, height: 300, borderRadius: 8, background: sel ? C.white : "transparent", border: `1px solid ${sel ? C.line : "transparent"}`, boxShadow: sel ? "0 16px 44px rgba(22,41,31,.12)" : "none", display: "flex", flexDirection: "column", justifyContent: "center", padding: 40, textAlign: "center", transition: "all .4s ease-out", zIndex: 5 }}>
                   {sel ? (<>
-                    <span className="eyebrow" style={{ color: C.teal, fontSize: 11 }}>{sel.n} · insight</span>
+                    <span className="eyebrow" style={{ color: C.teal, fontSize: 11 }}>{sel.n} \u00b7 insight</span>
                     <p style={{ color: C.fg2, fontSize: 14.5, lineHeight: 1.5, margin: "12px 0 14px" }}>{sel.ins}</p>
                     <p style={{ fontFamily: SER, fontStyle: "italic", color: C.fg1, fontSize: 18, lineHeight: 1.35, margin: 0 }}>{sel.take}</p>
                   </>) : (<>
                     <span className="eyebrow" style={{ color: C.teal, fontSize: 11 }}>the thesis</span>
-                    <p style={{ fontFamily: SER, fontSize: 20, lineHeight: 1.4, color: C.fg1, margin: "12px 0 0", fontStyle: "italic" }}>AI’s greater potential is the human capacity it unlocks.</p>
+                    <p style={{ fontFamily: SER, fontSize: 20, lineHeight: 1.4, color: C.fg1, margin: "12px 0 0", fontStyle: "italic" }}>AI\u2019s greater potential is the human capacity it unlocks.</p>
                     <p style={{ color: C.fg3, fontSize: 13, marginTop: 14 }}>Select a tile</p>
                   </>)}
                 </div>
@@ -883,13 +727,13 @@ export default function App() {
           {mob && (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, marginTop: 22, padding: "14px 16px", borderRadius: 12, border: `1px solid ${C.lineOnDark}`, background: "rgba(255,255,255,0.06)" }}>
               <div>
-                <span className="eyebrow" style={{ color: C.onDark2, fontSize: 9 }}>your score · live</span>
+                <span className="eyebrow" style={{ color: C.onDark2, fontSize: 9 }}>your score \u00b7 live</span>
                 <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 3 }}>
                   <span style={{ fontFamily: SER, fontSize: 40, fontWeight: 500, lineHeight: 1, color: band.color, transition: "color .4s" }}>{avg}</span>
                   <span style={{ fontFamily: SER, fontSize: 17, color: C.onDark, fontStyle: "italic" }}>{band.name}</span>
                 </div>
               </div>
-              <span style={{ fontFamily: SAN, fontSize: 11, fontWeight: 600, color: C.onDark2, textAlign: "right", maxWidth: 110, lineHeight: 1.35 }}>Updates as you drag ↓</span>
+              <span style={{ fontFamily: SAN, fontSize: 11, fontWeight: 600, color: C.onDark2, textAlign: "right", maxWidth: 110, lineHeight: 1.35 }}>Updates as you drag \u2193</span>
             </div>
           )}
 
@@ -917,7 +761,7 @@ export default function App() {
                 <p style={{ color: C.onDark, fontSize: 15.5, lineHeight: 1.55, margin: 0, maxWidth: 540 }}>{band.note}</p>
                 <div style={{ marginTop: 20, paddingTop: 18, borderTop: `1px solid ${C.lineOnDark}`, display: "flex", gap: 20, flexWrap: "wrap", alignItems: "flex-start", justifyContent: "space-between" }}>
                   <div style={{ flex: "1 1 250px" }}>
-                    <span className="eyebrow" style={{ color: "#E0A07E", fontSize: 10 }}>biggest opportunity · {ASSESS[weakest].dim}</span>
+                    <span className="eyebrow" style={{ color: "#E0A07E", fontSize: 10 }}>biggest opportunity \u00b7 {ASSESS[weakest].dim}</span>
                     <p style={{ color: C.onDark2, fontSize: 14, lineHeight: 1.5, margin: "8px 0 0" }}>{ASSESS[weakest].tip}</p>
                   </div>
                   <button onClick={() => setScores(ASSESS.map(() => 50))} style={{ flexShrink: 0, height: 38, padding: "0 16px", borderRadius: 6, border: `1px solid ${C.lineOnDark}`, background: "transparent", color: C.onDark, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13, fontFamily: SAN }}><RotateCcw size={14} /> Reset</button>
@@ -934,7 +778,7 @@ export default function App() {
           </div>
 
           <p style={{ marginTop: 44, fontFamily: SER, fontSize: "clamp(22px,3.6vw,34px)", fontStyle: "italic", lineHeight: 1.25, maxWidth: 800 }}>
-            Don’t let the AI Dividend disappear into more work. <span style={{ color: C.paleGreen }}>Make it visible, intentional, and protected.</span>
+            Don\u2019t let the AI Dividend disappear into more work. <span style={{ color: C.paleGreen }}>Make it visible, intentional, and protected.</span>
           </p>
         </div>
       </section>
@@ -948,7 +792,7 @@ export default function App() {
             <SectionTag num="03" text="table conversations" accent={C.olive} />
             <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>The Listening Room</h2>
             <Scribble w={230} color={C.olive} style={{ marginTop: 8 }} />
-            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 660 }}>A few themes surfaced again and again across the table conversations. Open each fragment for the insight it captured — and the provocative question it raised.</p>
+            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 660 }}>A few themes surfaced again and again across the table conversations. Open each fragment for the insight it captured \u2014 and the provocative question it raised.</p>
           </Reveal>
 
           <Reveal style={{ marginTop: 36 }}>
@@ -957,7 +801,7 @@ export default function App() {
 
           <div style={{ marginTop: 28, display: "flex", gap: 12, alignItems: "flex-start", background: C.white, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.olive}`, borderRadius: 10, padding: "15px 18px", maxWidth: 720 }}>
             <span style={{ width: 11, height: 11, borderRadius: 2, background: C.olive, transform: "rotate(-6deg)", flexShrink: 0, marginTop: 4 }} />
-            <p style={{ color: C.fg2, fontSize: 13, lineHeight: 1.6, margin: 0 }}>This is a synthesized summary of the table discussions — representative themes, not verbatim quotes. <strong style={{ color: C.fg1, fontWeight: 700 }}>All recordings and transcripts from the evening have since been deleted; only this summary remains.</strong></p>
+            <p style={{ color: C.fg2, fontSize: 13, lineHeight: 1.6, margin: 0 }}>This is a synthesized summary of the table discussions \u2014 representative themes, not verbatim quotes. <strong style={{ color: C.fg1, fontWeight: 700 }}>All recordings and transcripts from the evening have since been deleted; only this summary remains.</strong></p>
           </div>
         </div>
       </section>
@@ -967,7 +811,7 @@ export default function App() {
         <Grain />
         <div style={{ position: "relative", zIndex: 1 }}>
           <Reveal>
-            <SectionTag num="04" text="the evening · in photos" accent={C.gold} />
+            <SectionTag num="04" text="the evening \u00b7 in photos" accent={C.gold} />
             <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>Photo Gallery</h2>
             <Scribble w={210} color={C.gold} style={{ marginTop: 8 }} />
             <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 640 }}>A look back at the evening at kyu HOUSE. {mob ? "Swipe" : "Scroll"} through and {mob ? "tap" : "click"} any photo to enlarge.</p>
@@ -1018,7 +862,7 @@ export default function App() {
               <a className="kyuNav" href="mailto:kyucollective@kyu.com">kyucollective@kyu.com</a>
             </div>
             <div style={{ position: "absolute", bottom: 38, right: "6vw", display: "flex", flexDirection: "column", zIndex: 2 }}>
-              <span style={{ fontFamily: SER, fontSize: 18, color: "#1c1c19", lineHeight: 1.6 }}>© 2026</span>
+              <span style={{ fontFamily: SER, fontSize: 18, color: "#1c1c19", lineHeight: 1.6 }}>\u00a9 2026</span>
               <span style={{ fontFamily: SER, fontSize: 18, color: "#1c1c19", lineHeight: 1.6 }}>kyu Collective</span>
               <a className="kyuNav kyuUnder" href="https://www.hakuhodody-holdings.co.jp/english/" target="_blank" rel="noreferrer">Hakuhodo DY Holdings</a>
             </div>
@@ -1042,7 +886,7 @@ export default function App() {
               <a className="kyuNav" href="mailto:kyucollective@kyu.com">kyucollective@kyu.com</a>
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ fontFamily: SER, fontSize: 17, color: "#1c1c19", lineHeight: 1.6 }}>© 2026</span>
+              <span style={{ fontFamily: SER, fontSize: 17, color: "#1c1c19", lineHeight: 1.6 }}>\u00a9 2026</span>
               <span style={{ fontFamily: SER, fontSize: 17, color: "#1c1c19", lineHeight: 1.6 }}>kyu Collective</span>
               <a className="kyuNav kyuUnder" href="https://www.hakuhodody-holdings.co.jp/english/" target="_blank" rel="noreferrer">Hakuhodo DY Holdings</a>
             </div>
