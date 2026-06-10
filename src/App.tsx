@@ -337,7 +337,7 @@ const TOC = [
   { id: "panel", label: "The Fireside Chat", color: C.rust },
   { id: "assess", label: "The Assessment", color: C.teal },
   { id: "tables", label: "The Listening Room", color: C.olive },
-  { id: "gallery", label: "The Evening", color: C.gold },
+  { id: "gallery", label: "Photo Gallery", color: C.gold },
 ];
 
 const PANEL = [
@@ -555,6 +555,7 @@ function MosaicWall({ mob }) {
 // ----- Photo gallery -----
 // To use real photos, paste each image's hosted URL (or data URI) into `src`.
 const PHOTOS = [
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/Overall%20Room.png", w: true },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC07086.jpg", w: true },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC06914.jpg" },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC06945.jpg" },
@@ -566,7 +567,6 @@ const PHOTOS = [
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC07236.jpg", h: true },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/k_DSC07012.jpg" },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/k_DSC06997.jpg" },
-  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/Overall%20Room.png", w: true },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/k_DSC06749.jpg" },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/k_DSC06958.jpg", h: true },
   { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/k_DSC07300.jpg" },
@@ -579,26 +579,36 @@ const GPAL = [C.teal, C.olive, C.rust, C.oliveLt, C.tealDeep, C.gold];
 function Gallery({ mob }) {
   const [open, setOpen] = useState(null);
   const [failed, setFailed] = useState({});
-  const cols = mob ? 2 : 4;
+  const [ratios, setRatios] = useState({});
+  const strip = useRef(null);
+  const H = mob ? 210 : 300;
+  const widthOf = (i, p) => { const r = ratios[i]; const ratio = r ? Math.min(1.9, Math.max(0.62, r)) : (p.h ? 0.74 : (p.w ? 1.5 : 1.3)); return Math.round(H * ratio); };
+  const scrollBy = (dir) => { const el = strip.current; if (el) el.scrollBy({ left: dir * (mob ? 240 : 460), behavior: "smooth" }); };
   const navBtn = (side) => ({ position: "absolute", [side]: mob ? 6 : 24, top: "50%", transform: "translateY(-50%)", width: 46, height: 46, borderRadius: "50%", border: "1px solid rgba(255,255,255,.3)", background: "rgba(0,0,0,.32)", color: "#fff", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" });
+  const arrow = (side) => ({ position: "absolute", [side]: -6, top: `${H / 2}px`, transform: "translateY(-50%)", zIndex: 4, width: 44, height: 44, borderRadius: "50%", border: `1px solid ${C.line}`, background: C.white, color: C.fg1, cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 18px rgba(22,41,31,.18)" });
   return (
     <>
-      <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gridAutoRows: mob ? 116 : 150, gridAutoFlow: "dense", gap: mob ? 10 : 13 }}>
-        {PHOTOS.map((p, i) => {
-          const tilt = ((i % 3) - 1) * 1.5;
-          const color = GPAL[i % GPAL.length];
-          return (
-            <button key={i} onClick={() => setOpen(i)} className="lift" style={{ gridColumn: (p.w && !mob) ? "span 2" : "span 1", gridRow: p.h ? "span 2" : "span 1", position: "relative", border: `1px solid ${C.line}`, borderRadius: 12, overflow: "hidden", cursor: "pointer", padding: 0, background: p.src ? "#111" : color, transform: `rotate(${tilt}deg)` }}>
-              {(p.src && !failed[i])
-                ? <img src={p.src} alt="" onError={() => setFailed((f) => ({ ...f, [i]: true }))} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                : <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <Grain op={0.09} />
-                    <span style={{ display: "flex", gap: 5 }}>{[0, 1, 2].map((d) => <span key={d} style={{ width: 12, height: 12, borderRadius: 3, background: "rgba(255,255,255,.55)", transform: `rotate(${(d - 1) * 10}deg)` }} />)}</span>
-                  </div>}
-            </button>
-          );
-        })}
+      <div style={{ position: "relative" }}>
+        {!mob && <button onClick={() => scrollBy(-1)} style={arrow("left")} aria-label="Previous"><ChevronLeft size={20} /></button>}
+        <div ref={strip} style={{ display: "flex", gap: 14, overflowX: "auto", scrollSnapType: "x proximity", padding: "6px 2px 12px", WebkitOverflowScrolling: "touch" }}>
+          {PHOTOS.map((p, i) => {
+            const tilt = ((i % 3) - 1) * 1.4;
+            const color = GPAL[i % GPAL.length];
+            return (
+              <button key={i} onClick={() => setOpen(i)} className="lift" style={{ flex: "0 0 auto", width: widthOf(i, p), height: H, scrollSnapAlign: "start", position: "relative", border: `1px solid ${C.line}`, borderRadius: 12, overflow: "hidden", cursor: "pointer", padding: 0, background: (p.src && !failed[i]) ? "#111" : color, transform: `rotate(${tilt}deg)` }}>
+                {(p.src && !failed[i])
+                  ? <img src={p.src} alt="" onLoad={(e) => setRatios((r) => ({ ...r, [i]: e.target.naturalWidth / e.target.naturalHeight }))} onError={() => setFailed((f) => ({ ...f, [i]: true }))} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  : <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <Grain op={0.09} />
+                      <span style={{ display: "flex", gap: 5 }}>{[0, 1, 2].map((d) => <span key={d} style={{ width: 12, height: 12, borderRadius: 3, background: "rgba(255,255,255,.55)", transform: `rotate(${(d - 1) * 10}deg)` }} />)}</span>
+                    </div>}
+              </button>
+            );
+          })}
+        </div>
+        {!mob && <button onClick={() => scrollBy(1)} style={arrow("right")} aria-label="Next"><ChevronRight size={20} /></button>}
       </div>
+      <p style={{ color: C.fg3, fontSize: 12.5, marginTop: 10, fontFamily: SAN }}>{mob ? "Swipe to browse · tap a photo to enlarge" : "Scroll or use the arrows to browse · click a photo to enlarge"}</p>
 
       {open != null && (
         <div onClick={() => setOpen(null)} style={{ position: "fixed", inset: 0, zIndex: 100, background: "rgba(16,24,18,.88)", display: "flex", alignItems: "center", justifyContent: "center", padding: mob ? 16 : 40 }}>
@@ -957,10 +967,10 @@ export default function App() {
         <Grain />
         <div style={{ position: "relative", zIndex: 1 }}>
           <Reveal>
-            <SectionTag num="04" text="the evening · in the room" accent={C.gold} />
-            <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>Scenes from the Evening</h2>
+            <SectionTag num="04" text="the evening · in photos" accent={C.gold} />
+            <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>Photo Gallery</h2>
             <Scribble w={210} color={C.gold} style={{ marginTop: 8 }} />
-            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 640 }}>A look inside kyu HOUSE — the conversation, the tables, and the people who gathered for the evening. {mob ? "Tap" : "Click"} any image to enlarge.</p>
+            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 640 }}>A look back at the evening at kyu HOUSE. {mob ? "Swipe" : "Scroll"} through and {mob ? "tap" : "click"} any photo to enlarge.</p>
           </Reveal>
           <Reveal style={{ marginTop: 34 }}>
             <Gallery mob={mob} />
