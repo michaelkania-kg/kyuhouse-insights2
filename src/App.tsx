@@ -287,51 +287,6 @@ function BrickField() {
   );
 }
 
-function Chip({ active, onClick, accent, children }) {
-  return (
-    <button onClick={onClick} className="tab" style={{
-      padding: "8px 15px", borderRadius: 22, fontSize: 13, fontWeight: 600, fontFamily: SAN, whiteSpace: "nowrap",
-      border: `1.5px solid ${active ? (accent || C.forest) : C.line}`,
-      background: active ? (accent || C.forest) : C.white,
-      color: active ? C.onDark : C.fg1,
-      boxShadow: active ? "0 6px 16px rgba(22,41,31,.14)" : "none",
-    }}>{children}</button>
-  );
-}
-
-function RoomView({ activeTable, onSelect, promptColors, mob }) {
-  const tables = [{ n: 1, x: 27, y: 27 }, { n: 2, x: 73, y: 27 }, { n: 3, x: 27, y: 73 }, { n: 4, x: 73, y: 73 }];
-  const dia = 28, chairR = 18, chairAngles = [20, 80, 140, 200, 260, 320];
-  return (
-    <div style={{ position: "relative", width: "100%", aspectRatio: "1 / 1", maxWidth: mob ? 360 : 520, margin: mob ? "0 auto" : 0, background: C.floor, borderRadius: 18, overflow: "hidden", border: `1px solid ${C.lineStrong}`, boxShadow: "inset 0 2px 14px rgba(22,41,31,.10)" }}>
-      {Array.from({ length: 9 }).map((_, i) => <div key={i} style={{ position: "absolute", top: 0, bottom: 0, left: `${(i + 1) * 10}%`, width: 1, background: "rgba(22,41,31,0.04)" }} />)}
-      <Grain op={0.06} />
-      <button onClick={() => onSelect(null)} className="tab" style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: "36%", height: "16%", borderRadius: 9, cursor: "pointer", border: `2px dashed ${activeTable === null ? C.forest : C.lineStrong}`, background: activeTable === null ? C.paleGreen : "rgba(255,255,255,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: "4px 6px", zIndex: 3 }}>
-        <span style={{ fontFamily: SER, fontSize: mob ? 9 : 11, lineHeight: 1.15, color: C.forest, textAlign: "center" }}>Overall Room<br />Perspective</span>
-      </button>
-      {tables.map((t) => {
-        const on = activeTable === t.n;
-        const dim = activeTable !== null && !on;
-        return (
-          <div key={t.n}>
-            {chairAngles.map((a, ci) => {
-              const rad = (a * Math.PI) / 180, cx = t.x + Math.cos(rad) * chairR, cy = t.y + Math.sin(rad) * chairR;
-              return <div key={ci} style={{ position: "absolute", left: `${cx}%`, top: `${cy}%`, width: "5.5%", height: "5.5%", transform: `translate(-50%,-50%) rotate(${a + 90}deg)`, background: C.chair, borderRadius: "42% 42% 30% 30%", opacity: dim ? 0.35 : 0.8, transition: "opacity .3s", zIndex: 1 }} />;
-            })}
-            <button onClick={() => onSelect(t.n)} className="tableBtn" style={{ position: "absolute", left: `${t.x}%`, top: `${t.y}%`, width: `${dia}%`, height: `${dia}%`, transform: `translate(-50%,-50%) scale(${on ? 1.07 : 1})`, borderRadius: "50%", cursor: "pointer", border: `2px solid ${on ? C.forest : C.line}`, background: C.table, boxShadow: on ? "0 14px 32px rgba(22,41,31,.24)" : "0 6px 16px rgba(22,41,31,.12)", opacity: dim ? 0.5 : 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", transition: "all .35s ease-out", zIndex: on ? 4 : 2 }}>
-              <span className="eyebrow" style={{ fontSize: mob ? 8 : 9, color: C.fg3 }}>Table</span>
-              <span style={{ fontFamily: SER, fontSize: mob ? 26 : 36, fontWeight: 500, lineHeight: 0.85, color: on ? C.forest : C.fg1 }}>{t.n}</span>
-              <div style={{ display: "flex", gap: mob ? 4 : 6, marginTop: mob ? 5 : 8 }}>
-                {promptColors.map((pc, pi) => <span key={pi} style={{ width: mob ? 8 : 10, height: mob ? 8 : 10, borderRadius: 2, background: pc, transform: `rotate(${(pi - 1) * 8}deg)`, opacity: on ? 1 : 0.85 }} />)}
-              </div>
-            </button>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
 // ---- DATA ----
 const TOC = [
   { id: "panel", label: "The Fireside Chat", color: C.rust },
@@ -341,23 +296,23 @@ const TOC = [
 ];
 
 const PANEL = [
-  { n: "01", lbl: "Efficiency is the mechanism", t: "Efficiency is the mechanism, not the destination.", ins: "AI creates capacity, but capacity only becomes advantage when leaders intentionally direct it toward higher-value work.", take: "The question shifts from \u201cHow do we do the same work faster?\u201d to \u201cWhat better work should we now have time to do?\u201d" },
-  { n: "02", lbl: "Reinvest the dividend", t: "The AI Dividend needs to be reinvested.", ins: "Saved time should be treated as a strategic asset \u2014 allocated with the same discipline as capital, talent, or budget.", take: "The AI Dividend is only valuable if leaders protect it and reinvest it." },
+  { n: "01", lbl: "Efficiency is the mechanism", t: "Efficiency is the mechanism, not the destination.", ins: "AI creates capacity, but capacity only becomes advantage when leaders intentionally direct it toward higher-value work.", take: "The question shifts from “How do we do the same work faster?” to “What better work should we now have time to do?”" },
+  { n: "02", lbl: "Reinvest the dividend", t: "The AI Dividend needs to be reinvested.", ins: "Saved time should be treated as a strategic asset — allocated with the same discipline as capital, talent, or budget.", take: "The AI Dividend is only valuable if leaders protect it and reinvest it." },
   { n: "03", lbl: "Redesign, don't bolt on", t: "AI exposes the limits of old operating models.", ins: "AI will not transform organizations that simply plug new tools into old workflows.", take: "The opportunity is to redesign the system around the work humans are best positioned to do." },
   { n: "04", lbl: "The creative frontier", t: "The creative frontier becomes the competitive frontier.", ins: "When more organizations can move fast, distinction comes from stronger ideas, sharper choices, and more meaningful human judgment.", take: "When everything is easier to make, knowing what is worth making becomes the advantage." },
   { n: "05", lbl: "Adaptive beats efficient", t: "Adaptive organizations will outperform efficient ones.", ins: "The strongest organizations will use AI to increase learning velocity, not just output volume.", take: "The winners will use AI to become more adaptive, not simply more automated." },
-  { n: "06", lbl: "Conditions over control", t: "Leadership becomes less about control, more about conditions.", ins: "AI makes command-and-control less effective. Leaders shape the environment where people apply judgment with confidence.", take: "The leader\u2019s role shifts from directing activity to designing the conditions for better work." },
+  { n: "06", lbl: "Conditions over control", t: "Leadership becomes less about control, more about conditions.", ins: "AI makes command-and-control less effective. Leaders shape the environment where people apply judgment with confidence.", take: "The leader’s role shifts from directing activity to designing the conditions for better work." },
 ];
 
 const COMPANIES = [
   { id: "RTG", firm: "Rich Talent Group", accent: C.rust,
-    desc: "Rich Talent Group recruits extraordinary leaders for companies that want to make an impact and need a firm that goes beyond the traditional playbook. Combining deep expertise with creative sourcing and expansive networks, RTG builds leadership teams and boards for some of the world\u2019s most influential companies.",
+    desc: "Rich Talent Group recruits extraordinary leaders for companies that want to make an impact and need a firm that goes beyond the traditional playbook. Combining deep expertise with creative sourcing and expansive networks, RTG builds leadership teams and boards for some of the world’s most influential companies.",
     linkText: null, linkUrl: null, reachUrl: "https://www.richtalentgroup.com/" },
   { id: "SY", firm: "SYPartners", accent: C.olive,
-    desc: "SYPartners is a consultancy that partners with clients at their critical turning points \u2014 designing new possibilities for impact, creating paths to long-term value, and building cultures of competitive advantage. For more than 30 years they\u2019ve transformed some of the world\u2019s most iconic organizations by fusing strategy and design. Their recent piece, Zero Gravity Leadership, distills how they\u2019re thinking about AI.",
+    desc: "SYPartners is a consultancy that partners with clients at their critical turning points — designing new possibilities for impact, creating paths to long-term value, and building cultures of competitive advantage. For more than 30 years they’ve transformed some of the world’s most iconic organizations by fusing strategy and design. Their recent piece, Zero Gravity Leadership, distills how they’re thinking about AI.",
     linkText: "Read Zero Gravity Leadership", linkUrl: "https://www.sypartners.com/articles/zero-gravity-leadership-in-the-age-of-ai", reachUrl: "https://www.sypartners.com/" },
   { id: "IDEO", firm: "IDEO", accent: C.teal,
-    desc: "IDEO is an iconic design and innovation company, enabling the world\u2019s most influential leaders to create breakthrough, human-centered products, services, and organizations with purpose and impact. In partnership with Tim Brown, they recently released their latest thought piece, The AI Dividend.",
+    desc: "IDEO is an iconic design and innovation company, enabling the world’s most influential leaders to create breakthrough, human-centered products, services, and organizations with purpose and impact. In partnership with Tim Brown, they recently released their latest thought piece, The AI Dividend.",
     linkText: "Read The AI Dividend", linkUrl: "https://www.ideo.com/journal/the-ai-dividend", reachUrl: "https://www.ideo.com/" },
 ];
 
@@ -366,11 +321,11 @@ const QPAL = [C.teal, C.olive, C.rust, C.tealDeep, C.oliveLt, C.gold];
 // Summarized insights from the conversation, each paired with an aligned provocation
 const LISTENING = [
   { n: "01", color: C.tealDeep, insight: "Trade debate for experimentation", summary: "Once testing an idea costs less than arguing about it, the edge goes to leaders who get hands-on and put themselves at the frontier instead of directing from a distance.", q: "What if the cost of testing a hypothesis fell so low that experimentation replaced debate as the engine of strategy?" },
-  { n: "02", color: C.olive, insight: "Leaders must define AI, not defer it", summary: "Hand this to technologists with a \u201cdeploy AI\u201d mandate and everything collapses into cost-cutting. People fill the silence with fear. Leaders must be fluent enough to say what AI is for.", q: "What if cutting through the exploding signal-to-noise became the most valuable thing a leader does?" },
-  { n: "03", color: C.teal, insight: "The human edge becomes relational", summary: "As intelligence turns cheap and ubiquitous, what sets people apart is how they work with others \u2014 reading the room, navigating stakeholders, the relational intelligence we\u2019ve let atrophy.", q: "How might we put relational intelligence back at the core of how we build products, teams, and institutions?" },
-  { n: "04", color: C.rust, insight: "Redesign the work, don\u2019t just speed it up", summary: "\u201cRedesign the workflow\u201d quietly assumes the work stays the same, only faster. The real move is rethinking the job around what humans do best \u2014 and where AI should step in.", q: "What would we build if we redefined the work from scratch around what only humans can do?" },
-  { n: "05", color: C.oliveLt, insight: "Push capacity to the edges", summary: "Breakthroughs come from unexpected corners \u2014 a junior analyst building tools no one would fund. Centralizing AI contradicts what it is; let freed capacity flow to the people closest to the work.", q: "How might we redesign organizations so the capacity freed by AI flows to the people closest to the work?" },
-  { n: "06", color: C.gold, insight: "It\u2019s a people problem, not a tech problem", summary: "Resistance is rational when people feel close to being replaced. Adoption is a desirability problem, not a mandate \u2014 the work is illuminating the next, better jobs.", q: "How might we make the next generation of jobs so desirable that people race toward them rather than resist them?" },
+  { n: "02", color: C.olive, insight: "Leaders must define AI, not defer it", summary: "Hand this to technologists with a “deploy AI” mandate and everything collapses into cost-cutting. People fill the silence with fear. Leaders must be fluent enough to say what AI is for.", q: "What if cutting through the exploding signal-to-noise became the most valuable thing a leader does?" },
+  { n: "03", color: C.teal, insight: "The human edge becomes relational", summary: "As intelligence turns cheap and ubiquitous, what sets people apart is how they work with others — reading the room, navigating stakeholders, the relational intelligence we’ve let atrophy.", q: "How might we put relational intelligence back at the core of how we build products, teams, and institutions?" },
+  { n: "04", color: C.rust, insight: "Redesign the work, don’t just speed it up", summary: "“Redesign the workflow” quietly assumes the work stays the same, only faster. The real move is rethinking the job around what humans do best — and where AI should step in.", q: "What would we build if we redefined the work from scratch around what only humans can do?" },
+  { n: "05", color: C.oliveLt, insight: "Push capacity to the edges", summary: "Breakthroughs come from unexpected corners — a junior analyst building tools no one would fund. Centralizing AI contradicts what it is; let freed capacity flow to the people closest to the work.", q: "How might we redesign organizations so the capacity freed by AI flows to the people closest to the work?" },
+  { n: "06", color: C.gold, insight: "It’s a people problem, not a tech problem", summary: "Resistance is rational when people feel close to being replaced. Adoption is a desirability problem, not a mandate — the work is illuminating the next, better jobs.", q: "How might we make the next generation of jobs so desirable that people race toward them rather than resist them?" },
 ];
 
 // ----- Mosaic: six fragments that pop down -----
@@ -378,7 +333,7 @@ function MosaicWall({ mob }) {
   const [sel, setSel] = useState(null); // 0..5 or null
   const item = sel != null ? LISTENING[sel] : null;
   const cols = mob ? 2 : 6;
-  const SHORT = ["Experiment over debate", "Define, don\u2019t defer", "The relational edge", "Redesign the work", "Push to the edges", "A people problem"];
+  const SHORT = ["Experiment over debate", "Define, don’t defer", "The relational edge", "Redesign the work", "Push to the edges", "A people problem"];
   return (
     <div>
       <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: mob ? 12 : 14 }}>
@@ -416,7 +371,7 @@ function MosaicWall({ mob }) {
                 <p style={{ position: "relative", fontFamily: SER, fontStyle: "italic", fontSize: mob ? 21 : 24, lineHeight: 1.32, margin: "10px 0 0" }}>{item.q}</p>
               </div>
             </div>
-            <button onClick={() => setSel(null)} style={{ marginTop: 18, background: "none", border: "none", cursor: "pointer", color: C.fg3, fontWeight: 600, fontSize: 13, fontFamily: SAN, padding: 0 }}>Close \u00d7</button>
+            <button onClick={() => setSel(null)} style={{ marginTop: 18, background: "none", border: "none", cursor: "pointer", color: C.fg3, fontWeight: 600, fontSize: 13, fontFamily: SAN, padding: 0 }}>Close ×</button>
           </div>
         </div>
       )}
@@ -478,11 +433,11 @@ function Gallery({ mob }) {
         </div>
         {!mob && <button onClick={() => scrollBy(1)} style={arrow("right")} aria-label="Next"><ChevronRight size={20} /></button>}
       </div>
-      <p style={{ color: C.fg3, fontSize: 12.5, marginTop: 10, fontFamily: SAN }}>{mob ? "Swipe to browse \u00b7 tap a photo to enlarge" : "Scroll or use the arrows to browse \u00b7 click a photo to enlarge"}</p>
+      <p style={{ color: C.fg3, fontSize: 12.5, marginTop: 10, fontFamily: SAN }}>{mob ? "Swipe to browse · tap a photo to enlarge" : "Scroll or use the arrows to browse · click a photo to enlarge"}</p>
 
       {open != null && (
         <div onClick={() => setOpen(null)} style={{ position: "fixed", inset: 0, zIndex: 100, background: "rgba(16,24,18,.88)", display: "flex", alignItems: "center", justifyContent: "center", padding: mob ? 16 : 40 }}>
-          <button onClick={() => setOpen(null)} style={{ position: "absolute", top: 16, right: 20, background: "none", border: "none", color: "#fff", fontSize: 32, cursor: "pointer", lineHeight: 1 }}>\u00d7</button>
+          <button onClick={() => setOpen(null)} style={{ position: "absolute", top: 16, right: 20, background: "none", border: "none", color: "#fff", fontSize: 32, cursor: "pointer", lineHeight: 1 }}>×</button>
           <button onClick={(e) => { e.stopPropagation(); setOpen((o) => (o - 1 + PHOTOS.length) % PHOTOS.length); }} style={navBtn("left")}><ChevronLeft size={26} /></button>
           <div onClick={(e) => e.stopPropagation()} style={{ maxWidth: 880, width: "100%", textAlign: "center" }}>
             {(PHOTOS[open].src && !failed[open])
@@ -501,18 +456,18 @@ function Gallery({ mob }) {
 }
 
 const ASSESS = [
-  { dim: "Reinvestment", q: "We\u2019ve decided where our reclaimed time should go.", tip: "Name the return you want on saved time \u2014 strategy, customer insight, creativity, coaching \u2014 before it\u2019s absorbed." },
-  { dim: "Operating rhythm", q: "AI is built into how we plan, decide, create, and review \u2014 not isolated pilots.", tip: "Move AI out of side projects and into the team\u2019s everyday operating rhythm." },
+  { dim: "Reinvestment", q: "We’ve decided where our reclaimed time should go.", tip: "Name the return you want on saved time — strategy, customer insight, creativity, coaching — before it’s absorbed." },
+  { dim: "Operating rhythm", q: "AI is built into how we plan, decide, create, and review — not isolated pilots.", tip: "Move AI out of side projects and into the team’s everyday operating rhythm." },
   { dim: "Time visibility", q: "We can see where time goes, and what AI should absorb, accelerate, or leave to humans.", tip: "Map work into four buckets: what AI can absorb, accelerate, what humans protect, and what to stop doing." },
   { dim: "Trust", q: "Our people trust AI is used to unlock better work, not to extract more labor.", tip: "Make it explicit that the dividend is meant to create room, not raise the quota." },
   { dim: "Discernment", q: "Our leaders can tell signal from noise in AI output.", tip: "Build the muscle to judge when AI output is useful, generic, or missing human context." },
   { dim: "Learning velocity", q: "We turn AI experiments into learning, quickly.", tip: "Design experiments as learning systems, not one-off tests." },
 ];
 const BANDS = [
-  { min: 0, name: "Extracting", color: C.rust, note: "The dividend is being absorbed as more output and higher expectations \u2014 the squeeze that erodes trust. Start by deciding where the time should go." },
-  { min: 36, name: "Drifting", color: C.olive, note: "You\u2019re creating capacity, but it\u2019s leaking away. The gain needs an owner and a plan before it disappears into more work." },
-  { min: 61, name: "Reinvesting", color: C.teal, note: "You\u2019re directing reclaimed time toward better work. Protect it \u2014 and keep sharpening where it lands." },
-  { min: 83, name: "Compounding", color: C.oliveLt, note: "The dividend is visible, intentional, and protected. Now press the advantage \u2014 distinctiveness over sameness." },
+  { min: 0, name: "Extracting", color: C.rust, note: "The dividend is being absorbed as more output and higher expectations — the squeeze that erodes trust. Start by deciding where the time should go." },
+  { min: 36, name: "Drifting", color: C.olive, note: "You’re creating capacity, but it’s leaking away. The gain needs an owner and a plan before it disappears into more work." },
+  { min: 61, name: "Reinvesting", color: C.teal, note: "You’re directing reclaimed time toward better work. Protect it — and keep sharpening where it lands." },
+  { min: 83, name: "Compounding", color: C.oliveLt, note: "The dividend is visible, intentional, and protected. Now press the advantage — distinctiveness over sameness." },
 ];
 
 export default function App() {
@@ -642,7 +597,7 @@ export default function App() {
                 <CircleScribble color={C.rust} style={{ position: "absolute", left: "-7%", top: "-26%", width: "114%", height: "158%", pointerEvents: "none" }} />
               </span>
             </h2>
-            <p style={{ color: C.fg2, marginTop: 22, fontSize: 17, lineHeight: 1.5, maxWidth: 620 }}>Key insights \u2014 {mob ? "Tap" : "Select"} a tile to explore.</p>
+            <p style={{ color: C.fg2, marginTop: 22, fontSize: 17, lineHeight: 1.5, maxWidth: 620 }}>Key insights — {mob ? "Tap" : "Select"} a tile to explore.</p>
           </Reveal>
 
           {mob ? (
@@ -661,14 +616,14 @@ export default function App() {
               <div className="bloom" key={node ?? "thesis"} style={{ marginTop: 18, background: C.white, border: `1px solid ${C.line}`, borderRadius: 10, padding: 22, boxShadow: "0 12px 30px rgba(22,41,31,.10)", textAlign: "center" }}>
                 {sel ? (
                   <>
-                    <span className="eyebrow" style={{ color: C.teal, fontSize: 10 }}>{sel.n} \u00b7 insight</span>
+                    <span className="eyebrow" style={{ color: C.teal, fontSize: 10 }}>{sel.n} · insight</span>
                     <p style={{ color: C.fg2, fontSize: 15, lineHeight: 1.5, margin: "10px 0 12px" }}>{sel.ins}</p>
                     <p style={{ fontFamily: SER, fontStyle: "italic", color: C.fg1, fontSize: 18, lineHeight: 1.35, margin: 0 }}>{sel.take}</p>
                   </>
                 ) : (
                   <>
                     <span className="eyebrow" style={{ color: C.teal, fontSize: 10 }}>the thesis</span>
-                    <p style={{ fontFamily: SER, fontSize: 18, lineHeight: 1.4, color: C.fg1, margin: "10px 0 0", fontStyle: "italic" }}>AI\u2019s greater potential is the human capacity it unlocks.</p>
+                    <p style={{ fontFamily: SER, fontSize: 18, lineHeight: 1.4, color: C.fg1, margin: "10px 0 0", fontStyle: "italic" }}>AI’s greater potential is the human capacity it unlocks.</p>
                     <p style={{ color: C.fg3, fontSize: 12.5, marginTop: 12 }}>Tap a tile to reveal it</p>
                   </>
                 )}
@@ -682,12 +637,12 @@ export default function App() {
                 </svg>
                 <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: 330, height: 300, borderRadius: 8, background: sel ? C.white : "transparent", border: `1px solid ${sel ? C.line : "transparent"}`, boxShadow: sel ? "0 16px 44px rgba(22,41,31,.12)" : "none", display: "flex", flexDirection: "column", justifyContent: "center", padding: 40, textAlign: "center", transition: "all .4s ease-out", zIndex: 5 }}>
                   {sel ? (<>
-                    <span className="eyebrow" style={{ color: C.teal, fontSize: 11 }}>{sel.n} \u00b7 insight</span>
+                    <span className="eyebrow" style={{ color: C.teal, fontSize: 11 }}>{sel.n} · insight</span>
                     <p style={{ color: C.fg2, fontSize: 14.5, lineHeight: 1.5, margin: "12px 0 14px" }}>{sel.ins}</p>
                     <p style={{ fontFamily: SER, fontStyle: "italic", color: C.fg1, fontSize: 18, lineHeight: 1.35, margin: 0 }}>{sel.take}</p>
                   </>) : (<>
                     <span className="eyebrow" style={{ color: C.teal, fontSize: 11 }}>the thesis</span>
-                    <p style={{ fontFamily: SER, fontSize: 20, lineHeight: 1.4, color: C.fg1, margin: "12px 0 0", fontStyle: "italic" }}>AI\u2019s greater potential is the human capacity it unlocks.</p>
+                    <p style={{ fontFamily: SER, fontSize: 20, lineHeight: 1.4, color: C.fg1, margin: "12px 0 0", fontStyle: "italic" }}>AI’s greater potential is the human capacity it unlocks.</p>
                     <p style={{ color: C.fg3, fontSize: 13, marginTop: 14 }}>Select a tile</p>
                   </>)}
                 </div>
@@ -727,13 +682,13 @@ export default function App() {
           {mob && (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, marginTop: 22, padding: "14px 16px", borderRadius: 12, border: `1px solid ${C.lineOnDark}`, background: "rgba(255,255,255,0.06)" }}>
               <div>
-                <span className="eyebrow" style={{ color: C.onDark2, fontSize: 9 }}>your score \u00b7 live</span>
+                <span className="eyebrow" style={{ color: C.onDark2, fontSize: 9 }}>your score · live</span>
                 <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 3 }}>
                   <span style={{ fontFamily: SER, fontSize: 40, fontWeight: 500, lineHeight: 1, color: band.color, transition: "color .4s" }}>{avg}</span>
                   <span style={{ fontFamily: SER, fontSize: 17, color: C.onDark, fontStyle: "italic" }}>{band.name}</span>
                 </div>
               </div>
-              <span style={{ fontFamily: SAN, fontSize: 11, fontWeight: 600, color: C.onDark2, textAlign: "right", maxWidth: 110, lineHeight: 1.35 }}>Updates as you drag \u2193</span>
+              <span style={{ fontFamily: SAN, fontSize: 11, fontWeight: 600, color: C.onDark2, textAlign: "right", maxWidth: 110, lineHeight: 1.35 }}>Updates as you drag ↓</span>
             </div>
           )}
 
@@ -761,7 +716,7 @@ export default function App() {
                 <p style={{ color: C.onDark, fontSize: 15.5, lineHeight: 1.55, margin: 0, maxWidth: 540 }}>{band.note}</p>
                 <div style={{ marginTop: 20, paddingTop: 18, borderTop: `1px solid ${C.lineOnDark}`, display: "flex", gap: 20, flexWrap: "wrap", alignItems: "flex-start", justifyContent: "space-between" }}>
                   <div style={{ flex: "1 1 250px" }}>
-                    <span className="eyebrow" style={{ color: "#E0A07E", fontSize: 10 }}>biggest opportunity \u00b7 {ASSESS[weakest].dim}</span>
+                    <span className="eyebrow" style={{ color: "#E0A07E", fontSize: 10 }}>biggest opportunity · {ASSESS[weakest].dim}</span>
                     <p style={{ color: C.onDark2, fontSize: 14, lineHeight: 1.5, margin: "8px 0 0" }}>{ASSESS[weakest].tip}</p>
                   </div>
                   <button onClick={() => setScores(ASSESS.map(() => 50))} style={{ flexShrink: 0, height: 38, padding: "0 16px", borderRadius: 6, border: `1px solid ${C.lineOnDark}`, background: "transparent", color: C.onDark, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13, fontFamily: SAN }}><RotateCcw size={14} /> Reset</button>
@@ -778,7 +733,7 @@ export default function App() {
           </div>
 
           <p style={{ marginTop: 44, fontFamily: SER, fontSize: "clamp(22px,3.6vw,34px)", fontStyle: "italic", lineHeight: 1.25, maxWidth: 800 }}>
-            Don\u2019t let the AI Dividend disappear into more work. <span style={{ color: C.paleGreen }}>Make it visible, intentional, and protected.</span>
+            Don’t let the AI Dividend disappear into more work. <span style={{ color: C.paleGreen }}>Make it visible, intentional, and protected.</span>
           </p>
         </div>
       </section>
@@ -792,7 +747,7 @@ export default function App() {
             <SectionTag num="03" text="table conversations" accent={C.olive} />
             <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>The Listening Room</h2>
             <Scribble w={230} color={C.olive} style={{ marginTop: 8 }} />
-            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 660 }}>A few themes surfaced again and again across the table conversations. Open each fragment for the insight it captured \u2014 and the provocative question it raised.</p>
+            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 660 }}>A few themes surfaced again and again across the table conversations. Open each fragment for the insight it captured — and the provocative question it raised.</p>
           </Reveal>
 
           <Reveal style={{ marginTop: 36 }}>
@@ -801,7 +756,7 @@ export default function App() {
 
           <div style={{ marginTop: 28, display: "flex", gap: 12, alignItems: "flex-start", background: C.white, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.olive}`, borderRadius: 10, padding: "15px 18px", maxWidth: 720 }}>
             <span style={{ width: 11, height: 11, borderRadius: 2, background: C.olive, transform: "rotate(-6deg)", flexShrink: 0, marginTop: 4 }} />
-            <p style={{ color: C.fg2, fontSize: 13, lineHeight: 1.6, margin: 0 }}>This is a synthesized summary of the table discussions \u2014 representative themes, not verbatim quotes. <strong style={{ color: C.fg1, fontWeight: 700 }}>All recordings and transcripts from the evening have since been deleted; only this summary remains.</strong></p>
+            <p style={{ color: C.fg2, fontSize: 13, lineHeight: 1.6, margin: 0 }}>This is a synthesized summary of the table discussions — representative themes, not verbatim quotes. <strong style={{ color: C.fg1, fontWeight: 700 }}>All recordings and transcripts from the evening have since been deleted; only this summary remains.</strong></p>
           </div>
         </div>
       </section>
@@ -811,7 +766,7 @@ export default function App() {
         <Grain />
         <div style={{ position: "relative", zIndex: 1 }}>
           <Reveal>
-            <SectionTag num="04" text="the evening \u00b7 in photos" accent={C.gold} />
+            <SectionTag num="04" text="the evening · in photos" accent={C.gold} />
             <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>Photo Gallery</h2>
             <Scribble w={210} color={C.gold} style={{ marginTop: 8 }} />
             <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 640 }}>A look back at the evening at kyu HOUSE. {mob ? "Swipe" : "Scroll"} through and {mob ? "tap" : "click"} any photo to enlarge.</p>
@@ -862,7 +817,7 @@ export default function App() {
               <a className="kyuNav" href="mailto:kyucollective@kyu.com">kyucollective@kyu.com</a>
             </div>
             <div style={{ position: "absolute", bottom: 38, right: "6vw", display: "flex", flexDirection: "column", zIndex: 2 }}>
-              <span style={{ fontFamily: SER, fontSize: 18, color: "#1c1c19", lineHeight: 1.6 }}>\u00a9 2026</span>
+              <span style={{ fontFamily: SER, fontSize: 18, color: "#1c1c19", lineHeight: 1.6 }}>© 2026</span>
               <span style={{ fontFamily: SER, fontSize: 18, color: "#1c1c19", lineHeight: 1.6 }}>kyu Collective</span>
               <a className="kyuNav kyuUnder" href="https://www.hakuhodody-holdings.co.jp/english/" target="_blank" rel="noreferrer">Hakuhodo DY Holdings</a>
             </div>
@@ -886,7 +841,7 @@ export default function App() {
               <a className="kyuNav" href="mailto:kyucollective@kyu.com">kyucollective@kyu.com</a>
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ fontFamily: SER, fontSize: 17, color: "#1c1c19", lineHeight: 1.6 }}>\u00a9 2026</span>
+              <span style={{ fontFamily: SER, fontSize: 17, color: "#1c1c19", lineHeight: 1.6 }}>© 2026</span>
               <span style={{ fontFamily: SER, fontSize: 17, color: "#1c1c19", lineHeight: 1.6 }}>kyu Collective</span>
               <a className="kyuNav kyuUnder" href="https://www.hakuhodody-holdings.co.jp/english/" target="_blank" rel="noreferrer">Hakuhodo DY Holdings</a>
             </div>
