@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowDown, ArrowRight, RotateCcw, Mic, Sparkles, PenTool, Code2, Mail, ExternalLink } from "lucide-react";
+import { ArrowDown, ArrowRight, RotateCcw, Mic, Sparkles, PenTool, Code2, Mail, ExternalLink, ChevronLeft, ChevronRight, Shuffle, Play, Pause } from "lucide-react";
 
 const C = {
   cream: "#E3E1DE", paleGreen: "#D6E9B4", teal: "#2C695B", tealDeep: "#214F44",
@@ -43,6 +43,19 @@ input[type=range]{accent-color:${C.teal};width:100%}
 .kyuNav{font-family:${SER};font-size:18px;color:#1c1c19;text-decoration:none;line-height:1.6;transition:opacity .2s ease-out}
 .kyuNav:hover{opacity:.5}
 .kyuUnder{text-decoration:underline;text-underline-offset:3px}
+.flip{perspective:1600px}
+.flipInner{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.45,.05,.25,1);transform-style:preserve-3d}
+.flip.on .flipInner{transform:rotateY(180deg)}
+.flipFace{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;box-shadow:0 6px 18px rgba(22,41,31,.08);transition:box-shadow .3s ease-out}
+.flip:hover .flipFace{box-shadow:0 16px 40px rgba(22,41,31,.16)}
+.flipBack{transform:rotateY(180deg)}
+@keyframes eq{0%,100%{transform:scaleY(.32)}50%{transform:scaleY(1)}}
+.studioSeg:hover{background:rgba(255,255,255,.05)!important}
+.pill{transition:all .2s ease-out;cursor:pointer}
+@keyframes mfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.mtile{transition:left .65s cubic-bezier(.45,.05,.2,1),top .65s cubic-bezier(.45,.05,.2,1),width .65s cubic-bezier(.45,.05,.2,1),height .65s cubic-bezier(.45,.05,.2,1)}
+.mrot{transition:transform .65s cubic-bezier(.45,.05,.2,1),box-shadow .3s ease-out}
+.mclick:hover .mrot{box-shadow:0 14px 34px rgba(22,41,31,.28)!important}
 `;
 
 function Reveal({ children, delay = 0, style = {} }) {
@@ -277,7 +290,7 @@ function BrickField() {
 function Chip({ active, onClick, accent, children }) {
   return (
     <button onClick={onClick} className="tab" style={{
-      padding: "9px 16px", borderRadius: 14, fontSize: 12.5, fontWeight: 600, fontFamily: SAN, lineHeight: 1.35, textAlign: "left",
+      padding: "8px 15px", borderRadius: 22, fontSize: 13, fontWeight: 600, fontFamily: SAN, whiteSpace: "nowrap",
       border: `1.5px solid ${active ? (accent || C.forest) : C.line}`,
       background: active ? (accent || C.forest) : C.white,
       color: active ? C.onDark : C.fg1,
@@ -293,8 +306,8 @@ function RoomView({ activeTable, onSelect, promptColors, mob }) {
     <div style={{ position: "relative", width: "100%", aspectRatio: "1 / 1", maxWidth: mob ? 360 : 520, margin: mob ? "0 auto" : 0, background: C.floor, borderRadius: 18, overflow: "hidden", border: `1px solid ${C.lineStrong}`, boxShadow: "inset 0 2px 14px rgba(22,41,31,.10)" }}>
       {Array.from({ length: 9 }).map((_, i) => <div key={i} style={{ position: "absolute", top: 0, bottom: 0, left: `${(i + 1) * 10}%`, width: 1, background: "rgba(22,41,31,0.04)" }} />)}
       <Grain op={0.06} />
-      <button onClick={() => onSelect(null)} className="tab" style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: "16%", height: "16%", borderRadius: "50%", cursor: "pointer", border: `2px dashed ${activeTable === null ? C.forest : C.lineStrong}`, background: activeTable === null ? C.paleGreen : "rgba(255,255,255,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 3 }}>
-        <span style={{ fontFamily: SER, fontSize: mob ? 8 : 10, lineHeight: 1.1, color: C.forest, textAlign: "center" }}>overall room<br />perspective</span>
+      <button onClick={() => onSelect(null)} className="tab" style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: "36%", height: "16%", borderRadius: 9, cursor: "pointer", border: `2px dashed ${activeTable === null ? C.forest : C.lineStrong}`, background: activeTable === null ? C.paleGreen : "rgba(255,255,255,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: "4px 6px", zIndex: 3 }}>
+        <span style={{ fontFamily: SER, fontSize: mob ? 9 : 11, lineHeight: 1.15, color: C.forest, textAlign: "center" }}>Overall Room<br />Perspective</span>
       </button>
       {tables.map((t) => {
         const on = activeTable === t.n;
@@ -323,7 +336,8 @@ function RoomView({ activeTable, onSelect, promptColors, mob }) {
 const TOC = [
   { id: "panel", label: "The Fireside Chat", color: C.rust },
   { id: "assess", label: "The Assessment", color: C.teal },
-  { id: "tables", label: "The Listening Room", color: C.olive, soon: true },
+  { id: "tables", label: "The Listening Room", color: C.olive },
+  { id: "gallery", label: "The Evening", color: C.gold },
 ];
 
 const PANEL = [
@@ -342,7 +356,7 @@ const COMPANIES = [
     prompt: "In a world where AI increasingly democratizes expertise and execution, what human qualities will become the strongest predictors of executive leadership success?",
     overall: "The human edge converges on judgment, taste, and the humility to keep learning." },
   { id: "SY", firm: "SYPartners", accent: C.olive,
-    desc: "SYPartners is a consultancy that partners with clients at their critical turning points — designing new possibilities for impact, creating paths to long-term value, and building cultures of competitive advantage. For more than 30 years they’ve transformed some of the world’s most iconic organizations by fusing strategy and design. Their perspective on AI recently inspired their Zero Gravity Leadership piece.",
+    desc: "SYPartners is a consultancy that partners with clients at their critical turning points — designing new possibilities for impact, creating paths to long-term value, and building cultures of competitive advantage. For more than 30 years they’ve transformed some of the world’s most iconic organizations by fusing strategy and design. Their recent piece, Zero Gravity Leadership, distills how they’re thinking about AI.",
     linkText: "Read Zero Gravity Leadership", linkUrl: "https://www.sypartners.com/articles/zero-gravity-leadership-in-the-age-of-ai", reachUrl: "https://www.sypartners.com/",
     prompt: "What leadership capabilities will distinguish businesses that merely deploy AI from those that use AI to spark new value?",
     overall: "Value comes from sharper questions, faster learning, protected attention, and meaning that motivates." },
@@ -366,6 +380,253 @@ const INSIGHTS = [
   { co: "IDEO", table: 2, t: "Build AI into the operating rhythm.", ins: "AI creates value when it’s woven into how teams plan, decide, create, and review — not when it lives in isolated pilots. The harder shift is habits and shared standards, not tool access.", x: "Fragmented pilots, inconsistent use, and no shared sense of what good AI-enabled work actually looks like.", frags: ["we’re piloting it, not living it", "everyone’s using it differently", "what does ‘good’ even look like here?", "the tools are fine — the habits aren’t", "we have champions, not a standard", "make it the rhythm, not the exception"] },
   { co: "IDEO", table: 3, t: "Trust is the precondition for the dividend.", ins: "People need to believe AI is being used to unlock better work, not to extract more labor. Without transparency about what changes, the gain reads as a threat.", x: "Fear of job loss, mixed leadership signals, and a lack of honesty about what AI actually changes.", frags: ["people think it’s code for layoffs", "is this to help me or replace me?", "say the quiet part — what’s it for?", "trust has to come before the tools", "give us autonomy, not surveillance", "no one will say it out loud"] },
   { co: "IDEO", table: 4, t: "Redesign the work, don’t just speed it up.", ins: "Bolting AI onto yesterday’s process only makes a flawed system faster. The dividend shows up when teams rebuild the workflow around what humans and AI each do best.", x: "Sunk-cost attachment to existing processes, and the effort of redesign feeling riskier than incremental tweaks.", frags: ["faster bad process is still bad", "we paved the cowpath", "redesign beats retrofit", "what would we build from scratch?", "automate the task, rethink the job", "don’t bolt it on"] },
+];
+
+const TABLE_SUMMARY = {
+  1: "Table 1 kept circling back to discernment. As AI raises the floor on output, the harder and more valuable work becomes judging what is actually worth pursuing — and protecting time for those calls rather than filling it with more tasks.",
+  2: "Table 2 focused on learning velocity. The group argued the real dividend isn't doing the same work faster, but running more small experiments and turning them into a system that compounds — treating speed as a way to learn, not just to ship.",
+  3: "Table 3 centered on trust and attention. Without transparency about what AI is for, people read it as a threat; with it, freed time can be redirected to deep work. The leadership job is to make it safe to try and to protect focus rather than flood it.",
+  4: "Table 4 returned to redesign and meaning. Bolting AI onto old workflows just makes a flawed process faster; the opportunity is rebuilding the work around what humans and AI each do best — and connecting it to a why that keeps people motivated.",
+};
+
+const PROMPT_TAB = { RTG: "Human qualities", SY: "Sparking new value", IDEO: "Realizing the dividend" };
+
+const ROOM_OVERALL = {
+  lead: "Across all four tables, one idea kept surfacing: the value of AI isn't the speed it adds, it's the human capacity it frees — and the room cared far more about what that freed capacity should be spent on than about the tools themselves.",
+  themes: [
+    "Judgment and taste become the scarce, defining skills",
+    "Learning velocity matters more than raw output",
+    "Trust and transparency decide whether the dividend is real",
+    "The work itself gets redesigned, not just accelerated",
+  ],
+};
+
+const QPAL = [C.teal, C.olive, C.rust, C.tealDeep, C.oliveLt, C.gold];
+const QUOTES = [
+  "With the explosion of access to IQ, IQ is no longer earned or owned — it's two hundred dollars a month. So the ability to work with humans and small teams, and to navigate a complex map of stakeholders, becomes the differentiator.",
+  "This is the ultimate reinvention moment, and we're shooting too narrow. The invitation is 'redesign your workflow,' which assumes we keep doing it the same way, only more efficiently — instead of fundamentally rethinking it.",
+  "Tell me how this person interacts with other humans. How do they problem-solve with others? If these capabilities are available to everyone now, what matters is how they actually deal with people.",
+  "Most leaders have a gap between how they're thinking about AI and their people strategy. They're not thinking about the humans at all, so employees never get a chance to adjust.",
+  "Don't defer this to the technology side. The CEO, the head of people, and the head of marketing all have to be at the table, and fluent enough to guide the organization.",
+  "We're not prepared for a future where the cost of debating a hypothesis is higher than the cost of testing it. The leaders who rise will put themselves at the edge, out of curiosity or a player-coach mentality.",
+  "As everyone gets busy trying to maximize AI in their current business, it's actually locking them into the way the business has always worked.",
+  "The new leader needs a lot more moral courage — to say there are two ends of AI, artificial intelligence and authentic interaction, and to figure out how those come together elegantly.",
+  "We've lost something over the last ten or twenty years: relational intelligence, in favor of computer-driven intelligence.",
+  "Every organization keeps going at this with a stick. It's a desirability problem — you don't solve it by telling everyone they have to do it and threatening to fire them.",
+  "Leaders are making their companies more efficient but slower at the same time, because they're not thinking about change management.",
+  "Differentiated leaders will code-shift between the weekly, crazy cycle time of things moving fast and the two-year arc of the organization — and hold both at once.",
+  "Your job is to imagine the next jobs that are so desirable that people look at them and say, 'I can't wait to get to do that.'",
+  "If leaders aren't defining AI — this is how we'll use it, this is what it could be — that's what's missing, and people just project into the void.",
+  "The innovations changing our organization are coming from unexpected places — a junior finance person building an entire tool set attached to our P&L that we never would have funded. How do you find that and bring it up so you can learn from it at the enterprise level?",
+  "Leaders are almost trapped in the old paradigm by the very existence of this supposedly radical technology.",
+  "We have not illuminated for people what the jobs are going to be. People are actively resisting — we have whole employee groups actively resisting.",
+  "The editorial eye gets heightened: what matters, how do you cut through it fast, and how do you get the whole organization to orient around it?",
+  "You need people who can actually talk to people to pull this off — and that's becoming more rare.",
+  "Non-technologists can be product leaders now. Someone with a vision can harness these tools to prototype, develop, and experiment far faster than before.",
+  "Everyone understands the customer journey and its touch points, but not which ones matter most for the financial metrics that drive share price. That's where you find where AI meaningfully reduces friction or creates a delightful moment.",
+  "Nobody is talking about top-line revenue generation — creating experiences that drive preference, choice, and the permanence of a relationship. And that has to start with the CEO.",
+  "The C-suite defers this to the CTO or the information officer and says 'deploy AI,' which moves everything straight into the efficiency space.",
+  "You have to redefine work: what are humans most capable of, and where does AI need to step in?",
+  "We need to change how we work: creating human experiences, tapping human creativity to create value for customers, and empowering the organization to be entrepreneurial.",
+  "It's the fault of the technology companies building it, because they look at it purely from a technology perspective. If you only focus on the technology, it's easy to default to cost savings and automation, when that might not help you grow.",
+  "There's fear because people sense they're that close to being replaced. The thought is: if I adopt it, am I just feeding the machine that replaces me anyway?",
+  "The signal-to-noise ratio is exploding. It's already hard for senior leaders in a complex organization to filter out what matters.",
+  "If you just turn to Silicon Valley and ask for the future of the hospital, they'll design a room where no humans ever interact.",
+  "There's no such thing as effective judgment if you're multiple layers removed, relying on the organization to coordinate information up to you and back down.",
+  "I was the odd one out for years for asking about our users and the community impact of what we were building. Those questions were treated as last-mile considerations — you should flip it around.",
+  "The leaders who rise won't be the ones who are good at debating. They'll be the ones who put themselves at the edge.",
+  "The tendency is to centralize AI, which is contradictory to what AI means. If you lead one of our companies, my AI advisor is your advisor — talk to him whenever you want.",
+  "Push yourself past asking the AI search-engine questions. Try to build something with a coding agent or automate a simple process. Executives should get their hands deep in it to understand what it is and isn't.",
+  "I don't start with AI or the technology. I start with the goal we're trying to achieve. AI is a tool. The first question is how we leverage human talent.",
+  "Determining very clearly what the objectives are, and doing it in real time — that's a skill of the future. It's a skill of the present too, just not well practiced.",
+  "There's human potential everywhere — we're just not unleashing enough of it.",
+  "Some people will be out there aggressively adapting; others won't even understand why we need to change. That difference in adaptability is everything.",
+  "I think a lot about moving innovation to the people closest to the work.",
+  "The CEO is the only person who can knock down operational and business silos so people can actually grow.",
+  "Now it's very expensive — the token wars. People are getting their bills for thinking. The instinct is to hand everyone a hammer, but not everyone needs a hammer.",
+  "I'm not looking for efficiency or to make more money. My goal is how we serve more people with the same dollars.",
+  "As an executive you suddenly have superpowers. You don't have to go through cycles of communication and watch things fall down the chain — you can put ideas into action much more quickly.",
+  "Help people unlock the human spirit. We're at a point where people genuinely want that.",
+  "For people with deep experience and expertise, this is amazing — you can do active strategy in ways you never could before.",
+  "Creating experiences that drive preference, choice, and the permanence of a relationship — that's the human work.",
+  "You have to be able to communicate the real purpose, the objective, and how we're going to get there. We all have to be cheerleaders for that excitement and innovation.",
+  "AI has become too ubiquitous a word. It doesn't really mean anything anymore.",
+];
+const PROVOCATIONS = [
+  "How might we make the next generation of jobs so desirable that people race toward them rather than resist them?",
+  "What does it take to lead as a gardener who cultivates the conditions for growth rather than an engineer who directs it?",
+  "What does it take to translate the unmeasured creative frontier into a durable competitive difference?",
+  "What if the entire surplus AI creates were reinvested in human creativity, judgment, and taste?",
+  "How might we redesign organizations so the capacity freed by AI flows to the people closest to the work?",
+  "What does it take to redefine work around what humans are most capable of?",
+  "What if the cost of testing a hypothesis fell so low that experimentation replaced debate as the engine of strategy?",
+  "How might we put relational intelligence at the core of how we build products, teams, and institutions?",
+  "How might we surface the breakthrough innovations emerging from unexpected corners of an organization and learn from them at enterprise scale?",
+  "How might we cultivate the moral courage leaders need to weave authentic human interaction into AI-driven systems?",
+  "What if the most valuable leadership skill became the editorial eye that cuts through exploding signal-to-noise?",
+  "What does it take to help a frightened workforce move from fear to creative confidence?",
+];
+
+// Summarized insights from the conversation, each paired with an aligned provocation
+const LISTENING = [
+  { n: "01", color: C.tealDeep, insight: "Trade debate for experimentation", summary: "Once testing an idea costs less than arguing about it, the edge goes to leaders who get hands-on and put themselves at the frontier instead of directing from a distance.", q: "What if the cost of testing a hypothesis fell so low that experimentation replaced debate as the engine of strategy?" },
+  { n: "02", color: C.olive, insight: "Leaders must define AI, not defer it", summary: "Hand this to technologists with a “deploy AI” mandate and everything collapses into cost-cutting. People fill the silence with fear. Leaders must be fluent enough to say what AI is for.", q: "What if cutting through the exploding signal-to-noise became the most valuable thing a leader does?" },
+  { n: "03", color: C.teal, insight: "The human edge becomes relational", summary: "As intelligence turns cheap and ubiquitous, what sets people apart is how they work with others — reading the room, navigating stakeholders, the relational intelligence we’ve let atrophy.", q: "How might we put relational intelligence back at the core of how we build products, teams, and institutions?" },
+  { n: "04", color: C.rust, insight: "Redesign the work, don’t just speed it up", summary: "“Redesign the workflow” quietly assumes the work stays the same, only faster. The real move is rethinking the job around what humans do best — and where AI should step in.", q: "What would we build if we redefined the work from scratch around what only humans can do?" },
+  { n: "05", color: C.oliveLt, insight: "Push capacity to the edges", summary: "Breakthroughs come from unexpected corners — a junior analyst building tools no one would fund. Centralizing AI contradicts what it is; let freed capacity flow to the people closest to the work.", q: "How might we redesign organizations so the capacity freed by AI flows to the people closest to the work?" },
+  { n: "06", color: C.gold, insight: "It’s a people problem, not a tech problem", summary: "Resistance is rational when people feel close to being replaced. Adoption is a desirability problem, not a mandate — the work is illuminating the next, better jobs.", q: "How might we make the next generation of jobs so desirable that people race toward them rather than resist them?" },
+];
+
+function FlipCard({ item, mob }) {
+  const [on, setOn] = useState(false);
+  return (
+    <div className={"flip" + (on ? " on" : "")} style={{ height: mob ? 300 : 330 }}>
+      <div className="flipInner">
+        <div className="flipFace" onClick={() => setOn(true)} style={{ background: C.white, border: `1px solid ${C.line}`, borderTop: `3px solid ${item.color}`, cursor: "pointer", padding: mob ? 22 : 26 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 14 }}>
+            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, borderRadius: 6, background: item.color, color: C.onDark, fontFamily: SER, fontSize: 17, transform: "rotate(-3deg)", flexShrink: 0, boxShadow: "0 4px 12px rgba(22,41,31,.12)" }}>{item.n}</span>
+            <span className="eyebrow" style={{ color: item.color, fontSize: 10 }}>insight</span>
+          </div>
+          <h4 style={{ fontFamily: SER, fontWeight: 500, fontSize: mob ? 20 : 21, lineHeight: 1.15, margin: 0, color: C.fg1 }}>{item.insight}</h4>
+          <p style={{ color: C.fg2, fontSize: 13.5, lineHeight: 1.5, margin: "12px 0 0", flex: 1 }}>{item.summary}</p>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: item.color, fontFamily: SAN, fontSize: 12.5, fontWeight: 700, marginTop: 14 }}><RotateCcw size={14} /> Reveal the provocation</span>
+        </div>
+        <div className="flipFace flipBack" onClick={() => setOn(false)} style={{ background: item.color, color: C.onDark, cursor: "pointer", padding: mob ? 24 : 28 }}>
+          <span className="eyebrow" style={{ color: "rgba(255,255,255,.82)", fontSize: 10 }}>a provocation</span>
+          <p style={{ fontFamily: SER, fontStyle: "italic", fontSize: mob ? 21 : 22, lineHeight: 1.32, margin: 0, flex: 1, display: "flex", alignItems: "center" }}>{item.q}</p>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "rgba(255,255,255,.85)", fontFamily: SAN, fontSize: 12.5, fontWeight: 700 }}><RotateCcw size={14} /> Back to insight</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ----- Mosaic: six fragments that pop down -----
+function MosaicWall({ mob }) {
+  const [sel, setSel] = useState(null); // 0..5 or null
+  const item = sel != null ? LISTENING[sel] : null;
+  const cols = mob ? 2 : 6;
+  const SHORT = ["Experiment over debate", "Define, don’t defer", "The relational edge", "Redesign the work", "Push to the edges", "A people problem"];
+  return (
+    <div>
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: mob ? 12 : 14 }}>
+        {LISTENING.map((l, i) => {
+          const on = i === sel;
+          const dim = sel != null && !on;
+          const tilt = ((i % 3) - 1) * 3;
+          return (
+            <div key={i} style={{ animation: !on ? `mfloat ${3 + (i % 3) * 0.6}s ease-in-out ${(i % 6) * 0.28}s infinite` : "none" }}>
+              <button onClick={() => setSel(on ? null : i)}
+                style={{ position: "relative", zIndex: on ? 5 : 1, width: "100%", height: mob ? 118 : 150, boxSizing: "border-box", border: "none", cursor: "pointer", textAlign: "left", borderRadius: 12, padding: mob ? 13 : 15, background: l.color, color: C.onDark, opacity: dim ? 0.5 : 1, transform: on ? "translateY(14px) scale(1.05)" : `rotate(${tilt}deg)`, boxShadow: on ? "0 22px 46px rgba(22,41,31,.3)" : "0 6px 16px rgba(22,41,31,.15)", display: "flex", flexDirection: "column", justifyContent: "space-between", overflow: "hidden", transition: "transform .5s cubic-bezier(.34,1.45,.5,1), box-shadow .4s ease-out, opacity .35s ease-out" }}>
+                <span style={{ fontFamily: SER, fontSize: mob ? 20 : 26, fontWeight: 500, opacity: 0.8, lineHeight: 1 }}>{l.n}</span>
+                <span style={{ fontFamily: SER, fontSize: mob ? 14 : 15.5, fontWeight: 500, lineHeight: 1.18, wordBreak: "break-word" }}>{SHORT[i]}</span>
+              </button>
+            </div>
+          );
+        })}
+      </div>
+
+      {item && (
+        <div className="bloom" key={sel} style={{ position: "relative", marginTop: mob ? 18 : 24 }}>
+          {!mob && <div style={{ position: "absolute", top: -10, left: `calc(${((sel + 0.5) / cols) * 100}% - 11px)`, width: 0, height: 0, borderLeft: "11px solid transparent", borderRight: "11px solid transparent", borderBottom: `12px solid ${item.color}`, transition: "left .4s ease-out" }} />}
+          <div style={{ background: C.white, border: `1px solid ${C.line}`, borderTop: `4px solid ${item.color}`, borderRadius: 12, padding: mob ? 22 : 30, boxShadow: "0 14px 40px rgba(22,41,31,.12)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: mob ? 20 : 40, alignItems: "start" }}>
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+                  <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 44, height: 44, borderRadius: 8, background: item.color, color: C.onDark, fontFamily: SER, fontSize: 22, transform: "rotate(-3deg)", flexShrink: 0, boxShadow: "0 6px 16px rgba(22,41,31,.16)" }}>{item.n}</span>
+                  <h3 style={{ fontFamily: SER, fontWeight: 500, fontSize: "clamp(22px,2.7vw,28px)", lineHeight: 1.13, margin: 0 }}>{item.insight}</h3>
+                </div>
+                <p style={{ color: C.fg2, fontSize: 15.5, lineHeight: 1.6, margin: 0 }}>{item.summary}</p>
+              </div>
+              <div style={{ background: item.color, borderRadius: 12, padding: mob ? "20px 22px" : "24px 26px", color: C.onDark, position: "relative", overflow: "hidden", alignSelf: "stretch", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <Grain blend="overlay" op={0.07} />
+                <span className="eyebrow" style={{ color: "rgba(255,255,255,.82)", fontSize: 10, position: "relative" }}>the question it raised</span>
+                <p style={{ position: "relative", fontFamily: SER, fontStyle: "italic", fontSize: mob ? 21 : 24, lineHeight: 1.32, margin: "10px 0 0" }}>{item.q}</p>
+              </div>
+            </div>
+            <button onClick={() => setSel(null)} style={{ marginTop: 18, background: "none", border: "none", cursor: "pointer", color: C.fg3, fontWeight: 600, fontSize: 13, fontFamily: SAN, padding: 0 }}>Close ×</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ----- Photo gallery -----
+// To use real photos, paste each image's hosted URL (or data URI) into `src`.
+const PHOTOS = [
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC07086.jpg", w: true },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC06914.jpg" },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC06945.jpg" },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC06790.jpg", h: true },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC06733.jpg" },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC07078.jpg", w: true },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC07218.jpg" },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC07180.jpg" },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC07236.jpg", h: true },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/k_DSC07012.jpg" },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/k_DSC06997.jpg" },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/Overall%20Room.png", w: true },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/k_DSC06749.jpg" },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/k_DSC06958.jpg", h: true },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/k_DSC07300.jpg" },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/k_DSC07266.jpg", w: true },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC06855.jpg" },
+  { src: "https://raw.githubusercontent.com/michaelkania-kg/kyuhouse-insights2/main/public/images/DSC07306.jpg" },
+];
+const GPAL = [C.teal, C.olive, C.rust, C.oliveLt, C.tealDeep, C.gold];
+
+function Gallery({ mob }) {
+  const [open, setOpen] = useState(null);
+  const [failed, setFailed] = useState({});
+  const cols = mob ? 2 : 4;
+  const navBtn = (side) => ({ position: "absolute", [side]: mob ? 6 : 24, top: "50%", transform: "translateY(-50%)", width: 46, height: 46, borderRadius: "50%", border: "1px solid rgba(255,255,255,.3)", background: "rgba(0,0,0,.32)", color: "#fff", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" });
+  return (
+    <>
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gridAutoRows: mob ? 116 : 150, gridAutoFlow: "dense", gap: mob ? 10 : 13 }}>
+        {PHOTOS.map((p, i) => {
+          const tilt = ((i % 3) - 1) * 1.5;
+          const color = GPAL[i % GPAL.length];
+          return (
+            <button key={i} onClick={() => setOpen(i)} className="lift" style={{ gridColumn: (p.w && !mob) ? "span 2" : "span 1", gridRow: p.h ? "span 2" : "span 1", position: "relative", border: `1px solid ${C.line}`, borderRadius: 12, overflow: "hidden", cursor: "pointer", padding: 0, background: p.src ? "#111" : color, transform: `rotate(${tilt}deg)` }}>
+              {(p.src && !failed[i])
+                ? <img src={p.src} alt="" onError={() => setFailed((f) => ({ ...f, [i]: true }))} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                : <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <Grain op={0.09} />
+                    <span style={{ display: "flex", gap: 5 }}>{[0, 1, 2].map((d) => <span key={d} style={{ width: 12, height: 12, borderRadius: 3, background: "rgba(255,255,255,.55)", transform: `rotate(${(d - 1) * 10}deg)` }} />)}</span>
+                  </div>}
+            </button>
+          );
+        })}
+      </div>
+
+      {open != null && (
+        <div onClick={() => setOpen(null)} style={{ position: "fixed", inset: 0, zIndex: 100, background: "rgba(16,24,18,.88)", display: "flex", alignItems: "center", justifyContent: "center", padding: mob ? 16 : 40 }}>
+          <button onClick={() => setOpen(null)} style={{ position: "absolute", top: 16, right: 20, background: "none", border: "none", color: "#fff", fontSize: 32, cursor: "pointer", lineHeight: 1 }}>×</button>
+          <button onClick={(e) => { e.stopPropagation(); setOpen((o) => (o - 1 + PHOTOS.length) % PHOTOS.length); }} style={navBtn("left")}><ChevronLeft size={26} /></button>
+          <div onClick={(e) => e.stopPropagation()} style={{ maxWidth: 880, width: "100%", textAlign: "center" }}>
+            {(PHOTOS[open].src && !failed[open])
+              ? <img src={PHOTOS[open].src} alt="" onError={() => setFailed((f) => ({ ...f, [open]: true }))} style={{ maxWidth: "100%", maxHeight: "76vh", borderRadius: 12, display: "block", margin: "0 auto" }} />
+              : <div style={{ aspectRatio: "3 / 2", width: "100%", maxWidth: 760, maxHeight: "70vh", margin: "0 auto", borderRadius: 12, background: GPAL[open % GPAL.length], position: "relative", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Grain op={0.1} />
+                  <span style={{ display: "flex", gap: 7 }}>{[0, 1, 2].map((d) => <span key={d} style={{ width: 16, height: 16, borderRadius: 4, background: "rgba(255,255,255,.55)", transform: `rotate(${(d - 1) * 10}deg)` }} />)}</span>
+                </div>}
+            <p style={{ fontFamily: SER, fontStyle: "italic", color: "rgba(237,235,230,.65)", fontSize: 14, marginTop: 14 }}>{open + 1} / {PHOTOS.length}</p>
+          </div>
+          <button onClick={(e) => { e.stopPropagation(); setOpen((o) => (o + 1) % PHOTOS.length); }} style={navBtn("right")}><ChevronRight size={26} /></button>
+        </div>
+      )}
+    </>
+  );
+}
+
+const ROOM_INSIGHTS = [
+  { t: "The human edge becomes relational", s: "As intelligence turns cheap and ubiquitous, what sets people apart is how they work with others: reading the room, navigating stakeholders, and the relational intelligence many organizations have let atrophy." },
+  { t: "Redesign the work, don't just speed it up", s: "The common push to redesign workflows quietly assumes the work stays the same, only faster. The real opportunity is to rethink work entirely around what humans are most capable of, and where AI should step in." },
+  { t: "Leaders must define AI, not defer it", s: "When the C-suite hands this to technologists and simply asks them to deploy AI, everything collapses into efficiency and cost-cutting. Leaders across the business need to be fluent enough to say what AI is for, or people fill the silence with fear." },
+  { t: "It's a people problem, not a tech problem", s: "Resistance is rational when people sense they are close to being replaced. Adoption is a desirability problem, not something you solve with a mandate. The work is illuminating the next, more desirable jobs and moving a frightened workforce toward creative confidence." },
+  { t: "Trade debate for experimentation", s: "As the cost of testing an idea falls below the cost of arguing about it, advantage shifts to leaders who get hands-on and put themselves at the edge rather than directing from a distance." },
+  { t: "Push capacity to the edges", s: "Breakthroughs arrive from unexpected corners, like a junior analyst building tools no one would have funded. Centralizing AI contradicts what it is; the move is to let freed capacity flow to the people closest to the work." },
 ];
 
 const ASSESS = [
@@ -395,13 +656,15 @@ export default function App() {
   const [activeTable, setActiveTable] = useState(null);
   const [activePrompt, setActivePrompt] = useState("RTG");
   const [scores, setScores] = useState(ASSESS.map(() => 50));
+  const [qIdx, setQIdx] = useState(0);
+  const [provIdx, setProvIdx] = useState(0);
 
   const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
   const band = [...BANDS].reverse().find((b) => avg >= b.min);
   const weakest = scores.indexOf(Math.min(...scores));
   const TILES = 24, filled = Math.round((avg / 100) * TILES);
 
-  const sections = ["intro", "panel", "assess", "tables"];
+  const sections = ["intro", "panel", "assess", "tables", "gallery"];
   const [active, setActive] = useState("intro");
   useEffect(() => { const o = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)), { threshold: 0.4 });
     sections.forEach((s) => { const el = document.getElementById(s); if (el) o.observe(el); }); return () => o.disconnect(); }, []);
@@ -667,92 +930,41 @@ export default function App() {
       </section>
 
       {/* 3 · THE LISTENING ROOM */}
-      <section id="tables" style={{ padding: mob ? "6vh 7vw" : "7vh 7vw", background: C.sage, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
+      <section id="tables" style={{ padding: mob ? "9vh 7vw" : "11vh 7vw", background: C.sage, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
         <Grain />
-        <div style={{ position: "relative", zIndex: 1, filter: "grayscale(0.92) blur(2px)", opacity: 0.5, pointerEvents: "none", userSelect: "none", maxHeight: mob ? 280 : 360, overflow: "hidden" }} aria-hidden="true">
+        {!mob && <div style={{ position: "absolute", bottom: -50, right: -50, opacity: 0.14, transform: "rotate(10deg)", pointerEvents: "none", WebkitMaskImage: "linear-gradient(300deg,#000,transparent 70%)", maskImage: "linear-gradient(300deg,#000,transparent 70%)" }}><OrbitBurst w={300} /></div>}
+        <div style={{ position: "relative", zIndex: 1 }}>
           <Reveal>
-            <SectionTag num="03" text="the roundtables · we were listening" accent={C.olive} />
+            <SectionTag num="03" text="table conversations" accent={C.olive} />
             <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>The Listening Room</h2>
             <Scribble w={230} color={C.olive} style={{ marginTop: 8 }} />
-            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 660 }}>Four tables, each working through all three prompts. Tap a table to explore what was said there — or the center of the room for the overall themes.</p>
+            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 660 }}>A few themes surfaced again and again across the table conversations. Open each fragment for the insight it captured — and the provocative question it raised.</p>
           </Reveal>
 
           <Reveal style={{ marginTop: 36 }}>
-            <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "0.85fr 1.15fr", gap: mob ? 30 : 44, alignItems: "start" }}>
-              <div>
-                <RoomView activeTable={activeTable} onSelect={(v) => setActiveTable(v)} promptColors={promptColors} mob={mob} />
-                <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap", marginTop: 16 }}>
-                  <span className="eyebrow" style={{ color: C.fg3, fontSize: 10 }}>prompts at every table</span>
-                  {COMPANIES.map((c) => (
-                    <span key={c.id} style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 12.5, color: C.fg2 }}>
-                      <span style={{ width: 10, height: 10, borderRadius: 2, background: c.accent }} /> {c.firm}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bloom" key={activeTable ?? "overall"} style={{ minHeight: mob ? "auto" : 420 }}>
-                {activeTable == null ? (
-                  <>
-                    <span className="eyebrow" style={{ color: C.olive }}>overall room perspective</span>
-                    <h3 style={{ fontFamily: SER, fontWeight: 500, fontSize: "clamp(24px,3.2vw,32px)", lineHeight: 1.15, margin: "10px 0 0" }}>Three themes, one per prompt</h3>
-                    <p style={{ color: C.fg2, fontSize: 15, lineHeight: 1.55, margin: "10px 0 26px", maxWidth: 540 }}>Across all four tables, each co-host’s prompt drew out a distinct theme. Tap a table in the room to read its specific insights and the voices behind them.</p>
-                    <div style={{ display: "grid", gap: 14 }}>
-                      {COMPANIES.map((c) => (
-                        <div key={c.id} style={{ borderLeft: `3px solid ${c.accent}`, paddingLeft: 18 }}>
-                          <span className="eyebrow" style={{ color: c.accent, fontSize: 10 }}>prompt from {c.firm}</span>
-                          <p style={{ fontFamily: SER, fontStyle: "italic", fontSize: 14.5, color: C.fg3, margin: "6px 0 8px", maxWidth: 560 }}>“{c.prompt}”</p>
-                          <p style={{ fontFamily: SER, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.3, color: C.fg1, margin: 0, maxWidth: 560 }}>{c.overall}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <button onClick={() => setActiveTable(null)} style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "none", border: "none", cursor: "pointer", color: C.fg3, fontWeight: 600, fontSize: 13, fontFamily: SAN, padding: 0 }}>← Overall Room Perspective</button>
-                    <h3 style={{ fontFamily: SER, fontWeight: 500, fontSize: "clamp(26px,3.6vw,36px)", lineHeight: 1.1, margin: "12px 0 4px" }}>Table {activeTable}</h3>
-                    <p style={{ color: C.fg3, fontSize: 13.5, margin: "0 0 18px" }}>Choose a prompt to read what this table said.</p>
-                    <div style={{ display: "flex", gap: 9, flexWrap: "wrap", marginBottom: 22 }}>
-                      {COMPANIES.map((c) => <Chip key={c.id} active={activePrompt === c.id} accent={c.accent} onClick={() => setActivePrompt(c.id)}>{c.prompt}</Chip>)}
-                    </div>
-                    {activeInsight && (
-                      <div key={activePrompt} className="bloom" style={{ background: C.white, border: `1px solid ${C.line}`, borderTop: `3px solid ${activeCo.accent}`, borderRadius: 12, padding: 24 }}>
-                        <span className="eyebrow" style={{ color: activeCo.accent, fontSize: 10 }}>prompt from {activeCo.firm}</span>
-                        <p style={{ fontFamily: SER, fontStyle: "italic", fontSize: 14.5, color: C.fg3, margin: "6px 0 14px" }}>“{activeCo.prompt}”</p>
-                        <h4 style={{ fontFamily: SER, fontWeight: 500, fontSize: 22, lineHeight: 1.2, margin: 0 }}>{activeInsight.t}</h4>
-                        <p style={{ color: C.fg2, fontSize: 15, lineHeight: 1.55, margin: "10px 0 14px" }}>{activeInsight.ins}</p>
-                        {activeInsight.tag && <span style={{ display: "inline-block", border: `1px solid ${activeCo.accent}`, color: activeCo.accent, borderRadius: 4, padding: "5px 12px", fontSize: 12, fontWeight: 600 }}>{activeInsight.tag}</span>}
-                        {activeInsight.x && <div style={{ borderTop: `1px solid ${C.line}`, marginTop: 14, paddingTop: 12 }}><span className="eyebrow" style={{ color: C.rust, fontSize: 10 }}>what stands in the way</span><p style={{ color: C.fg3, fontSize: 13.5, lineHeight: 1.5, margin: "6px 0 0" }}>{activeInsight.x}</p></div>}
-                        <div style={{ marginTop: 16 }}>
-                          <span className="eyebrow" style={{ color: C.fg3, fontSize: 10 }}>voices from the table</span>
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
-                            {activeInsight.frags.slice(0, 4).map((f, i) => <span key={i} style={{ fontFamily: SER, fontStyle: "italic", fontSize: 13, color: C.fg2, background: C.cream, border: `1px solid ${C.line}`, borderRadius: 4, padding: "6px 11px" }}>“{f}”</span>)}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
+            <MosaicWall mob={mob} />
           </Reveal>
 
-          <p style={{ color: C.fg3, fontSize: 12, marginTop: 22, fontStyle: "italic" }}>Quotes are illustrative — representative of the discussion rather than verbatim.</p>
-        </div>
-
-        {/* COMING SOON OVERLAY */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 20, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: mob ? "7vh" : "8vh", paddingLeft: "7vw", paddingRight: "7vw", paddingBottom: "4vh", background: "repeating-linear-gradient(135deg, rgba(109,121,69,0.07) 0 16px, transparent 16px 32px), rgba(225,231,215,0.42)", backdropFilter: "blur(1.5px)", WebkitBackdropFilter: "blur(1.5px)" }}>
-          <div style={{ position: "relative", background: C.white, border: `1px solid ${C.lineStrong}`, borderRadius: 16, padding: mob ? "32px 26px" : "40px 48px", boxShadow: "0 30px 72px rgba(22,41,31,.28)", textAlign: "center", maxWidth: 500, animation: "softPulse 4.5s ease-in-out infinite" }}>
-            <div style={{ display: "flex", justifyContent: "center", gap: 7, marginBottom: 20 }}>
-              {[C.rust, C.olive, C.teal].map((cc, i) => <span key={i} style={{ width: 13, height: 13, borderRadius: 3, background: cc, transform: `rotate(${(i - 1) * 9}deg)`, boxShadow: "0 3px 8px rgba(22,41,31,.14)" }} />)}
-            </div>
-            <span className="eyebrow" style={{ color: C.fg3, fontSize: 11, display: "block", marginBottom: 14 }}>the listening room</span>
-            <span style={{ display: "inline-block", background: "#2C3B36", color: C.white, fontFamily: SER, fontWeight: 500, fontSize: "clamp(26px,4.4vw,42px)", lineHeight: 1.05, padding: "8px 24px 6px", transform: "rotate(-1.6deg)", boxShadow: "0 12px 30px rgba(22,41,31,.22)" }}>Coming Soon</span>
-            <p style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9, color: C.fg1, fontSize: "clamp(15px,2vw,17px)", lineHeight: 1.5, margin: "26px 0 0", fontWeight: 500 }}>
-              <Mail size={19} color={C.teal} style={{ flexShrink: 0 }} /> Keep an eye on your emails this week!
-            </p>
-            <p style={{ color: C.fg3, fontSize: 13.5, lineHeight: 1.55, margin: "12px auto 0", maxWidth: 360 }}>The insights from the roundtables are being synthesized — we'll share them with you soon.</p>
+          <div style={{ marginTop: 28, display: "flex", gap: 12, alignItems: "flex-start", background: C.white, border: `1px solid ${C.line}`, borderLeft: `3px solid ${C.olive}`, borderRadius: 10, padding: "15px 18px", maxWidth: 720 }}>
+            <span style={{ width: 11, height: 11, borderRadius: 2, background: C.olive, transform: "rotate(-6deg)", flexShrink: 0, marginTop: 4 }} />
+            <p style={{ color: C.fg2, fontSize: 13, lineHeight: 1.6, margin: 0 }}>This is a synthesized summary of the table discussions — representative themes, not verbatim quotes. <strong style={{ color: C.fg1, fontWeight: 700 }}>All recordings and transcripts from the evening have since been deleted; only this summary remains.</strong></p>
           </div>
+        </div>
+      </section>
+
+      {/* 4 · THE EVENING (photos) */}
+      <section id="gallery" style={{ padding: mob ? "9vh 7vw" : "11vh 7vw", background: C.sand, borderTop: `1px solid ${C.line}`, position: "relative", overflow: "hidden" }}>
+        <Grain />
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <Reveal>
+            <SectionTag num="04" text="the evening · in the room" accent={C.gold} />
+            <h2 style={{ fontFamily: SER, fontSize: "clamp(32px,5vw,56px)", fontWeight: 500, margin: 0, lineHeight: 1.02, color: C.rust }}>Scenes from the Evening</h2>
+            <Scribble w={210} color={C.gold} style={{ marginTop: 8 }} />
+            <p style={{ color: C.fg2, marginTop: 14, fontSize: 17, lineHeight: 1.5, maxWidth: 640 }}>A look inside kyu HOUSE — the conversation, the tables, and the people who gathered for the evening. {mob ? "Tap" : "Click"} any image to enlarge.</p>
+          </Reveal>
+          <Reveal style={{ marginTop: 34 }}>
+            <Gallery mob={mob} />
+          </Reveal>
         </div>
       </section>
 
